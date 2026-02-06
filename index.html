@@ -378,9 +378,30 @@ function recordPassesSilaFilters(rec){
 // --- MODAL DETALLE ----------------------------------------------------------------------
 // ✅ convierte **texto** a <strong>texto</strong>
 function renderBoldMarkdown(text){
-  if(!text) return '';
-  return String(text).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  if (text === undefined || text === null) return '';
+
+  // 1) Convertimos a string
+  let s = String(text);
+
+  // 2) Escapado mínimo para evitar HTML accidental (si quieres permitir HTML, quita este bloque)
+  s = s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  // 3) Negritas tipo markdown: **texto**
+  s = s.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+  // 4) Saltos de línea:
+  // - \n reales
+  // - \\n escritos literal
+  // - /n como marca manual
+  // - || como marca alternativa
+  s = s.replace(/(\r\n|\r|\n|\\n|\/n|\|\|)/g, '<br>');
+
+  return s;
 }
+
 
 // --- MODAL DETALLE (con sufijo) ----------------------------------------------------------------------
 function openModalDetalle(rec, suffix = ''){
