@@ -367,7 +367,7 @@ function recordPassesSilaFilters(rec){
   // 3) Si NO marca prestación:
   //    depende de chkInscrito
   if (chkInscrito.checked){
-    return inscr === 'si' || inscr === '');
+    return inscr === 'si';
   } else {
     return (inscr === 'no' || inscr === '');
   }
