@@ -204,7 +204,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Tarjeta Roja  Autoriza trabajar no autoriza",
+    "ANVERSO": "Tarjeta Roja  Autoriza trabajar",
     "REVERSO": "",
     "Condicionantes": "Preguntar si incorpora autoriza a trabajar. Si es afirmativo va en A1. En caso contrario va C1 ",
     "Código de inscripción en SILA": "A1",
@@ -238,7 +238,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Tarjeta Roja  Autoriza trabajar no autoriza",
+    "ANVERSO": "Tarjeta Roja  Autoriza trabajar",
     "REVERSO": "",
     "Condicionantes": "Preguntar si incorpora autoriza a trabajar. Si es afirmativo va en A1. En caso contrario va C1 ",
     "Código de inscripción en SILA": "A1",
