@@ -34,7 +34,7 @@
     "¿Revisado?": ""
   },
   {
-    "ANVERSO": "Resguardo de presentación de solicitud de protección internacional \n(Art 18.1 a) Ley 12/2009) Tarjeta blanca (+ 6 meses desde solicitud). Solicitud asilo\nentre 1 y",
+    "ANVERSO": "Resguardo de presentación de solicitud de protección internacional \n(Art 18.1 a) Ley 12/2009) Tarjeta blanca (+ 6 meses desde solicitud). Solicitud asilo\nentre 1 y  expediente OAR ",
     "REVERSO": "",
     "Condicionantes": "Preguntar: Fecha solicitud o Tarjeta blanca:\nSi ha pasado mas de 6 meses desde presentación de la solicitud va en A1 (casilla 3). \nSi ha pasado entre 1 y 6 meses va al C1.\n\n¿y si no ha pasado todavía el mes? No puede inscribirse",
     "Código de inscripción en SILA": "A1",
@@ -61,21 +61,21 @@
     "Opción a": "If (ahora() > fecha + 180)",
     "Opción b": "If (ahora() >= fecha + 30) and (ahora() <= fecha + 180)",
     "Opción c": "If (ahora() < fecha + 30)",
-    "Mostrar": "**RESGUARDO  DE SOLICITUD** de protección internacional. (Art 18.1 a) Ley 12/2009). Tarjeta blanca.",
+    "Mostrar": "**RESGUARDO  DE PRESENTACIÓN SOLICITUD** de protección internacional. (Art 18.1 a) Ley 12/2009). Tarjeta blanca.",
     "Tipo de documento": "Solicitud",
     "¿Que pide SILA?": "* Fecha de caducidad\n\nFecha solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Resguardo de presentación de solicitud de protección internacional \n(Art 18.1 a) Ley 12/2009) Tarjeta blanca (+ 6 meses desde solicitud). Solicitud asilo\nentre 1 y",
+    "ANVERSO": "Resguardo de presentación de solicitud de protección internacional \n(Art 18.1 a) Ley 12/2009) Tarjeta blanca (+ 6 meses desde solicitud). Solicitud asilo\nentre 1 y expediente OAR",
     "REVERSO": "",
     "Condicionantes": "Preguntar: Fecha solicitud o Tarjeta blanca:\nSi ha pasado mas de 6 meses desde presentación de la solicitud va en A1 (casilla 3). \nSi ha pasado entre 1 y 6 meses va al C1.\n\n¿y si no ha pasado todavía el mes? No puede inscribirse",
     "Código de inscripción en SILA": "A1",
     "Código de inscripción en SILA OPCIONAL": "C1",
     "Código de inscripción en SILA OPCIONAL2": "",
     "Modalidad de inscripción": "Demanda de Empleo Completa",
-    "Modalidad de inscripción OPCIONAL": "Demanda de Empleo Completa./nAnotar código 700",
+    "Modalidad de inscripción OPCIONAL": "Demanda de Empleo Completa.",
     "Modalidad de inscripción OPCIONAL2": "",
     "Alcance de la Autorización": "Autoriza a trabajar",
     "Alcance de la Autorización OPCIONAL": "NO autoriza a trabajar.",
@@ -95,14 +95,14 @@
     "Opción a": "If (ahora() > fecha + 180)",
     "Opción b": "If (ahora() >= fecha + 30) and (ahora() <= fecha + 180)",
     "Opción c": "If (ahora() < fecha + 30)",
-    "Mostrar": "**RESGUARDO  DE SOLICITUD** de protección internacional. (Art 18.1 a) Ley 12/2009). Tarjeta blanca.",
+    "Mostrar": "**RESGUARDO  DE PRESENTACIÓN  SOLICITUD** de protección internacional. (Art 18.1 a) Ley 12/2009). Tarjeta blanca.",
     "Tipo de documento": "Solicitud",
     "¿Que pide SILA?": "* Fecha de caducidad\n\nFecha solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Resguardo de prórroga de derechos por recurso administrativo / judicial\nDirectiva 2013/32/UE del Parlamento Europeo y del Consejo de 25 de junio de 2013\nExpediente O.A.R. OAR",
+    "ANVERSO": "Resguardo de prórroga de derechos por recurso administrativo / judicial\nDirectiva 2013/32/UE del Parlamento Europeo y del Consejo de 26 de junio de 2013\nExpediente O.A.R. OAR Union Europea",
     "REVERSO": "",
     "Condicionantes": "",
     "Código de inscripción en SILA": "A1",
@@ -170,7 +170,7 @@
     "¿Revisado?": ""
   },
   {
-    "ANVERSO": "Solicitud  asilo\nTarjeta blanca",
+    "ANVERSO": "Solicitud  asilo\nTarjeta blanca OAR ",
     "REVERSO": "",
     "Condicionantes": "",
     "Código de inscripción en SILA": "A1",
@@ -204,7 +204,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Tarjeta Roja  Autoriza trabajar",
+    "ANVERSO": "Tarjeta Roja  Autoriza trabajar Documento acreditativo de la condicion de solicitante de proteccion internacional arti. 18.1 Ley 12/2009 art articulo",
     "REVERSO": "",
     "Condicionantes": "Preguntar si incorpora autoriza a trabajar. Si es afirmativo va en A1. En caso contrario va C1 ",
     "Código de inscripción en SILA": "A1",
@@ -238,7 +238,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Tarjeta Roja  Autoriza trabajar",
+    "ANVERSO": "Tarjeta Roja  Autoriza trabajar Documento acreditativo de la condicion de solicitante de proteccion internacional arti. 18.1 Ley 12/2009  art articulo",
     "REVERSO": "",
     "Condicionantes": "Preguntar si incorpora autoriza a trabajar. Si es afirmativo va en A1. En caso contrario va C1 ",
     "Código de inscripción en SILA": "A1",
@@ -293,7 +293,7 @@
     "¿Inscrito anteriormente?": "",
     "¿Cobra prestación?": "",
     "Documentación Caducada o ¿documento de ejemplo? ¿esto para que era?": "",
-    "Pregunta1": "Indica la fecha de solicitud de la TIE.",
+    "Pregunta1": "Indica la fecha de caducidad de la TIE.",
     "Pregunta2": "",
     "Opciones_Pregunta": "fecha",
     "Opción a": "hoy>=fecha + 3 meses",
@@ -327,7 +327,7 @@
     "¿Inscrito anteriormente?": "",
     "¿Cobra prestación?": "",
     "Documentación Caducada o ¿documento de ejemplo? ¿esto para que era?": "",
-    "Pregunta1": "Indica la fecha de solicitud de la TIE.",
+    "Pregunta1": "Indica la fecha de caducidad de la TIE.",
     "Pregunta2": "",
     "Opciones_Pregunta": "fecha",
     "Opción a": "hoy>=fecha + 3 meses",
@@ -374,7 +374,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Resguardo de presentación de solicitud de protección temporal para personas desplazadas\nTarjeta blanca",
+    "ANVERSO": "Resguardo de presentación de solicitud de protección temporal para personas desplazadas\nTarjeta blanca Real Decreto 1325/2003",
     "REVERSO": "",
     "Condicionantes": "",
     "Código de inscripción en SILA": "A4",
@@ -612,7 +612,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Resolución de concesión de autorización de estancia por estudios Movilidad de alumnos. Voluntariado Actividades formativas.Larga duracion por estudios.art. 52 RD 1155/2024 Estudios Superiores Ambito sanitario Investigación prorrogada servicios O/E aut. trabajar cta ajena prop estancias realización",
+    "ANVERSO": "Resolución de concesión de autorización de estancia por estudios Movilidad de alumnos. Voluntariado Actividades formativas.Larga duracion por estudios.art. 52 RD 1155/2024 Estudios Superiores Ambito sanitario Investigación prorrogada servicios O/E aut. trabajar cta ajena prop estancias realización.1.A cuenta propia pro ",
     "REVERSO": "",
     "Condicionantes": "Preguntar al tecnico si son estudios superiores:\n➡️ Grado / Titulación universitaria\n➡️ Técnico Superior de FP\n➡️ Titulación artística o deportiva superior.\n1. Si lo son: autoriza a trabajar hasta 30 horas semanales y limitacion geográfica.\n2. Si no o son estudios superiores: No autoriza a trabajar.",
     "Código de inscripción en SILA": "E1",
@@ -850,7 +850,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Menor tutelado por la entidad de protección de menores CON autorización de residencia temporal. (Menores extranjeros no acompañados). Concesión autorizacion residencia temporal inicial junta de andalucia",
+    "ANVERSO": "Menor tutelado por la entidad de protección de menores CON autorización de residencia temporal. (Menores extranjeros no acompañados). Concesión autorizacion residencia temporal inicial junta de andalucia ART. 172 habilita trabajar",
     "REVERSO": "",
     "Condicionantes": "Preguntar al técnico fecha nacimiento.\n>16 años, podra trabajar aunque la TIE fuera expedida anteriormente y dijera que no.\n<16 años, no procede inscripción.",
     "Código de inscripción en SILA": "M1",
@@ -884,7 +884,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Solicitud renovacion o prorroga Menor tutelado por la entidad de protección de menores . (Menores extranjeros no acompañados). ",
+    "ANVERSO": "Solicitud renovacion o prorroga Menor tutelado por la entidad de protección de menores . (Menores extranjeros no acompañados).  junta de andalucia",
     "REVERSO": "",
     "Condicionantes": "Preguntar al técnico fecha nacimiento.\n>16 años, podra trabajar aunque la TIE fuera expedida anteriormente y dijera que no.\n<16 años, no procede inscripción.",
     "Código de inscripción en SILA": "M1",
@@ -918,7 +918,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Menor tutelado por la entidad de protección de menores SIN autorización de residencia temporal. Acreditación de Servicios de Protección de Menores  junta de andalucia",
+    "ANVERSO": "Menor tutelado por la entidad de protección de menores SIN autorización de residencia temporal. Acreditación de Servicios de Protección de Menores  junta de andalucia MEN A  Certificado ",
     "REVERSO": "",
     "Condicionantes": "Preguntar al técnico fecha nacimiento.\nVigencia: Ver cuando cumple 18 años + 90 dias\n\nentre 16 y 18años +90 días servicios previos\n<16 no inscribe\n>18 años + 90 días no inscribe",
     "Código de inscripción en SILA": "M2",
@@ -984,6 +984,40 @@
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
+  },
+  {
+    "ANVERSO": "Ficha de inscripción MENA",
+    "REVERSO": "",
+    "Condicionantes": "",
+    "Código de inscripción en SILA": "",
+    "Código de inscripción en SILA OPCIONAL": "",
+    "Código de inscripción en SILA OPCIONAL2": "",
+    "Modalidad de inscripción": "",
+    "Modalidad de inscripción OPCIONAL": "",
+    "Modalidad de inscripción OPCIONAL2": "",
+    "Alcance de la Autorización": "",
+    "Alcance de la Autorización OPCIONAL": "",
+    "Alcance de la Autorización OPCIONAL2": "",
+    "Observaciones": "Sin el certificado del servicio de protección de menores, no habilita para inscripción. Siempre que supere la edad laboral. ",
+    "Observaciones OPCIONAL": "",
+    "Observaciones OPCIONAL2": "",
+    "Documentación": "",
+    "Documentación OPCIONAL": "",
+    "Documentación OPCIONAL2": "",
+    "¿Inscrito anteriormente?": "",
+    "¿Cobra prestación?": "",
+    "Documentación Caducada o ¿documento de ejemplo? ¿esto para que era?": "",
+    "Pregunta1": "",
+    "Pregunta2": "",
+    "Opciones_Pregunta": "",
+    "Opción a": "",
+    "Opción b": "",
+    "Opción c": "",
+    "Mostrar": "FICHA inscripción MENA",
+    "Tipo de documento": "",
+    "¿Que pide SILA?": "",
+    "Fecha de la última actualización": "",
+    "¿Revisado?": ""
   },
   {
     "ANVERSO": "FAMILIAR CIUDADANO REINO UNIDO. FAMILIAR CIUDADANO UK. ACUERDO DE RETIRADA",
@@ -1122,7 +1156,7 @@
     "¿Revisado?": ""
   },
   {
-    "ANVERSO": "RESIDENCIA LARGA DURACIÓN\nAUTORIZA A TRABAJAR. RESIDENCIA LARGA DURACIÓN ESPAÑA AUTORIZA A TRABAJAR. RESIDENCIA RE LARGA DU UE AUTORIZA A TRABAJAR",
+    "ANVERSO": "RESIDENCIA LARGA DURACIÓN\nAUTORIZA A TRABAJAR. RESIDENCIA LARGA DURACIÓN ESPAÑA AUTORIZA A TRABAJAR. RESIDENCIA RE LARGA DU UE AUTORIZA A TRABAJAR EDAD LABORAL",
     "REVERSO": "",
     "Condicionantes": "",
     "Código de inscripción en SILA": "",
@@ -1338,7 +1372,7 @@
     "Alcance de la Autorización": "Autoriza a Trabajar",
     "Alcance de la Autorización OPCIONAL": "",
     "Alcance de la Autorización OPCIONAL2": "",
-    "Observaciones": "Deberá aportar Certificado matrimonio o Certificado parreja de hecho y/o documento de afliacion de los hijos en su caso.\n/n\nSe condignará en **fecha de caducidad** la de presentacion de la **solicitud + dos meses**.",
+    "Observaciones": "Deberá aportar Certificado matrimonio o Certificado pareja de hecho y/o documento de afliacion de los hijos en su caso.\n/n\nSe condignará en **fecha de caducidad** la de presentacion de la **solicitud + dos meses**.",
     "Observaciones OPCIONAL": "",
     "Observaciones OPCIONAL2": "",
     "Documentación": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/PERMISO-R0.pdf",
@@ -1496,7 +1530,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "RESIDENCIA \nTEMPORAL 1ª RENOVACIÓN\nNO AUTORIZA A TRABAJAR. NO LUCRATIVA. RENOVADA.",
+    "ANVERSO": "RESIDENCIA \nTEMPORAL 1ª RENOVACIÓN\nNO AUTORIZA A TRABAJAR. NO LUCRATIVA. RENOVADA. PRIMERA TEMP AUT",
     "REVERSO": "",
     "Condicionantes": "",
     "Código de inscripción en SILA": "R2",
@@ -1530,7 +1564,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "RESIDENCIA \nTEMPORAL 1ª RENOVACIÓN\nNO AUTORIZA A TRABAJAR. NO LUCRATIVA. RENOVADA.",
+    "ANVERSO": "RESIDENCIA \nTEMPORAL 1ª RENOVACIÓN\nNO AUTORIZA A TRABAJAR. NO LUCRATIVA. RENOVADA. AUT PRIMERA TEMP",
     "REVERSO": "",
     "Condicionantes": "",
     "Código de inscripción en SILA": "R2",
@@ -2074,7 +2108,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "RESIDENCIA\nTEMPORAL REAGRUPAC FAMILIAR",
+    "ANVERSO": "RESIDENCIA\nTEMPORAL REAGRUPAC FAMILIAR reagrupación",
     "REVERSO": "REAGRUPANTE",
     "Condicionantes": "",
     "Código de inscripción en SILA": "R7",
@@ -2108,7 +2142,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "RESIDENCIA TEMPORAL REAGRUPAC FAMILIAR",
+    "ANVERSO": "RESIDENCIA TEMPORAL REAGRUPAC FAMILIAR reagrupación",
     "REVERSO": "",
     "Condicionantes": "",
     "Código de inscripción en SILA": "R7",
@@ -2203,7 +2237,7 @@
     "Opción a": "",
     "Opción b": "",
     "Opción c": "",
-    "Mostrar": "AUTORIZACION (Resolución): Residencia o Visado por Movilidad Internacional. Ley 14/2013. Apoyo emprendedores y su internacionalización. INVERSOR",
+    "Mostrar": "AUTORIZACION (Resolución): Residencia o Visado por Movilidad Internacional. Ley 14/2013. Apoyo emprendedores y su internacionalización. INVERSOR.**Viene a España para realizar inversión.**",
     "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
@@ -2237,7 +2271,7 @@
     "Opción a": "",
     "Opción b": "",
     "Opción c": "",
-    "Mostrar": "AUTORIZACION (Resolución): Residencia o Visado por Movilidad Internacional. Ley 14/2013. Apoyo emprendedores y su internacionalización. INVERSOR",
+    "Mostrar": "AUTORIZACION (Resolución): Residencia o Visado por Movilidad Internacional. Ley 14/2013. Apoyo emprendedores y su internacionalización. INVERSOR.**Por haber realizado inversión en España**",
     "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
@@ -2414,7 +2448,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Autorización de Residencia o Visado por Movilidad Internacional. Artículos 71 bis Ley 14/2013. Apoyo emprendedores y su internacionalización. Profesionales altamente cualificados. Tarjeta azul Residencia Inicial Altamente Cualifica. Fam Ley 14/2013 Ambito Naci Nacional Cualificado Familiar",
+    "ANVERSO": "Autorización de Residencia o Visado por Movilidad Internacional. Artículos 71 bis Ley 14/2013. Apoyo emprendedores y su internacionalización. Profesionales altamente cualificados. Tarjeta azul Residencia Inicial Altamente Cualifica. Ley 14/2013 Ambito Naci Nacional Cualificado",
     "REVERSO": "",
     "Condicionantes": "",
     "Código de inscripción en SILA": "R8",
@@ -2720,7 +2754,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "RESIDENCIA INICIAL y Renovada para familiares de profesionales ALTAMENTE CUALIFICA CUALIFICADOS\nFAM. FAMILIARES LEY 14/2013 de 27 de septiembre, de apoyo a los emprendedores y su internacionalización. AMBITO NACI NACIONAL MOVILIDAD INTERNACIONAL",
+    "ANVERSO": "Autorización RESIDENCIA INICIAL y Renovada para familiares de profesionales ALTAMENTE CUALIFICA CUALIFICADOS\nFAM. FAMILIARES LEY 14/2013 de 27 de septiembre, de apoyo a los emprendedores y su internacionalización. AMBITO NACI NACIONAL MOVILIDAD INTERNACIONAL",
     "REVERSO": "",
     "Condicionantes": "",
     "Código de inscripción en SILA": "R9",
@@ -2747,7 +2781,7 @@
     "Opción a": "",
     "Opción b": "",
     "Opción c": "",
-    "Mostrar": "AUTORIZACION (Resolución o TIE): RESIDENCIA INICIAL Y RENOVADA PARA FAMILIARES MOVILIDAD INTERNACIONAL LEY 14/2013",
+    "Mostrar": "AUTORIZACION (Resolución o TIE): RESIDENCIA INICIAL Y RENOVADA PARA** FAMILIARES** MOVILIDAD INTERNACIONAL LEY 14/2013",
     "Tipo de documento": "TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
@@ -3060,7 +3094,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "RESIDENCIA\nTEMPORAL . RESI Y TRABAJO TEMPORAL RENOVADA AUT autoriza TRABAJAR CTA.AJENA / PROP. CUENTA AJENA / PROPIA. TRABAJO EN EDAD LABORAL, CUANTA AJENA Y PROPIA. RENOVACION",
+    "ANVERSO": "RESIDENCIA TEMPORAL . RESI Y TRABAJO TEMPORAL RENOVADA AUT autoriza TRABAJAR CTA.AJENA / PROP. CUENTA AJENA / PROPIA. TRABAJO EN EDAD LABORAL, CUANTA AJENA Y PROPIA. RENOVACION",
     "REVERSO": "",
     "Condicionantes": "",
     "Código de inscripción en SILA": "T2",
@@ -3079,6 +3113,40 @@
     "Documentación OPCIONAL": "",
     "Documentación OPCIONAL2": "",
     "¿Inscrito anteriormente?": "SI",
+    "¿Cobra prestación?": "",
+    "Documentación Caducada o ¿documento de ejemplo? ¿esto para que era?": "",
+    "Pregunta1": "",
+    "Pregunta2": "",
+    "Opciones_Pregunta": "",
+    "Opción a": "",
+    "Opción b": "",
+    "Opción c": "",
+    "Mostrar": "AUTORIZACIÓN (**Resolución o TIE**) **RENOVACION** DE RESIDENCIA Y TRABAJO TEMPORAL.  AUTORIZA A TRABAJAR. TRABAJAR POR CUENTA AJENA Y/O PROPIA",
+    "Tipo de documento": "TIE",
+    "¿Que pide SILA?": "",
+    "Fecha de la última actualización": "6/02/2026",
+    "¿Revisado?": "Revisado"
+  },
+  {
+    "ANVERSO": "RESIDENCIA TEMPORAL . RESI Y TRABAJO TEMPORAL RENOVADA AUT autoriza TRABAJAR CTA.AJENA / PROP. CUENTA AJENA / PROPIA. TRABAJO EN EDAD LABORAL, CUANTA AJENA Y PROPIA. RENOVACION",
+    "REVERSO": "",
+    "Condicionantes": "",
+    "Código de inscripción en SILA": "T2",
+    "Código de inscripción en SILA OPCIONAL": "",
+    "Código de inscripción en SILA OPCIONAL2": "",
+    "Modalidad de inscripción": "Demanda de Empleo Completa",
+    "Modalidad de inscripción OPCIONAL": "",
+    "Modalidad de inscripción OPCIONAL2": "",
+    "Alcance de la Autorización": "Autoriza a Trabajar",
+    "Alcance de la Autorización OPCIONAL": "",
+    "Alcance de la Autorización OPCIONAL2": "",
+    "Observaciones": "",
+    "Observaciones OPCIONAL": "",
+    "Observaciones OPCIONAL2": "",
+    "Documentación": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/PERMISO-T2.pdf",
+    "Documentación OPCIONAL": "",
+    "Documentación OPCIONAL2": "",
+    "¿Inscrito anteriormente?": "NO",
     "¿Cobra prestación?": "",
     "Documentación Caducada o ¿documento de ejemplo? ¿esto para que era?": "",
     "Pregunta1": "",
@@ -3298,40 +3366,6 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Autorización de residencia inicial para investigación nacional\nLey 14/2003, de 27 de septiembre, de apoyo a los emprendedores y su internacionalización",
-    "REVERSO": "",
-    "Condicionantes": "",
-    "Código de inscripción en SILA": "",
-    "Código de inscripción en SILA OPCIONAL": "",
-    "Código de inscripción en SILA OPCIONAL2": "",
-    "Modalidad de inscripción": "",
-    "Modalidad de inscripción OPCIONAL": "",
-    "Modalidad de inscripción OPCIONAL2": "",
-    "Alcance de la Autorización": "",
-    "Alcance de la Autorización OPCIONAL": "",
-    "Alcance de la Autorización OPCIONAL2": "",
-    "Observaciones": "",
-    "Observaciones OPCIONAL": "",
-    "Observaciones OPCIONAL2": "",
-    "Documentación": "",
-    "Documentación OPCIONAL": "",
-    "Documentación OPCIONAL2": "",
-    "¿Inscrito anteriormente?": "",
-    "¿Cobra prestación?": "",
-    "Documentación Caducada o ¿documento de ejemplo? ¿esto para que era?": "",
-    "Pregunta1": "",
-    "Pregunta2": "",
-    "Opciones_Pregunta": "",
-    "Opción a": "",
-    "Opción b": "",
-    "Opción c": "",
-    "Mostrar": "Autorización de residencia inicial para investigación nacional. Ley 14/2003, de 27 de septiembre, de apoyo a los emprendedores y su internacionalización.",
-    "Tipo de documento": "Resolución",
-    "¿Que pide SILA?": "",
-    "Fecha de la última actualización": "6/02/2026",
-    "¿Revisado?": "Revisado"
-  },
-  {
     "ANVERSO": "Autorización de residencia por circunstancias excepcionales inicial",
     "REVERSO": "",
     "Condicionantes": "",
@@ -3366,7 +3400,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Certificado asignado en el Registro Central de Extranjeros de la dirección General de la policía el numero de Identidad Extranjero (NIE )",
+    "ANVERSO": "Certificado asignado en el Registro Central de Extranjeros de la dirección General de la policía el numero de Identidad Extranjero (NIE ) asignacion consta que tiene",
     "REVERSO": "",
     "Condicionantes": "",
     "Código de inscripción en SILA": "",
@@ -3536,7 +3570,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Declaración responsable de presentacion de solicitud de protección internacional",
+    "ANVERSO": "Declaración responsable de presentacion de solicitud de protección internacional declaro responsablemente presentado transcurrido el plazo de un mes desde la solicitud sin haber recibido resolución de no admisión a trámite",
     "REVERSO": "",
     "Condicionantes": "",
     "Código de inscripción en SILA": "",
@@ -3548,7 +3582,7 @@
     "Alcance de la Autorización": "",
     "Alcance de la Autorización OPCIONAL": "",
     "Alcance de la Autorización OPCIONAL2": "",
-    "Observaciones": "No habilita inscripción",
+    "Observaciones": "No habilita inscripción salvo que se presente el resguardo de presentación de solicitud de protección internacional.",
     "Observaciones OPCIONAL": "",
     "Observaciones OPCIONAL2": "",
     "Documentación": "",
