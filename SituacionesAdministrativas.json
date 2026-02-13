@@ -58,9 +58,9 @@
     "Pregunta1": "Indique la Fecha donde se indica **\"Expedido en PROVINCIA a.......\"**",
     "Pregunta2": "",
     "Opciones_Pregunta": "fecha",
-    "Opción a": "hoy > fecha1 + 180",
-    "Opción b": "(hoy >= fecha1 + 30) and (hoy <= fecha1 + 180)",
-    "Opción c": "hoy < fecha1 + 30",
+    "Opción a": "hoy > fecha1 + 180 dias",
+    "Opción b": "hoy >= fecha1 + 30 dias y hoy <= fecha1 + 180 dias",
+    "Opción c": "hoy < fecha1 + 30 dias",
     "Mostrar": "**RESGUARDO  DE PRESENTACIÓN SOLICITUD** de protección internacional. (Art 18.1 a) Ley 12/2009). Tarjeta blanca.",
     "Tipo de documento": "Solicitud",
     "¿Que pide SILA?": "* Fecha de caducidad\n\nFecha solicitud renovación automática",
@@ -92,9 +92,9 @@
     "Pregunta1": "Indique la Fecha donde se indica **\"Expedido en PROVINCIA a.......\"**",
     "Pregunta2": "",
     "Opciones_Pregunta": "fecha",
-    "Opción a": "hoy > fecha1 + 180",
-    "Opción b": "(hoy >= fecha1 + 30) and (hoy <= fecha1 + 180)",
-    "Opción c": "hoy < fecha1 + 30",
+    "Opción a": "hoy > fecha1 + 180 dias",
+    "Opción b": "hoy >= fecha1 + 30 dias y hoy <= fecha1 + 180 dias",
+    "Opción c": "hoy < fecha1 + 30 dias",
     "Mostrar": "**RESGUARDO  DE PRESENTACIÓN  SOLICITUD** de protección internacional. (Art 18.1 a) Ley 12/2009). Tarjeta blanca.",
     "Tipo de documento": "Solicitud",
     "¿Que pide SILA?": "* Fecha de caducidad\n\nFecha solicitud renovación automática",
@@ -3094,7 +3094,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "RESIDENCIA TEMPORAL . RESI Y TRABAJO TEMPORAL RENOVADA AUT autoriza TRABAJAR CTA.AJENA / PROP. CUENTA AJENA / PROPIA. TRABAJO EN EDAD LABORAL, CUANTA AJENA Y PROPIA. RENOVACION",
+    "ANVERSO": "RESIDENCIA TEMPORAL . RESI Y TRABAJO TEMPORAL RENOVADA AUT autoriza TRABAJAR CTA.AJENA / PROP. CUENTA AJENA / PROPIA. TRABAJO EN EDAD LABORAL, CUENTA AJENA Y PROPIA. RENOVACION supuesto general artículo 81.1 vigencia anterior 1 año",
     "REVERSO": "",
     "Condicionantes": "",
     "Código de inscripción en SILA": "T2",
@@ -3128,7 +3128,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "RESIDENCIA TEMPORAL . RESI Y TRABAJO TEMPORAL RENOVADA AUT autoriza TRABAJAR CTA.AJENA / PROP. CUENTA AJENA / PROPIA. TRABAJO EN EDAD LABORAL, CUANTA AJENA Y PROPIA. RENOVACION",
+    "ANVERSO": "RESIDENCIA TEMPORAL . RESI Y TRABAJO TEMPORAL RENOVADA AUT autoriza TRABAJAR CTA.AJENA / PROP. CUENTA AJENA / PROPIA. TRABAJO EN EDAD LABORAL, CUENTA AJENA Y PROPIA. RENOVACION supuesto general artículo 81.1 vigencia anterior 1 año",
     "REVERSO": "",
     "Condicionantes": "",
     "Código de inscripción en SILA": "T2",
