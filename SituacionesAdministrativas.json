@@ -272,9 +272,9 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "REFUGIADO. PROTECCIÓN SUB.\nPROTECCIÓN INTERNACIONAL.  FAMILIAR DE REFUGIADO. RENOVACION DE ASILO O PROTECCION INTERNACIONAL. DOCUMENTO DE IDENTIDAD DE REFUGIADO. ASILO residencia autorización trab",
+    "ANVERSO": "REFUGIADO. PROTECCIÓN SUB.\nPROTECCIÓN INTERNACIONAL.  FAMILIAR DE REFUGIADO. RENOVACION DE ASILO O PROTECCION INTERNACIONAL. DOCUMENTO DE IDENTIDAD DE REFUGIADO. ASILO residencia autorización trab trabajo larga duracion",
     "REVERSO": "LARGA DURACIÓN",
-    "Condicionantes": "Preguntar Fecha caducidad de la TIE:\n\nSi está caducada menos de 3 meses, podrá inscribirse con documento caducado o pasaporte + solicitud de renovación siempre que se haya solicitado entre 60 días antes de su caducidad o 3 meses desde su caducidad.\n\nSi esta caducado mas de 3 meses para su inscripcion deberá acreditar certificado acreditativo de la renovacion",
+    "Condicionantes": "Preguntar Fecha caducidad de la TIE:\nSi está en vigor , inscripción normal\nSi está caducada menos de 3 meses, podrá inscribirse con documento caducado o pasaporte + solicitud de renovación siempre que se haya solicitado entre 60 días antes de su caducidad o 3 meses desde su caducidad.\n\nSi esta caducado mas de 3 meses para su inscripcion deberá acreditar certificado acreditativo de la renovacion",
     "Código de inscripción en SILA": "A2",
     "Código de inscripción en SILA OPCIONAL": "A2",
     "Código de inscripción en SILA OPCIONAL2": "",
@@ -612,7 +612,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Resolución de concesión de autorización de estancia por estudios Movilidad de alumnos. Voluntariado Actividades formativas.Larga duracion por estudios.art. 52 RD 1155/2024 Estudios Superiores Ambito sanitario Investigación prorrogada servicios O/E aut. trabajar cta ajena prop estancias realización.1.A cuenta propia pro ",
+    "ANVERSO": "Resolución de concesión de autorización de estancia por estudios Movilidad de alumnos. Voluntariado Actividades formativas.Larga duracion por estudios.art. 52 RD 1155/2024 Estudios Superiores Ambito sanitario Investigación prorrogada servicios O/E aut. trabajar cta ajena prop estancias realización.1.A cuenta propia pro Ambito Nacional Universidad de Granada",
     "REVERSO": "",
     "Condicionantes": "Preguntar al tecnico si son estudios superiores:\n➡️ Grado / Titulación universitaria\n➡️ Técnico Superior de FP\n➡️ Titulación artística o deportiva superior.\n1. Si lo son: autoriza a trabajar hasta 30 horas semanales y limitacion geográfica.\n2. Si no o son estudios superiores: No autoriza a trabajar.",
     "Código de inscripción en SILA": "E1",
@@ -918,7 +918,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Menor tutelado por la entidad de protección de menores SIN autorización de residencia temporal. Acreditación de Servicios de Protección de Menores  junta de andalucia MEN A  Certificado ",
+    "ANVERSO": "Menor tutelado por la entidad de protección de menores SIN autorización de residencia temporal. Acreditación de Servicios de Protección de Menores  junta de andalucia MENA  Certificado ",
     "REVERSO": "",
     "Condicionantes": "Preguntar al técnico fecha nacimiento.\nVigencia: Ver cuando cumple 18 años + 90 dias\n\nentre 16 y 18años +90 días servicios previos\n<16 no inscribe\n>18 años + 90 días no inscribe",
     "Código de inscripción en SILA": "M2",
@@ -2312,7 +2312,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Autorización de Residencia o Visado por Movilidad Internacional. Articulo 72 Ley 14/2013. Apoyo emprendedores y su internacionalización. Formación, investigación, desarrollo e Innovación Autorización de Residencia Inicial para Investigación Nacional",
+    "ANVERSO": "Autorización de Residencia o Visado por Movilidad Internacional. Articulo 72 Ley 14/2013. Apoyo emprendedores y su internacionalización. Formación, investigación, desarrollo e Innovación Autorización de Residencia Inicial para Investigación Nacional aplicacion",
     "REVERSO": "Personal Invertigador. cientifico y técnico. profesores de universidades. Investigadores.",
     "Condicionantes": "",
     "Código de inscripción en SILA": "R8",
