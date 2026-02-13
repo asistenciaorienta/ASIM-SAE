@@ -286,7 +286,7 @@ function addDays(date, days){
   return d;
 }
 
-let _pregState = { rec:null, tipo:'', selectedBranch:null };
+let _pregState = { rec:null, tipo:'', selectedBranch:null, phase:'initial', fecha1:null };
 
 function normRule(s){
   return String(s || '')
@@ -399,11 +399,11 @@ function openModalPreguntas(rec, tipo){
     modalPreguntasContent.appendChild(wrap);
   }
 
-  function addABCRadios(){
+  function addABCRadios({ onlyAB = false } = {}){
     const oa = (getField(rec, ['Opción a','Opcion a']) || 'Opción A').trim();
     const ob = (getField(rec, ['Opción b','Opcion b']) || 'Opción B').trim();
     const oc = (getField(rec, ['Opción c','Opcion c']) || '').trim();
-
+  
     const box = document.createElement('div');
     box.className = 'field';
     box.innerHTML = `
@@ -414,7 +414,7 @@ function openModalPreguntas(rec, tipo){
         <label style="display:flex;gap:8px;align-items:center">
           <input type="radio" name="branchABC" value="b"> <strong>B</strong>: ${renderBoldMarkdown(ob)}
         </label>
-        ${oc ? `
+        ${(!onlyAB && oc) ? `
         <label style="display:flex;gap:8px;align-items:center">
           <input type="radio" name="branchABC" value="c"> <strong>C</strong>: ${renderBoldMarkdown(oc)}
         </label>` : ``}
@@ -424,12 +424,29 @@ function openModalPreguntas(rec, tipo){
     modalPreguntasContent.appendChild(box);
   }
 
+
   // --- Construcción del modal según tipo ---
   if(tipo === 'fecha'){
     // Si hay pregunta, la ponemos y luego el input
     addQuestion(p1 || 'Introduce la fecha:');
     addDateInput('pregFecha1', 'Fecha:');
   }
+  else if (tipo === 'fecha+ab') {
+    addQuestion(p1 || 'Introduce la fecha:');
+    addDateInput('pregFecha1', 'Fecha:');
+    // Nota opcional
+    const rule = (getField(rec, ['PreguntaABC','preguntaabc']) || '').trim();
+    if(rule){
+      const hint = document.createElement('div');
+      hint.className = 'small';
+      hint.style.marginTop = '6px';
+      hint.innerHTML = `Se validará: <strong>${renderBoldMarkdown(rule)}</strong>`;
+      modalPreguntasContent.appendChild(hint);
+    }
+  
+    _pregState.phase = 'date';     // importante
+    _pregState.fecha1 = null;
+  }    
   else if(tipo === 'dosfechas'){
     // Pregunta 1 -> Fecha1
     addQuestion(p1 || 'Introduce la fecha 1:');
@@ -471,6 +488,51 @@ btnContinuarPreguntas.addEventListener('click', () => {
     }
     branch = checked.value;
   }
+  else if (tipo === 'fecha+ab') {
+  
+    // Fase 1: pedir fecha y decidir si pasamos a la pregunta A/B o saltamos a C
+    if (_pregState.phase === 'date') {
+      const v = document.getElementById('pregFecha1')?.value || '';
+      const fecha = parseDateInputToDate(v);
+      if(!fecha){
+        alert('Introduce una fecha válida.');
+        return;
+      }
+  
+      const cond = (getField(rec, ['PreguntaABC','preguntaabc']) || '').trim();
+      if(!cond){
+        alert('Falta la condición en PreguntaABC.');
+        return;
+      }
+  
+      // Evaluamos la condición usando tu motor (fecha1 + hoy)
+      const ok = evalRule(cond, fecha, fecha); // d2 no se usa, pero tu parser entiende hoy/fecha1
+      if (ok !== true){
+        // No cumple => rama C directamente
+        branch = 'c';
+      } else {
+        // Cumple => mostramos Pregunta2 con radios A/B
+        modalPreguntasContent.innerHTML = '';
+        addQuestion((getField(rec, ['Pregunta2']) || '').trim() || 'Selecciona una opción:');
+        addABCRadios({ onlyAB: true });
+  
+        _pregState.phase = 'ab';
+        _pregState.fecha1 = fecha;
+        return; // IMPORTANTE: no cerramos modal aún, esperamos la elección A/B
+      }
+    }
+  
+    // Fase 2: elegir A/B
+    if (_pregState.phase === 'ab') {
+      const checked = document.querySelector('input[name="branchABC"]:checked');
+      if(!checked){
+        alert('Selecciona una opción (A/B).');
+        return;
+      }
+      branch = checked.value; // a o b
+    }
+  }
+    
   else if(tipo === 'fecha'){
     const v = document.getElementById('pregFecha1')?.value || '';
     const fecha = parseDateInputToDate(v);
