@@ -23,7 +23,7 @@
     "Documentación Caducada o ¿documento de ejemplo? ¿esto para que era?": "tengo que pedir fecha y después preguntar si la autorización sobre la que recurre autorizaba o no a trabajar.\n\nPreguntar al técnico la fecha de la resolución denegatoria.\n\nEl recurso debe presentarse en el plazo de un mes desde denegacion.\n\nSi ya esta autorizado a trabajar va a A1.\n\nSi no lo está va a C1 colectivo especial 17 (Demandante de Servicios Previos al Empleo).",
     "Pregunta1": "Indica la fecha de la **Resolución Denegatoria**",
     "Pregunta2": "¿La autorización sobre la que recurre autorizaba o no a trabajar?",
-    "Opciones_Pregunta": "(hoy >= fecha1) and (hoy <= fecha1 + 30 dias)",
+    "Opciones_Pregunta": "(hoy >= fecha1) y (hoy <= fecha1 + 30 dias)",
     "Opción a": "fecha+ab",
     "Opción b": "Autorizaba a trabajar",
     "Opción c": "No autorizaba a trabajar",
