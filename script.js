@@ -18,7 +18,6 @@ function logBusquedaToSheets(busqueda, numResultados, cobraPrestacion, inscritoA
     keepalive: true
   }).catch(() => {});
 }
-
  
 document.addEventListener('DOMContentLoaded', () => {
 
