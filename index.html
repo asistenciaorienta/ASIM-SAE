@@ -548,17 +548,28 @@ function normRule(s){
 }
 
 function parseExpr(expr, d1, d2){
-  // expr ejemplos: "fecha1", "fecha2", "hoy", "fecha1 + 30 dias", "fecha2 + 16 anos"
+  // expr ejemplos: "fecha", "fecha1", "fecha2", "hoy",
+  // "fecha + 30 dias", "fecha1 + 180 dias", "fecha2 + 16 anos"
+
   let s = normRule(expr);
 
   let base;
-  if (/^fecha\s*1\b|^fecha1\b/.test(s)) base = new Date(d1);
-  else if (/^fecha\s*2\b|^fecha2\b/.test(s)) base = new Date(d2);
-  else if (/^hoy\b|^now\b/.test(s)) base = new Date();
-  else return null;
+  if (/^fecha\b/.test(s) || /^fecha\s*1\b/.test(s) || /^fecha1\b/.test(s)) {
+    base = new Date(d1);
+  }
+  else if (/^fecha\s*2\b/.test(s) || /^fecha2\b/.test(s)) {
+    if(!d2) return null;      // si no hay fecha2, no se puede evaluar
+    base = new Date(d2);
+  }
+  else if (/^hoy\b|^now\b/.test(s)) {
+    base = new Date();
+  }
+  else {
+    return null;
+  }
 
-  // aplicar +N dias / +N anos (soporta también "-")
-  const m = s.match(/(fecha\s*1|fecha1|fecha\s*2|fecha2|hoy|now)\s*([+-])\s*(\d+)\s*(dias|dia|anos|ano|years|year|days|day)\b/);
+  // permitir +N dias / +N anos (soporta "-")
+  const m = s.match(/(fecha|fecha\s*1|fecha1|fecha\s*2|fecha2|hoy|now)\s*([+-])\s*(\d+)\s*(dias|dia|anos|ano|years|year|days|day)\b/);
   if (m){
     const sign = m[2] === '-' ? -1 : 1;
     const n = parseInt(m[3], 10) * sign;
@@ -573,6 +584,7 @@ function parseExpr(expr, d1, d2){
 
   return base;
 }
+
 
 function evalSimpleComparison(ruleText, d1, d2){
   // Soporta: <, >, <=, >=, = y equivalentes en texto "antes de", "despues de", "igual a"
@@ -722,22 +734,33 @@ btnContinuarPreguntas.addEventListener('click', () => {
     }
     branch = checked.value;
   }
-  else if(tipo === 'fecha'){
-    const v = document.getElementById('pregFecha1')?.value || '';
-    const fecha = parseDateInputToDate(v);
-    if(!fecha){
-      alert('Introduce una fecha válida.');
-      return;
-    }
-
-    const hoy = new Date();
-    const plus30  = addDays(fecha, 30);
-    const plus180 = addDays(fecha, 180);
-
-    if(hoy > plus180) branch = 'a';
-    else if(hoy >= plus30 && hoy <= plus180) branch = 'b';
-    else branch = 'c';
+else if(tipo === 'fecha'){
+  const v = document.getElementById('pregFecha1')?.value || '';
+  const fecha = parseDateInputToDate(v);
+  if(!fecha){
+    alert('Introduce una fecha válida.');
+    return;
   }
+
+  // Reglas vienen del JSON en Opción a/b/c
+  const ruleA = (getField(rec, ['Opción a','Opcion a']) || '').trim();
+  const ruleB = (getField(rec, ['Opción b','Opcion b']) || '').trim();
+  const ruleC = (getField(rec, ['Opción c','Opcion c']) || '').trim();
+
+  // Evaluamos en orden A -> B -> C (con fecha como d1)
+  const okA = evalRule(ruleA, fecha, null);
+  const okB = evalRule(ruleB, fecha, null);
+  const okC = ruleC ? evalRule(ruleC, fecha, null) : false;
+
+  if(okA === true) branch = 'a';
+  else if(okB === true) branch = 'b';
+  else if(okC === true) branch = 'c';
+  else {
+    alert('No se ha podido determinar A/B/C con las reglas de Opción a/b/c. Revisa el formato de las reglas.');
+    return;
+  }
+}
+
   else if(tipo === 'dosfechas'){
     const v1 = document.getElementById('pregFecha1')?.value || '';
     const v2 = document.getElementById('pregFecha2')?.value || '';
