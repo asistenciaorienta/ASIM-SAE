@@ -377,10 +377,16 @@ function addQuestion(text){
   modalPreguntasContent.appendChild(q);
 }  
 function addABCRadios({ onlyAB = false } = {}){
-  const rec = _pregState.rec;   // ✅ añadir esta línea
-  const oa = (getField(rec, ['Opción a','Opcion a']) || 'Opción A').trim();
-  const ob = (getField(rec, ['Opción b','Opcion b']) || 'Opción B').trim();
-  const oc = (getField(rec, ['Opción c','Opcion c']) || '').trim();
+  const recLocal = _pregState?.rec; // <- clave
+
+  if (!recLocal) {
+    console.error('addABCRadios: _pregState.rec no está definido');
+    return;
+  }
+
+  const oa = (getField(recLocal, ['Opción a','Opcion a']) || 'Opción A').trim();
+  const ob = (getField(recLocal, ['Opción b','Opcion b']) || 'Opción B').trim();
+  const oc = (getField(recLocal, ['Opción c','Opcion c']) || '').trim();
 
   const box = document.createElement('div');
   box.className = 'field';
@@ -400,7 +406,8 @@ function addABCRadios({ onlyAB = false } = {}){
     <div class="small" style="margin-top:8px">Selecciona una opción para continuar.</div>
   `;
   modalPreguntasContent.appendChild(box);
-}  
+}
+
 function openModalPreguntas(rec, tipo){
   _pregState = { rec, tipo, selectedBranch: null, phase: 'initial', fecha1: null, fecha2: null };
 
