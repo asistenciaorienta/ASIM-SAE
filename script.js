@@ -440,7 +440,6 @@ function openModalPreguntas(rec, tipo){
       const hint = document.createElement('div');
       hint.className = 'small';
       hint.style.marginTop = '6px';
-      hint.innerHTML = `Se validará: <strong>${renderBoldMarkdown(rule)}</strong>`;
       modalPreguntasContent.appendChild(hint);
     }
   
@@ -459,7 +458,6 @@ function openModalPreguntas(rec, tipo){
       const hint = document.createElement('div');
       hint.className = 'small';
       hint.style.marginTop = '6px';
-      hint.innerHTML = `Se validará: <strong>${renderBoldMarkdown(rule)}</strong>`;
       modalPreguntasContent.appendChild(hint);
     }
   
