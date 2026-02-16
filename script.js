@@ -371,7 +371,7 @@ function evalRule(ruleText, d1, d2){
 }
   
 function openModalPreguntas(rec, tipo){
-  _pregState = { rec, tipo, selectedBranch: null };
+  _pregState = { rec, tipo, selectedBranch: null, phase: 'initial', fecha1: null, fecha2: null };
 
   modalPreguntasContent.innerHTML = '';
   modalPreguntasTitulo.innerHTML = renderBoldMarkdown((getField(rec, ['Mostrar','mostrar']) || '').trim());
@@ -447,6 +447,24 @@ function openModalPreguntas(rec, tipo){
     _pregState.phase = 'date';     // importante
     _pregState.fecha1 = null;
   }    
+  else if (tipo === 'dosfechas+ab') {
+    addQuestion(p1 || 'Introduce la fecha 1:');
+    addDateInput('pregFecha1', 'Fecha 1:');
+  
+    addQuestion(p2 || 'Introduce la fecha 2:');
+    addDateInput('pregFecha2', 'Fecha 2:');
+  
+    const rule = (getField(rec, ['PreguntaABC','preguntaabc']) || '').trim();
+    if(rule){
+      const hint = document.createElement('div');
+      hint.className = 'small';
+      hint.style.marginTop = '6px';
+      hint.innerHTML = `Se validará: <strong>${renderBoldMarkdown(rule)}</strong>`;
+      modalPreguntasContent.appendChild(hint);
+    }
+  
+    _pregState.phase = 'dates';
+  }    
   else if(tipo === 'dosfechas'){
     // Pregunta 1 -> Fecha1
     addQuestion(p1 || 'Introduce la fecha 1:');
@@ -488,6 +506,7 @@ btnContinuarPreguntas.addEventListener('click', () => {
     }
     branch = checked.value;
   }
+    
   else if (tipo === 'fecha+ab') {
   
     // Fase 1: pedir fecha y decidir si pasamos a la pregunta A/B o saltamos a C
@@ -519,6 +538,57 @@ btnContinuarPreguntas.addEventListener('click', () => {
         _pregState.phase = 'ab';
         _pregState.fecha1 = fecha;
         return; // IMPORTANTE: no cerramos modal aún, esperamos la elección A/B
+      }
+    }
+  
+    // Fase 2: elegir A/B
+    if (_pregState.phase === 'ab') {
+      const checked = document.querySelector('input[name="branchABC"]:checked');
+      if(!checked){
+        alert('Selecciona una opción (A/B).');
+        return;
+      }
+      branch = checked.value; // a o b
+    }
+  }
+
+  else if (tipo === 'dosfechas+ab') {
+  
+    // Fase 1: pedir fechas y decidir si pasamos a la pregunta A/B o saltamos a C
+    if (_pregState.phase === 'dates') {
+      const v1 = document.getElementById('pregFecha1')?.value || '';
+      const v2 = document.getElementById('pregFecha2')?.value || '';
+  
+      const d1 = parseDateInputToDate(v1);
+      const d2 = parseDateInputToDate(v2);
+  
+      if(!d1 || !d2){
+        alert('Introduce ambas fechas.');
+        return;
+      }
+  
+      const cond = (getField(rec, ['PreguntaABC','preguntaabc']) || '').trim();
+      if(!cond){
+        alert('Falta la condición en PreguntaABC.');
+        return;
+      }
+  
+      const ok = evalRule(cond, d1, d2);
+  
+      if (ok !== true){
+        // No cumple => rama C directa
+        branch = 'c';
+      } else {
+        // Cumple => mostramos Pregunta3 con radios A/B
+        modalPreguntasContent.innerHTML = '';
+        const p3 = (getField(rec, ['Pregunta3','pregunta3']) || '').trim();
+        addQuestion(p3 || 'Selecciona una opción:');
+        addABCRadios({ onlyAB: true });
+  
+        _pregState.phase = 'ab';
+        _pregState.fecha1 = d1;
+        _pregState.fecha2 = d2;
+        return; // esperamos el click siguiente con A/B
       }
     }
   
