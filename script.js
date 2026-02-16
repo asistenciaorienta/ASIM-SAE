@@ -376,7 +376,7 @@ function addQuestion(text){
   q.innerHTML = `<strong>${renderBoldMarkdown(text)}</strong>`;
   modalPreguntasContent.appendChild(q);
 }  
-function addABCRadios({ rec, onlyAB = false } = {}){
+function addABCRadios({ onlyAB = false } = {}){
   const rec = _pregState.rec;   // ✅ añadir esta línea
   const oa = (getField(rec, ['Opción a','Opcion a']) || 'Opción A').trim();
   const ob = (getField(rec, ['Opción b','Opcion b']) || 'Opción B').trim();
