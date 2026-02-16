@@ -369,7 +369,37 @@ function evalRule(ruleText, d1, d2){
   }
   return true; // todas true
 }
-  
+function addQuestion(text){
+  if(!text) return;
+  const q = document.createElement('div');
+  q.className = 'field';
+  q.innerHTML = `<strong>${renderBoldMarkdown(text)}</strong>`;
+  modalPreguntasContent.appendChild(q);
+}  
+function addABCRadios({ onlyAB = false } = {}){
+  const oa = (getField(rec, ['Opción a','Opcion a']) || 'Opción A').trim();
+  const ob = (getField(rec, ['Opción b','Opcion b']) || 'Opción B').trim();
+  const oc = (getField(rec, ['Opción c','Opcion c']) || '').trim();
+
+  const box = document.createElement('div');
+  box.className = 'field';
+  box.innerHTML = `
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <label style="display:flex;gap:8px;align-items:center">
+        <input type="radio" name="branchABC" value="a"> <strong>A</strong>: ${renderBoldMarkdown(oa)}
+      </label>
+      <label style="display:flex;gap:8px;align-items:center">
+        <input type="radio" name="branchABC" value="b"> <strong>B</strong>: ${renderBoldMarkdown(ob)}
+      </label>
+      ${(!onlyAB && oc) ? `
+      <label style="display:flex;gap:8px;align-items:center">
+        <input type="radio" name="branchABC" value="c"> <strong>C</strong>: ${renderBoldMarkdown(oc)}
+      </label>` : ``}
+    </div>
+    <div class="small" style="margin-top:8px">Selecciona una opción para continuar.</div>
+  `;
+  modalPreguntasContent.appendChild(box);
+}  
 function openModalPreguntas(rec, tipo){
   _pregState = { rec, tipo, selectedBranch: null, phase: 'initial', fecha1: null, fecha2: null };
 
@@ -380,13 +410,7 @@ function openModalPreguntas(rec, tipo){
   const p2 = (getField(rec, ['Pregunta2']) || '').trim();
 
   // helpers de render
-  function addQuestion(text){
-    if(!text) return;
-    const q = document.createElement('div');
-    q.className = 'field';
-    q.innerHTML = `<strong>${renderBoldMarkdown(text)}</strong>`;
-    modalPreguntasContent.appendChild(q);
-  }
+
 
   function addDateInput(id, labelText){
     const wrap = document.createElement('div');
@@ -399,30 +423,7 @@ function openModalPreguntas(rec, tipo){
     modalPreguntasContent.appendChild(wrap);
   }
 
-  function addABCRadios({ onlyAB = false } = {}){
-    const oa = (getField(rec, ['Opción a','Opcion a']) || 'Opción A').trim();
-    const ob = (getField(rec, ['Opción b','Opcion b']) || 'Opción B').trim();
-    const oc = (getField(rec, ['Opción c','Opcion c']) || '').trim();
-  
-    const box = document.createElement('div');
-    box.className = 'field';
-    box.innerHTML = `
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <label style="display:flex;gap:8px;align-items:center">
-          <input type="radio" name="branchABC" value="a"> <strong>A</strong>: ${renderBoldMarkdown(oa)}
-        </label>
-        <label style="display:flex;gap:8px;align-items:center">
-          <input type="radio" name="branchABC" value="b"> <strong>B</strong>: ${renderBoldMarkdown(ob)}
-        </label>
-        ${(!onlyAB && oc) ? `
-        <label style="display:flex;gap:8px;align-items:center">
-          <input type="radio" name="branchABC" value="c"> <strong>C</strong>: ${renderBoldMarkdown(oc)}
-        </label>` : ``}
-      </div>
-      <div class="small" style="margin-top:8px">Selecciona una opción para continuar.</div>
-    `;
-    modalPreguntasContent.appendChild(box);
-  }
+
 
 
   // --- Construcción del modal según tipo ---
