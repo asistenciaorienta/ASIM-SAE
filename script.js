@@ -359,7 +359,47 @@ function renderKeywordSuggestionItem(rec){
   `;
 }
 
-  
+  function containsTokenExact(text, token) {
+    const words = text.split(/\s+/).map(w => w.toLowerCase());
+    token = token.toLowerCase();
+    if (token === 'autoriza') {
+      for (let i = 0; i < words.length; i++) {
+        if (words[i] === 'autoriza' && (i === 0 || words[i-1] !== 'no')) return true;
+      }
+      return false;
+    }
+    if (token === 'no autoriza') {
+      for (let i = 0; i < words.length - 1; i++) {
+        if (words[i] === 'no' && words[i+1] === 'autoriza') return true;
+      }
+      return false;
+    }
+    return words.includes(token);
+  }
+
+function containsTokenTolerant(text, token) {
+  const words = text.split(/\s+/);
+  token = token.toLowerCase();
+
+  for (const w of words) {
+    const word = w.toLowerCase();
+
+    // 1. Exacta
+    if (word === token) return true;
+
+    // 2. Prefijo (inicio de palabra)
+    if (word.startsWith(token) && token.length >= 3) return true;
+
+    // 3. Tolerancia por Levenshtein
+    if (token.length >= 4 && word.length >= 4) {
+      const maxLen = Math.max(word.length, token.length);
+      const threshold = Math.max(1, Math.ceil(maxLen * 0.2)); // ahora 20% en vez de 10%
+      if (levenshtein(word, token) <= threshold) return true;
+    }
+  }
+
+  return false;
+}  
 
   
 function normRule(s){
@@ -888,49 +928,6 @@ function doSearch() {
     }
     return matrix[a.length][b.length];
   }
-
-  function containsTokenExact(text, token) {
-    const words = text.split(/\s+/).map(w => w.toLowerCase());
-    token = token.toLowerCase();
-    if (token === 'autoriza') {
-      for (let i = 0; i < words.length; i++) {
-        if (words[i] === 'autoriza' && (i === 0 || words[i-1] !== 'no')) return true;
-      }
-      return false;
-    }
-    if (token === 'no autoriza') {
-      for (let i = 0; i < words.length - 1; i++) {
-        if (words[i] === 'no' && words[i+1] === 'autoriza') return true;
-      }
-      return false;
-    }
-    return words.includes(token);
-  }
-
-function containsTokenTolerant(text, token) {
-  const words = text.split(/\s+/);
-  token = token.toLowerCase();
-
-  for (const w of words) {
-    const word = w.toLowerCase();
-
-    // 1. Exacta
-    if (word === token) return true;
-
-    // 2. Prefijo (inicio de palabra)
-    if (word.startsWith(token) && token.length >= 3) return true;
-
-    // 3. Tolerancia por Levenshtein
-    if (token.length >= 4 && word.length >= 4) {
-      const maxLen = Math.max(word.length, token.length);
-      const threshold = Math.max(1, Math.ceil(maxLen * 0.2)); // ahora 20% en vez de 10%
-      if (levenshtein(word, token) <= threshold) return true;
-    }
-  }
-
-  return false;
-}
-
 
   function extractQuotedPhrases(text) {
     const quotes = [];
