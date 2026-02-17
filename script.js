@@ -288,6 +288,80 @@ function addDays(date, days){
 
 let _pregState = { rec:null, tipo:'', selectedBranch:null, phase:'initial', fecha1:null };
 
+function getKeywordsRaw(rec){
+  return (getField(rec, ['Palabras_Clave','palabras_clave','PALABRAS_CLAVE']) || '').toString();
+}
+
+function normalizeText(s){
+  if (!s) return '';
+  return String(s)
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu,'')
+    .replace(/[^\p{L}\p{N}]+/gu,' ')
+    .toLowerCase()
+    .trim();
+}
+
+function splitKeywordsToList(raw){
+  // admite coma, punto y coma, pipes, saltos, /n, ||
+  return String(raw || '')
+    .replace(/(\r\n|\r|\n|\\n|\/n|\|\|)/g, ';')
+    .split(/[;,|]+/g)
+    .map(x => normalizeText(x))
+    .filter(Boolean);
+}
+
+function keywordsBlob(rec){
+  // “blob” de keywords normalizado para buscar dentro
+  // (unimos con espacios para reutilizar containsTokenExact/Tolerant)
+  const list = splitKeywordsToList(getKeywordsRaw(rec));
+  return list.join(' ');
+}
+
+function keywordsMatchAll(rec, tokens, tolerant=false){
+  const blob = keywordsBlob(rec);
+  if (!blob) return false;
+
+  for (const tok of tokens){
+    // reutilizamos tu lógica especial autoriza/no autoriza si te interesa también aquí
+    if (tolerant){
+      if (!containsTokenTolerant(blob, tok)) return false;
+    } else {
+      if (!containsTokenExact(blob, tok)) return false;
+    }
+  }
+  return true;
+}
+
+function keywordsMatchAny(rec, tokens, tolerant=false){
+  const blob = keywordsBlob(rec);
+  if (!blob) return false;
+
+  for (const tok of tokens){
+    if (tolerant){
+      if (containsTokenTolerant(blob, tok)) return true;
+    } else {
+      if (containsTokenExact(blob, tok)) return true;
+    }
+  }
+  return false;
+}
+
+// Para pintar sugerencias: mostramos Mostrar + TODAS las palabras clave (originales)
+function renderKeywordSuggestionItem(rec){
+  const mostrar = getField(rec, ['Mostrar','mostrar']) || 'Registro';
+  const kwRaw = getKeywordsRaw(rec) || '(sin Palabras_Clave)';
+  return `
+    <div class="result-item" style="cursor:pointer">
+      <h4 style="margin:0">${renderBoldMarkdown(mostrar)}</h4>
+      <div class="small" style="margin-top:4px">${renderBoldMarkdown(kwRaw)}</div>
+    </div>
+  `;
+}
+
+  
+
+  
 function normRule(s){
   return String(s || '')
     .toLowerCase()
@@ -430,10 +504,6 @@ function openModalPreguntas(rec, tipo){
     `;
     modalPreguntasContent.appendChild(wrap);
   }
-
-
-
-
   // --- Construcción del modal según tipo ---
   if(tipo === 'fecha'){
     // Si hay pregunta, la ponemos y luego el input
@@ -918,19 +988,32 @@ function containsTokenTolerant(text, token) {
     return true;
   }
 
-  // --- Filtro SILA (según checks) ---
+  // 0) Filtro SILA (según checks) ---
   const dbFiltrada = db
     .map((rec, idx) => ({ rec, idx }))
     .filter(x => recordPassesSilaFilters(x.rec));
   
-  // --- Fase 1: búsqueda estricta ---
-  let matches = dbFiltrada
+  // 1) Filtro por Palabras_Clave (primero estricto, si no hay, tolerante)
+  let kwCandidates = dbFiltrada.filter(x => keywordsMatchAll(x.rec, tokens, false));
+  if (kwCandidates.length === 0) {
+    kwCandidates = dbFiltrada.filter(x => keywordsMatchAll(x.rec, tokens, true));
+  }
+
+  // 2) Si hay candidatos por keywords, SOLO buscamos texto completo dentro de ellos.
+  //    Si no hay candidatos, puedes decidir:
+  //    - buscar en todo (como antes), o
+  //    - directamente ir a sugerencias.
+  //    Te propongo: si no hay kwCandidates, no restringes y sigues como antes.
+  const baseParaBuscar = (kwCandidates.length > 0) ? kwCandidates : dbFiltrada;
+  
+  // 3) búsqueda estricta ---
+  let matches = baseParaBuscar
     .map(x => recordMatches(x.rec, tokens, queryNorm, false) ? x : null)
     .filter(Boolean);
   
-  // --- Fase 2: búsqueda tolerante ---
+  // --- búsqueda tolerante ---
   if (matches.length === 0) {
-    matches = dbFiltrada
+    matches = baseParaBuscar
       .map(x => recordMatches(x.rec, tokens, queryNorm, true) ? x : null)
       .filter(Boolean);
   }
@@ -938,11 +1021,65 @@ function containsTokenTolerant(text, token) {
   const ctx = getContextoChecksSiNo();
   // --- Mostrar resultados ---
   if (matches.length === 0) {
-    resultsEl.innerHTML = '<div class="small">No se han encontrado registros con el filtro aplicado.</div>';
     countResults.textContent = '0';
+  
+    // B1) Si el filtro de Palabras_Clave encontró filas pero el texto completo no,
+    //     mostramos esas filas como sugerencias (con TODAS sus keywords)
+    if (kwCandidates.length > 0) {
+      resultsEl.innerHTML = `
+        <div class="small">
+          No se han encontrado coincidencias en el texto completo con el filtro aplicado.<br>
+          Pero sí hay situaciones sugeridas por <strong>Palabras_Clave</strong>:
+        </div>
+      `;
+  
+      kwCandidates.slice(0, 20).forEach(x => {
+        const tmp = document.createElement('div');
+        tmp.innerHTML = renderKeywordSuggestionItem(x.rec);
+        const item = tmp.firstElementChild;
+  
+        item.addEventListener('click', () => openRecord(x.rec));
+        resultsEl.appendChild(item);
+      });
+  
+      logBusquedaToSheets(rawQuery, 0, ctx.cobra, ctx.inscrito);
+      return;
+    }
+  
+    // B2) Si no hubo ni siquiera candidatos por “ALL tokens” en keywords,
+    //     mostramos coincidencias parciales (ANY token) como sugerencias.
+    //     Primero exactas, si no hay, tolerantes.
+    let kwAny = dbFiltrada.filter(x => keywordsMatchAny(x.rec, tokens, false));
+    if (kwAny.length === 0) {
+      kwAny = dbFiltrada.filter(x => keywordsMatchAny(x.rec, tokens, true));
+    }
+  
+    if (kwAny.length > 0) {
+      resultsEl.innerHTML = `
+        <div class="small">
+          No hay coincidencias exactas, pero he encontrado situaciones con alguna palabra clave coincidente:
+        </div>
+      `;
+  
+      kwAny.slice(0, 20).forEach(x => {
+        const tmp = document.createElement('div');
+        tmp.innerHTML = renderKeywordSuggestionItem(x.rec);
+        const item = tmp.firstElementChild;
+  
+        item.addEventListener('click', () => openRecord(x.rec));
+        resultsEl.appendChild(item);
+      });
+  
+      logBusquedaToSheets(rawQuery, 0, ctx.cobra, ctx.inscrito);
+      return;
+    }
+  
+    // B3) Nada de nada
+    resultsEl.innerHTML = '<div class="small">No se han encontrado registros con el filtro aplicado.</div>';
     logBusquedaToSheets(rawQuery, 0, ctx.cobra, ctx.inscrito);
     return;
   }
+
   // --- Si hay un único resultado, abrir directamente el modal ---
   if (matches.length === 1) {
     countResults.textContent = '1';
