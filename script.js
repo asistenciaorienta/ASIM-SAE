@@ -1027,8 +1027,7 @@ function doSearch() {
     if (kwCandidates.length > 0) {
       resultsEl.innerHTML = `
         <div class="small">
-          No se han encontrado coincidencias en el texto completo con el filtro aplicado.<br>
-          Pero sí hay situaciones sugeridas por <strong>Palabras_Clave</strong>:
+          No se han encontrado coincidencias en el texto completo con el filtro aplicado, pero sí hay situaciones sugeridas por <strong>Palabras_Clave</strong>:
         </div>
       `;
   
