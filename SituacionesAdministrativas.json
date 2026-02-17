@@ -2,7 +2,7 @@
   {
     "ANVERSO": "Recurso de reposición contra la denegación de protección internacional",
     "REVERSO": "",
-    "Palabras_Clave": "palabras, separadas, comas",
+    "Palabras_Clave": "recurso, reposición, protección, internacional",
     "Condicionantes": "Preguntar al técnico la fecha de la resolución denegatoria.\n\nEl recurso debe presentarse en el plazo de un mes desde denegacion, por lo tanto necesito conocer la fecha de denegación y la fecha de presentación del recurso.\n\nSi ya esta autorizado a trabajar va a A1. +180 días desde la declaración responsable\n\nSi no lo está va a C1 colectivo especial 17 (Demandante de Servicios Previos al Empleo). +180 días desde la declaración responsable",
     "Código de inscripción en SILA": "A1",
     "Código de inscripción en SILA OPCIONAL": "C1",
@@ -39,7 +39,7 @@
   {
     "ANVERSO": "Resguardo de presentación de solicitud de protección internacional \n(Art 18.1 a) Ley 12/2009) Tarjeta blanca (+ 6 meses desde solicitud). Solicitud asilo\nentre 1 y  expediente OAR ",
     "REVERSO": "",
-    "Palabras_Clave": "",
+    "Palabras_Clave": "protección, internacional, asilo, oar, tarjeta blanca",
     "Condicionantes": "Preguntar: Fecha solicitud o Tarjeta blanca:\nSi ha pasado mas de 6 meses desde presentación de la solicitud va en A1 (casilla 3). \nSi ha pasado entre 1 y 6 meses va al C1.\n\n¿y si no ha pasado todavía el mes? No puede inscribirse",
     "Código de inscripción en SILA": "A1",
     "Código de inscripción en SILA OPCIONAL": "C1",
@@ -76,7 +76,7 @@
   {
     "ANVERSO": "Resguardo de presentación de solicitud de protección internacional \n(Art 18.1 a) Ley 12/2009) Tarjeta blanca (+ 6 meses desde solicitud). Solicitud asilo\nentre 1 y expediente OAR",
     "REVERSO": "",
-    "Palabras_Clave": "",
+    "Palabras_Clave": "protección, internacional, asilo, oar, tarjeta blanca",
     "Condicionantes": "Preguntar: Fecha solicitud o Tarjeta blanca:\nSi ha pasado mas de 6 meses desde presentación de la solicitud va en A1 (casilla 3). \nSi ha pasado entre 1 y 6 meses va al C1.\n\n¿y si no ha pasado todavía el mes? No puede inscribirse",
     "Código de inscripción en SILA": "A1",
     "Código de inscripción en SILA OPCIONAL": "C1",
@@ -113,7 +113,7 @@
   {
     "ANVERSO": "Resguardo de prórroga de derechos por recurso administrativo / judicial\nDirectiva 2013/32/UE del Parlamento Europeo y del Consejo de 26 de junio de 2013\nExpediente O.A.R. OAR Union Europea",
     "REVERSO": "",
-    "Palabras_Clave": "",
+    "Palabras_Clave": "prórroga, recurso, oar",
     "Condicionantes": "",
     "Código de inscripción en SILA": "A1",
     "Código de inscripción en SILA OPCIONAL": "",
@@ -150,7 +150,7 @@
   {
     "ANVERSO": "Resguardo de prórroga de derechos por recurso contra la denegacion de protección internacional",
     "REVERSO": "",
-    "Palabras_Clave": "",
+    "Palabras_Clave": "prórroga, recurso, protección, internacional",
     "Condicionantes": "",
     "Código de inscripción en SILA": "A1",
     "Código de inscripción en SILA OPCIONAL": "",
@@ -187,7 +187,7 @@
   {
     "ANVERSO": "Solicitud  asilo\nTarjeta blanca OAR ",
     "REVERSO": "",
-    "Palabras_Clave": "",
+    "Palabras_Clave": "asilo, tarjeta blanca, oar",
     "Condicionantes": "",
     "Código de inscripción en SILA": "A1",
     "Código de inscripción en SILA OPCIONAL": "",
@@ -224,7 +224,7 @@
   {
     "ANVERSO": "Tarjeta Roja  Autoriza trabajar Documento acreditativo de la condicion de solicitante de proteccion internacional arti. 18.1 Ley 12/2009 art articulo",
     "REVERSO": "",
-    "Palabras_Clave": "",
+    "Palabras_Clave": "tarjeta roja, protección, internacional, autoriza",
     "Condicionantes": "Preguntar si incorpora autoriza a trabajar. Si es afirmativo va en A1. En caso contrario va C1 ",
     "Código de inscripción en SILA": "A1",
     "Código de inscripción en SILA OPCIONAL": "C1",
@@ -261,7 +261,7 @@
   {
     "ANVERSO": "Tarjeta Roja  Autoriza trabajar Documento acreditativo de la condicion de solicitante de proteccion internacional arti. 18.1 Ley 12/2009  art articulo",
     "REVERSO": "",
-    "Palabras_Clave": "",
+    "Palabras_Clave": "tarjeta roja, protección, internacional, autoriza",
     "Condicionantes": "Preguntar si incorpora autoriza a trabajar. Si es afirmativo va en A1. En caso contrario va C1 ",
     "Código de inscripción en SILA": "A1",
     "Código de inscripción en SILA OPCIONAL": "C1",
