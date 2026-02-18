@@ -126,7 +126,7 @@ function recordPassesSilaFilters(rec){
     return okCobra && okInscr;
   }   
 }
-  
+
   
 // --- MODAL DETALLE ----------------------------------------------------------------------
 // ✅ convierte **texto** a <strong>texto</strong>
