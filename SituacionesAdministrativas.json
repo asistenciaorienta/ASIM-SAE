@@ -224,7 +224,7 @@
   {
     "ANVERSO": "Tarjeta Roja  Autoriza trabajar Documento acreditativo de la condicion de solicitante de proteccion internacional arti. 18.1 Ley 12/2009 art articulo",
     "REVERSO": "",
-    "Palabras_Clave": "tarjeta roja, protección, internacional, autoriza",
+    "Palabras_Clave": "tarjeta roja, protección, internacional",
     "Condicionantes": "Preguntar si incorpora autoriza a trabajar. Si es afirmativo va en A1. En caso contrario va C1 ",
     "Código de inscripción en SILA": "A1",
     "Código de inscripción en SILA OPCIONAL": "C1",
@@ -261,7 +261,7 @@
   {
     "ANVERSO": "Tarjeta Roja  Autoriza trabajar Documento acreditativo de la condicion de solicitante de proteccion internacional arti. 18.1 Ley 12/2009  art articulo",
     "REVERSO": "",
-    "Palabras_Clave": "tarjeta roja, protección, internacional, autoriza",
+    "Palabras_Clave": "tarjeta roja, protección, internacional",
     "Condicionantes": "Preguntar si incorpora autoriza a trabajar. Si es afirmativo va en A1. En caso contrario va C1 ",
     "Código de inscripción en SILA": "A1",
     "Código de inscripción en SILA OPCIONAL": "C1",
