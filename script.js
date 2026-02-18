@@ -133,50 +133,48 @@ function recordPassesSilaFilters(rec){
 function renderBoldMarkdown(text){
   if (text === undefined || text === null) return '';
 
+  // 1) A string
   let s = String(text);
 
-  // 1) Escapado básico para evitar HTML inyectado
+  // 2) Escape básico
   s = s
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
-  // 2) Enlaces tipo Markdown: [texto](url)
-  //    (permitimos http(s) y también www... dentro del paréntesis)
+  // 3) Negritas **texto**
+  s = s.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+  // 4) Markdown links: [texto](url)  (permitiendo espacios)
   s = s.replace(
-    /\[([^\]]+)\]\(((?:https?:\/\/|www\.)[^\s)]+)\)/g,
-    (match, label, url) => {
-      const href = url.startsWith('www.') ? `https://${url}` : url;
+    /\[([^\]]+)\]\(\s*((?:https?:\/\/|www\.)[^\s)]+)\s*\)/g,
+    (m, label, url) => {
+      const href = url.startsWith('http') ? url : `https://${url}`;
       return `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
     }
   );
 
-  // 3) Negritas tipo markdown: **texto**
-  s = s.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  // 5) Linkificar URLs SUELTAS, pero solo fuera de tags HTML
+  //    (para NO tocar href="...")
+  const parts = s.split(/(<[^>]+>)/g); // separa texto y tags
+  for (let i = 0; i < parts.length; i++) {
+    if (parts[i].startsWith('<')) continue; // es una etiqueta, no tocar
+    parts[i] = parts[i].replace(
+      /((?:https?:\/\/|www\.)[^\s<]+[^\s<\.)])/g,
+      (m) => {
+        const href = m.startsWith('http') ? m : `https://${m}`;
+        return `<a href="${href}" target="_blank" rel="noopener noreferrer">${m}</a>`;
+      }
+    );
+  }
+  s = parts.join('');
 
-  // 4) Emails (mailto)
-  s = s.replace(
-    /(^|[\s>])([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})(?=$|[\s<])/gi,
-    '$1<a href="mailto:$2">$2</a>'
-  );
-
-  // 5) URLs sueltas con http(s)
-  s = s.replace(
-    /(https?:\/\/[^\s<]+)/g,
-    '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
-  );
-
-  // 6) URLs tipo www....
-  s = s.replace(
-    /(^|[\s>])(www\.[^\s<]+)/g,
-    '$1<a href="https://$2" target="_blank" rel="noopener noreferrer">$2</a>'
-  );
-
-  // 7) Saltos de línea
+  // 6) Saltos de línea
   s = s.replace(/(\r\n|\r|\n|\\n|\/n|\|\|)/g, '<br>');
 
   return s;
 }
+
 
 
 
