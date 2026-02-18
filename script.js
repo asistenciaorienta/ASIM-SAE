@@ -239,7 +239,7 @@ function openModalDetalle(rec, suffix = ''){
     row.className = 'field';
 
     const title = document.createElement('span');
-    title.textContent = 'Documentación/enlace: ';
+    title.textContent = 'Documentación: ';
     row.appendChild(title);
 
     const valStrong = document.createElement('strong');
