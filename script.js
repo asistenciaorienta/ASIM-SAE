@@ -145,7 +145,13 @@ function renderBoldMarkdown(text){
   // 3) Negritas tipo markdown: **texto**
   s = s.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
-  // 4) Saltos de línea:
+  // 3) Convertir URLs en enlaces clicables
+  s = s.replace(
+    /(https?:\/\/[^\s<]+)/g,
+    '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+  );
+
+  // 4) Saltos de línea
   // - \n reales
   // - \\n escritos literal
   // - /n como marca manual
