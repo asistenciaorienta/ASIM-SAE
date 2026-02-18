@@ -133,33 +133,51 @@ function recordPassesSilaFilters(rec){
 function renderBoldMarkdown(text){
   if (text === undefined || text === null) return '';
 
-  // 1) Convertimos a string
   let s = String(text);
 
-  // 2) Escapado mínimo para evitar HTML accidental (si quieres permitir HTML, quita este bloque)
+  // 1) Escapado básico para evitar HTML inyectado
   s = s
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
+  // 2) Enlaces tipo Markdown: [texto](url)
+  //    (permitimos http(s) y también www... dentro del paréntesis)
+  s = s.replace(
+    /\[([^\]]+)\]\(((?:https?:\/\/|www\.)[^\s)]+)\)/g,
+    (match, label, url) => {
+      const href = url.startsWith('www.') ? `https://${url}` : url;
+      return `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+    }
+  );
+
   // 3) Negritas tipo markdown: **texto**
   s = s.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
-  // 3) Convertir URLs en enlaces clicables
+  // 4) Emails (mailto)
+  s = s.replace(
+    /(^|[\s>])([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})(?=$|[\s<])/gi,
+    '$1<a href="mailto:$2">$2</a>'
+  );
+
+  // 5) URLs sueltas con http(s)
   s = s.replace(
     /(https?:\/\/[^\s<]+)/g,
     '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
   );
 
-  // 4) Saltos de línea
-  // - \n reales
-  // - \\n escritos literal
-  // - /n como marca manual
-  // - || como marca alternativa
+  // 6) URLs tipo www....
+  s = s.replace(
+    /(^|[\s>])(www\.[^\s<]+)/g,
+    '$1<a href="https://$2" target="_blank" rel="noopener noreferrer">$2</a>'
+  );
+
+  // 7) Saltos de línea
   s = s.replace(/(\r\n|\r|\n|\\n|\/n|\|\|)/g, '<br>');
 
   return s;
 }
+
 
 
 // --- MODAL DETALLE (con sufijo) ----------------------------------------------------------------------
