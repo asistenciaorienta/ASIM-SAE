@@ -140,3 +140,8 @@ input.enabled.flash {
 .result-item h4 {
   font-weight: normal;
 }
+mark.hit{
+  background:#fff3cd;
+  padding:0 3px;
+  border-radius:4px;
+}
