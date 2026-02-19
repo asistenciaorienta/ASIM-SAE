@@ -175,8 +175,80 @@ function renderBoldMarkdown(text){
   return s;
 }
 
+// ===== RESALTADO de tokens dentro de "Mostrar" (solo en lista) =====
 
+// Escape para usar tokens en regex sin romper por caracteres raros
+function escapeRegExp(str){
+  return String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
+// Normaliza solo para comparar (no para renderizar):
+// - quita tildes, baja a minúsculas, deja espacios
+function normalizeForMatch(s){
+  return String(s || '')
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu,'')
+    .toLowerCase();
+}
+
+// Aplica <mark class="hit">...</mark> sobre el HTML ya renderizado,
+// pero SOLO en partes de texto (no dentro de tags <a ...>, <strong>, etc.)
+function highlightTokensInHtml(html, tokens){
+  if (!html || !tokens || tokens.length === 0) return html;
+
+  // Separar en [texto, tag, texto, tag...]
+  const parts = String(html).split(/(<[^>]+>)/g);
+
+  // Preparamos tokens: sin stopwords (ya vienen), y filtramos tokens cortos
+  const toks = tokens
+    .map(t => String(t || '').trim())
+    .filter(Boolean)
+    .filter(t => t.length >= 2); // evita pintar "a", "y", etc
+
+  if (toks.length === 0) return html;
+
+  // Para cada parte que sea texto (no tag), hacemos reemplazos
+  for (let i = 0; i < parts.length; i++){
+    const chunk = parts[i];
+    if (!chunk || chunk.startsWith('<')) continue; // es tag, no tocar
+
+    // Para no liarla con tildes: trabajamos en modo "búsqueda tolerante de tildes":
+    // estrategia: como no podemos normalizar manteniendo índices fácilmente,
+    // hacemos un resaltado "simple" por palabra exacta en el texto visible.
+    //
+    // Esto resalta tokens tal cual aparezcan (con o sin tildes),
+    // y además intenta casar si el token no lleva tilde y el texto sí.
+    let out = chunk;
+
+    toks.forEach(tok => {
+      const tokNorm = normalizeForMatch(tok);
+      if (!tokNorm) return;
+
+      // Patrón por límites de palabra.
+      // NOTA: usamos un grupo que captura la palabra candidata y luego comprobamos normalización.
+      const re = new RegExp(`\\b([\\p{L}\\p{N}]+)\\b`, 'gu');
+
+      out = out.replace(re, (word) => {
+        // Si ya está marcado, no lo vuelvas a marcar
+        if (word.includes('hit')) return word;
+
+        const wNorm = normalizeForMatch(word);
+        if (wNorm === tokNorm) return `<mark class="hit">${word}</mark>`;
+        return word;
+      });
+    });
+
+    parts[i] = out;
+  }
+
+  return parts.join('');
+}
+
+// Renderiza tu markdown (negritas + links) y luego resalta tokens en el HTML resultante
+function renderBoldMarkdownWithHighlights(text, tokens){
+  const html = renderBoldMarkdown(text);
+  return highlightTokensInHtml(html, tokens);
+}
 
 // --- MODAL DETALLE (con sufijo) ----------------------------------------------------------------------
 function openModalDetalle(rec, suffix = ''){
@@ -1144,9 +1216,10 @@ matches.forEach(m => {
     content.style.gap = '4px';            // opcional, separación entre elementos internos
 
     const title = document.createElement('h4');
-    title.style.margin = '0';             // elimina márgenes que generan salto de línea
-    title.innerHTML = renderBoldMarkdown(getField(rec, ['Mostrar', 'mostrar']) || 'Registro sin campo Mostrar');
-
+    title.style.margin = '0';
+    
+    const mostrarTxt = getField(rec, ['Mostrar','mostrar']) || 'Registro sin campo Mostrar';
+    title.innerHTML = renderBoldMarkdownWithHighlights(mostrarTxt, tokens);
 
     content.appendChild(title);
 
