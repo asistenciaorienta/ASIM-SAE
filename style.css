@@ -79,7 +79,6 @@ footer {
   position: relative;
   width: 100%;
 }
-
 #searchInput {
   width: 100%;
   padding-right: 32px; /* espacio para la cruz */
@@ -88,7 +87,6 @@ footer {
   box-sizing: border-box;
   /* background: #94EB9D;*/
 }
-
 #searchInput {
   background-color: #72D677;  /* color cuando está deshabilitado */
   transition: background-color 0.3s ease;
