@@ -19,7 +19,6 @@ function logBusquedaToSheets(busqueda, numResultados, cobraPrestacion, inscritoA
   }).catch(() => {});
 }
 
-
 document.addEventListener('DOMContentLoaded', () => {
 
   // --- Elementos ---
