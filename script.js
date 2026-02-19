@@ -441,18 +441,31 @@ function keywordsMatchAny(rec, tokens, tolerant=false){
   }
   return false;
 }
+  
+function getMatchedTokensInKeywords(rec, tokens, tolerant=false){
+  const blob = keywordsBlob(rec);
+  if (!blob) return [];
+
+  const hits = [];
+  for (const tok of tokens){
+    const ok = tolerant ? containsTokenTolerant(blob, tok) : containsTokenExact(blob, tok);
+    if (ok) hits.push(tok);
+  }
+  return hits;
+}
 
 // Para pintar sugerencias: mostramos Mostrar + TODAS las palabras clave (originales)
-function renderKeywordSuggestionItem(rec){
+function renderKeywordSuggestionItem(rec, highlightTokens = []){
   const mostrar = getField(rec, ['Mostrar','mostrar']) || 'Registro';
-  const kwRaw = getKeywordsRaw(rec) || '(sin Palabras_Clave)';
+  const titleHtml = renderBoldMarkdownWithHighlights(mostrar, highlightTokens);
+
   return `
     <div class="result-item" style="cursor:pointer">
-      <h4 style="margin:0">${renderBoldMarkdown(mostrar)}</h4>
-      <div class="small" style="margin-top:4px">${renderBoldMarkdown(kwRaw)}</div>
+      <h4 style="margin:0">${titleHtml}</h4>
     </div>
   `;
 }
+
 
   function containsTokenExact(text, token) {
     const words = text.split(/\s+/).map(w => w.toLowerCase());
@@ -1141,11 +1154,12 @@ function doSearch() {
     // B2) Si no hubo ni siquiera candidatos por “ALL tokens” en keywords,
     //     mostramos coincidencias parciales (ANY token) como sugerencias.
     //     Primero exactas, si no hay, tolerantes.
+    let kwAnyTolerantUsed = false;
     let kwAny = dbFiltrada.filter(x => keywordsMatchAny(x.rec, tokens, false));
     if (kwAny.length === 0) {
       kwAny = dbFiltrada.filter(x => keywordsMatchAny(x.rec, tokens, true));
-    }
-  
+      kwAnyTolerantUsed = true;
+    }  
     if (kwAny.length > 0) {
       resultsEl.innerHTML = `
         <div class="small">
@@ -1154,10 +1168,16 @@ function doSearch() {
       `;
   
       kwAny.slice(0, 20).forEach(x => {
+        // 1) Detecta si este kwAny viene por exacto o tolerante
+        //    (si kwAny exacto está vacío, arriba lo rellenas con tolerante)
+        const usedTolerant = (dbFiltrada.filter(y => keywordsMatchAny(y.rec, tokens, false)).length === 0);      
+        // 2) Tokens realmente matcheados en keywords para ESTA fila
+        const hitTokens = getMatchedTokensInKeywords(x.rec, tokens, kwAnyTolerantUsed);
+      
         const tmp = document.createElement('div');
-        tmp.innerHTML = renderKeywordSuggestionItem(x.rec);
+        tmp.innerHTML = renderKeywordSuggestionItem(x.rec, hitTokens);
         const item = tmp.firstElementChild;
-  
+      
         item.addEventListener('click', () => openRecord(x.rec));
         resultsEl.appendChild(item);
       });
