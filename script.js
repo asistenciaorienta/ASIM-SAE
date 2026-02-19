@@ -182,6 +182,104 @@ function escapeRegExp(str){
   return String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+function tokenMatchesWord(wordRaw, token, tolerant=false){
+  const w = normalizeText(wordRaw);   // usa tu normalizeText (quita tildes y normaliza)
+  const t = normalizeText(token);
+
+  if (!w || !t) return false;
+
+  if (!tolerant) return w === t;
+
+  // tolerancia = exacta OR prefijo OR levenshtein <= 20%
+  if (w === t) return true;
+  if (t.length >= 3 && w.startsWith(t)) return true;
+
+  if (t.length >= 4 && w.length >= 4) {
+    const maxLen = Math.max(w.length, t.length);
+    const threshold = Math.max(1, Math.ceil(maxLen * 0.2));
+    return levenshtein(w, t) <= threshold;
+  }
+
+  return false;
+}
+
+// Resalta tokens dentro de una parte de texto "plano" (sin tags)
+function highlightTextPart(part, tokens, tolerant=false){
+  if (!part || tokens.length === 0) return part;
+
+  // separamos por espacios para mantenerlos (no rompe el layout)
+  const chunks = part.split(/(\s+)/);
+
+  return chunks.map(chunk => {
+    if (!chunk || /^\s+$/.test(chunk)) return chunk;
+
+    // quitamos puntuación para comparar, pero mantenemos el chunk original al pintar
+    const chunkComparable = chunk.replace(/[^\p{L}\p{N}]+/gu, '');
+
+    for (const tok of tokens){
+      if (tokenMatchesWord(chunkComparable, tok, tolerant)){
+        return `<span class="kw-hit">${chunk}</span>`;
+      }
+    }
+    return chunk;
+  }).join('');
+}
+
+// Versión de tu renderBoldMarkdown que además resalta tokens (exacto o tolerante)
+function renderBoldMarkdownWithHighlights(text, highlightTokens = [], tolerant=false){
+  if (text === undefined || text === null) return '';
+
+  // 1) A string
+  let s = String(text);
+
+  // 2) Escape básico
+  s = s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  // 3) Negritas **texto**
+  s = s.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+  // 4) Links markdown [texto](url)
+  s = s.replace(
+    /\[([^\]]+)\]\(\s*((?:https?:\/\/|www\.)[^\s)]+)\s*\)/g,
+    (m, label, url) => {
+      const href = url.startsWith('http') ? url : `https://${url}`;
+      return `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+    }
+  );
+
+  // 5) Linkificar URLs sueltas (sin tocar tags)
+  const parts = s.split(/(<[^>]+>)/g);
+  for (let i = 0; i < parts.length; i++) {
+    if (parts[i].startsWith('<')) continue;
+    parts[i] = parts[i].replace(
+      /((?:https?:\/\/|www\.)[^\s<]+[^\s<\.)])/g,
+      (m) => {
+        const href = m.startsWith('http') ? m : `https://${m}`;
+        return `<a href="${href}" target="_blank" rel="noopener noreferrer">${m}</a>`;
+      }
+    );
+  }
+  s = parts.join('');
+
+  // 6) ✅ Resaltado (solo en partes de texto, no dentro de tags)
+  const parts2 = s.split(/(<[^>]+>)/g);
+  for (let i = 0; i < parts2.length; i++) {
+    if (parts2[i].startsWith('<')) continue;
+    parts2[i] = highlightTextPart(parts2[i], highlightTokens, tolerant);
+  }
+  s = parts2.join('');
+
+  // 7) Saltos de línea
+  s = s.replace(/(\r\n|\r|\n|\\n|\/n|\|\|)/g, '<br>');
+
+  return s;
+}
+
+
+  
 // Normaliza solo para comparar (no para renderizar):
 // - quita tildes, baja a minúsculas, deja espacios
 function normalizeForMatch(s){
@@ -321,7 +419,7 @@ function openModalDetalle(rec, suffix = ''){
       a.href = docVal;
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
-      a.textContent = 'Acceder al documento / enlace';
+      a.textContent = 'Acceder a la documentación oficial';
       valStrong.appendChild(a);
     } else {
       valStrong.innerHTML = renderBoldMarkdown(docVal);
@@ -455,9 +553,9 @@ function getMatchedTokensInKeywords(rec, tokens, tolerant=false){
 }
 
 // Para pintar sugerencias: mostramos Mostrar + TODAS las palabras clave (originales)
-function renderKeywordSuggestionItem(rec, highlightTokens = []){
+function renderKeywordSuggestionItem(rec, highlightTokens = [], tolerant=false){
   const mostrar = getField(rec, ['Mostrar','mostrar']) || 'Registro';
-  const titleHtml = renderBoldMarkdownWithHighlights(mostrar, highlightTokens);
+  const titleHtml = renderBoldMarkdownWithHighlights(mostrar, highlightTokens, tolerant);
 
   return `
     <div class="result-item" style="cursor:pointer">
@@ -465,7 +563,6 @@ function renderKeywordSuggestionItem(rec, highlightTokens = []){
     </div>
   `;
 }
-
 
   function containsTokenExact(text, token) {
     const words = text.split(/\s+/).map(w => w.toLowerCase());
@@ -1155,11 +1252,13 @@ function doSearch() {
     //     mostramos coincidencias parciales (ANY token) como sugerencias.
     //     Primero exactas, si no hay, tolerantes.
     let kwAnyTolerantUsed = false;
+    
     let kwAny = dbFiltrada.filter(x => keywordsMatchAny(x.rec, tokens, false));
     if (kwAny.length === 0) {
       kwAny = dbFiltrada.filter(x => keywordsMatchAny(x.rec, tokens, true));
       kwAnyTolerantUsed = true;
-    }  
+    }
+
     if (kwAny.length > 0) {
       resultsEl.innerHTML = `
         <div class="small">
@@ -1168,14 +1267,10 @@ function doSearch() {
       `;
   
       kwAny.slice(0, 20).forEach(x => {
-        // 1) Detecta si este kwAny viene por exacto o tolerante
-        //    (si kwAny exacto está vacío, arriba lo rellenas con tolerante)
-        const usedTolerant = (dbFiltrada.filter(y => keywordsMatchAny(y.rec, tokens, false)).length === 0);      
-        // 2) Tokens realmente matcheados en keywords para ESTA fila
         const hitTokens = getMatchedTokensInKeywords(x.rec, tokens, kwAnyTolerantUsed);
       
         const tmp = document.createElement('div');
-        tmp.innerHTML = renderKeywordSuggestionItem(x.rec, hitTokens);
+        tmp.innerHTML = renderKeywordSuggestionItem(x.rec, hitTokens, kwAnyTolerantUsed);
         const item = tmp.firstElementChild;
       
         item.addEventListener('click', () => openRecord(x.rec));
