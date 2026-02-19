@@ -57,7 +57,7 @@ footer {
   left: 0;}
   
 .results .small {
-  color: #1b5e20;
+  color: --sae-green; /*#1b5e20;*/
   font-size: 15px;
   margin-bottom: 6px;
 }
