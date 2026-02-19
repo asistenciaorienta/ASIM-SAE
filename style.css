@@ -24,7 +24,7 @@ header .titulo-header {position: absolute;text-align: center;flex: 1;left: 50%;t
 .filters input[type="checkbox"]{ width:16px; height:16px; }
 #searchArea{ width:100%; display:flex; flex-direction:column; gap:10px }
 .search-top{ display:flex; gap:10px; align-items:center }
-.search-top input{ flex:1; padding:12px 14px; border-radius:8px; border:1px solid #85B68C; font-size:16px }
+.search-top input{ flex:1; padding:12px 14px; border-radius:8px; border:1px solid #fff; font-size:16px }
 .search-top button{ padding:11px 18px; border-radius:8px; border:none; background:var(--sae-green); color:#fff; font-weight:600; cursor:pointer }
 .search-top button[disabled]{ background:#85B68C; cursor:not-allowed }
 .search-meta{ display:flex; justify-content:space-between; color:var(--muted); font-size:13px; }
