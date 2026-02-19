@@ -90,11 +90,11 @@ footer {
 #searchInput {
   background-color: #85B68C;  /* color cuando está deshabilitado */
   transition: background-color 0.3s ease;
-  color: #757575;
+  color: #fff;
 }
 
 #searchInput.enabled {
-  background-color: #E9FFE5;  /* color cuando está habilitado */
+  background-color: #fff;  /* color cuando está habilitado */
   color: #000;
 }
 /* Estilo del placeholder cuando está deshabilitado */
