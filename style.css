@@ -85,9 +85,6 @@ footer {
   height: 36px;
   font-size: 14px;
   box-sizing: border-box;
-  /* background: #94EB9D;*/
-}
-#searchInput {
   background-color: #85B68C;  /* color cuando está deshabilitado */
   transition: background-color 0.3s ease;
   color: #fff;
@@ -99,7 +96,7 @@ footer {
 }
 /* Estilo del placeholder cuando está deshabilitado */
 #searchInput:disabled::placeholder {
-  color: #757575;  /* gris suave */
+  color: #fff;  /* gris suave */
 }
 
 /* Ocultar placeholder cuando está habilitado */
