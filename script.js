@@ -550,7 +550,27 @@ function getMatchedTokensInKeywords(rec, tokens, tolerant=false){
   }
   return hits;
 }
+function appendHelpResult(){
+  const tmp = document.createElement('div');
+  tmp.innerHTML = `
+    <div class="result-item help-item" style="cursor:pointer">
+      <div style="flex:1">
+        <h4>¿No encuentras lo que buscas? <a href="ayuda.html" target="_blank" rel="noopener noreferrer">Pulsa aquí y te ayudo a buscar</a></h4>
+        <div class="small">Consejos para escribir mejor la búsqueda y ejemplos habituales.</div>
+      </div>
+    </div>
+  `;
+  const item = tmp.firstElementChild;
 
+  // si quieres que al clicar en cualquier parte abra la ayuda:
+  item.addEventListener('click', (e) => {
+    // si clican el link, ya abre él solo
+    if (e.target.tagName.toLowerCase() === 'a') return;
+    window.open('ayuda.html', '_blank', 'noopener,noreferrer');
+  });
+
+  resultsEl.appendChild(item);
+}
 // Para pintar sugerencias: mostramos Mostrar + TODAS las palabras clave (originales)
 function renderKeywordSuggestionItem(rec, highlightTokens = [], tolerant=false){
   const mostrar = getField(rec, ['Mostrar','mostrar']) || 'Registro';
