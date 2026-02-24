@@ -167,3 +167,21 @@ mark.hit{
   font-weight: 700;
   text-decoration: underline;
 }
+.result-item.help-item{
+  border: 1px dashed #cfd8dc;
+  background: #fff;
+}
+.result-item.help-item h4{
+  margin: 0;
+  font-weight: 600;
+}
+.result-item.help-item .small{
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.result-item.help-item a{
+  color: var(--sae-green);
+  text-decoration: underline;
+  font-weight: 700;
+}
