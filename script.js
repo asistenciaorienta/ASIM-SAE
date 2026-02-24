@@ -1281,7 +1281,16 @@ function doSearch() {
     }
   
     // B3) Nada de nada
-    resultsEl.innerHTML = '<div class="small">No se han encontrado registros con el filtro aplicado.</div>';
+    resultsEl.innerHTML = `
+      <div class="small">No se han encontrado registros con el filtro aplicado.</div>
+    
+      <div class="help-cta">
+        ¿No encuentras lo que buscas?
+        <a href="ayuda.html" target="_blank" rel="noopener noreferrer">
+          Pulsa aquí y te ayudo a buscar
+        </a>
+      </div>
+    `;
     logBusquedaToSheets(rawQuery, 0, ctx.cobra, ctx.inscrito);
     return;
   }
