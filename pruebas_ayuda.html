@@ -5,16 +5,21 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ASIM-SAE — Aplicación de soporte para la inscripción de migrantes en SILA</title>
 <!-- Enlace al CSS (¡colócalo aquí!) -->
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">    
+<!-- PIXI.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.3.12/pixi.min.js"></script>
+<!-- Live2D Cubism Core -->
+<script src="libs/Core/live2dcubismcore.min.js"></script>
+<!-- pixi-live2d-display con soporte Cubism 4 -->
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.4.0/dist/cubism4.min.js"></script>
 </head>
 <body>
   <!-- Diseño e idea original de la Dirección Provincial de Granada, en concreto de:
   Jefe de Servicio: Francisco Escabias García.
   Diseñador: Valentín Jiménez Extremera.
   Contenido: Elisabeth Huertas García y José Manuel Robles Chaves.
-  Testeo y verificación: Isabel Peláez Carmona, Silvia Gómez Martín, Inmaculada Ortega Avilés, Beatriz Girela Muñoz.
-  Aporte de información: Todas las oficinas SAE de la provincia de Granada y sus direcciones de ATE.
-  JSON actualizado a 04/12/2025 9:33 horas -->  
+  Testeo y verificación: Francisco Flores Martín, Isabel Peláez Carmona, Silvia Gómez Martín, Inmaculada Ortega Avilés, Yolanda Espigares Beas, José Ángel Vílchez Bolivar.
+  Aporte de información: Todas las oficinas SAE de la provincia de Granada y sus direcciones de ATE. -->  
 <div class="container">
   <header>
     <img class="logo-izquierda" src="images/SAE_Junta_de_Andalucia_Documentacion.png" alt="Logo Junta de Andalucía">
@@ -40,9 +45,9 @@
     </div>
 
     <div class="filters" aria-label="Opciones SILA">
-      <label><input type="checkbox" id="chkInscrito"> Consta una inscripción previa en SILA</label>
-      <label><input type="checkbox" id="chkPrestacion"> Cobra prestación o subsidio</label>
-      <label><input type="checkbox" id="chkNada"> Ninguna de las anteriores</label>
+      <label><input type="checkbox" id="chkInscrito"> Consta una inscripción previa en SILA.</label>
+      <label><input type="checkbox" id="chkPrestacion"> Cobra prestación o subsidio.</label>
+      <label><input type="checkbox" id="chkNada"> Ninguna de las anteriores.</label>
     </div>
 
   <div id="searchArea" class="search-area" aria-live="polite">
