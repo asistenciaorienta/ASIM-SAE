@@ -145,3 +145,25 @@ mark.hit{
   padding: 0 3px;
   border-radius: 4px;
 }
+.help-link{
+  font-size: 13px;
+  color: var(--sae-green);
+  text-decoration: underline;
+  font-weight: 600;
+}
+.help-link:hover{
+  opacity: .85;
+}
+.help-cta{
+  margin-top: 10px;
+  background: #fff;
+  border: 1px dashed #cfd8dc;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+}
+.help-cta a{
+  color: var(--sae-green);
+  font-weight: 700;
+  text-decoration: underline;
+}
