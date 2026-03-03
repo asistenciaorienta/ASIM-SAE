@@ -363,7 +363,7 @@
     "Opción a": "hoy > fecha1 y hoy <= fecha1 + 90 dias",
     "Opción b": "hoy > fecha1 + 90 dias",
     "Opción c": "hoy <= fecha1",
-    "Mostrar": "**Solicitud DE RENOVACIÓN** de **Protección internacional** (persona refugiada o familiar). Autorización de Residencia y Trabajo de **Larga Duración**",
+    "Mostrar": "**Solicitud DE RENOVACIÓN** de **Protección internacional** (persona refugiada o familiar). ",
     "Tipo de documento": "Solicitud",
     "¿Que pide SILA?": "* Fecha de caducidad\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
@@ -703,7 +703,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Resolución de concesión de Autorización de estancia por estudios Movilidad de alumnos. Voluntariado Actividades formativas.Larga duracion por estudios.art. 52 RD 1155/2024 Estudios Superiores Ambito sanitario Investigación prorrogada servicios O/E aut. trabajar cta ajena prop estancias realización.1.A cuenta propia pro Ambito Nacional Universidad de Granada",
+    "ANVERSO": "Resolución de concesión de Autorización de estancia por estudios Movilidad de alumnos. Voluntariado Actividades formativas.Larga duracion por estudios.art. 52 RD 1155/2024 Estudios Superiores Ambito sanitario Investigación prorrogada servicios O/E aut. trabajar cta ajena prop estancias realización.1.A cuenta propia pro Ambito Nacional Universidad de Granada Estancia L. D. Temporal inicial Aut. Trabajo edad laboral ",
     "REVERSO": "",
     "Palabras_Clave": "",
     "Condicionantes": "Preguntar al tecnico si son estudios superiores:\n➡️ Grado / Titulación universitaria\n➡️ Técnico Superior de FP\n➡️ Titulación artística o deportiva superior.\n1. Si lo son: Autoriza a Trabajar hasta 30 horas semanales y limitacion geográfica.\n2. Si no o son estudios superiores: No Autoriza a Trabajar.",
@@ -1273,7 +1273,7 @@
     "Alcance de la Autorización OPCIONAL2": "Autoriza a Trabajar en las mismas condiciones que los nacionales",
     "Observaciones": "",
     "Observaciones OPCIONAL": "Hay que indicar como **fecha de renovación automática**, la **fecha de la cita**.",
-    "Observaciones OPCIONAL2": "Hay que indicar como **fecha de caducidad**, la **fecha de hoy + 30 días**.",
+    "Observaciones OPCIONAL2": "Hay que indicar como **fecha de caducidad**, la **fecha de personación en la oficina + 30 días**.",
     "Documentación": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/PERMISO-P1.pdf",
     "Documentación OPCIONAL": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/PERMISO-P1.pdf",
     "Documentación OPCIONAL2": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/PERMISO-P1.pdf",
@@ -1300,13 +1300,13 @@
     "Palabras_Clave": "",
     "Condicionantes": "Solicitar fecha de emision de la TIE para ver si es anterior a la edad laobral o no. \n\nSi es anterior y tiene >16 años opción A\nSi es posterior a su edad + 16 años opción B\nSi <16 no se puede incribir opcion C\n\nTambién hace falta la fecha de nacimiento.",
     "Código de inscripción en SILA": "P1",
-    "Código de inscripción en SILA OPCIONAL": "P1",
+    "Código de inscripción en SILA OPCIONAL": "",
     "Código de inscripción en SILA OPCIONAL2": "",
     "Modalidad de inscripción": "Demanda de Empleo Completa",
-    "Modalidad de inscripción OPCIONAL": "Servicios previos al empleo u otros servicios.",
+    "Modalidad de inscripción OPCIONAL": "",
     "Modalidad de inscripción OPCIONAL2": "",
     "Alcance de la Autorización": "Autoriza a Trabajar si alcanza la edad laboral",
-    "Alcance de la Autorización OPCIONAL": "No Autoriza a Trabajar",
+    "Alcance de la Autorización OPCIONAL": "",
     "Alcance de la Autorización OPCIONAL2": "",
     "Observaciones": "La persona está habilitada para trabajar, a pesar de la anotacion NO Autoriza a Trabajar.",
     "Observaciones OPCIONAL": "Al estar emitida después de la edad laboral, no Autoriza a Trabajar.",
@@ -2220,7 +2220,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Residencia TEMPORAL REAGRUPAC FAMILIAR reagrupación",
+    "ANVERSO": "Residencia TEMPORAL REAGRUPAC FAMILIAR reagrupación autoriza a trabajar",
     "REVERSO": "",
     "Palabras_Clave": "",
     "Condicionantes": "",
@@ -2257,7 +2257,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Residencia TEMPORAL REAGRUPAC FAMILIAR Autoriza a Trabajar reagrupación",
+    "ANVERSO": "Residencia TEMPORAL REAGRUPAC FAMILIAR NO Autoriza a Trabajar reagrupación",
     "REVERSO": "",
     "Palabras_Clave": "",
     "Condicionantes": "Se ha de incorporar fecha expedicion tarjeta y fecha nacimiento. Si el reagrupado alcanza la edad laboral esta autorizado a trabajar aunque la tarjeta ponga \"no Autoriza a Trabajar\".\n\n<16 años, no procede Inscripción al no alcanzar mayoría de edad laboral.\n>16 años, R7\n\nSi se emite después de los 18 (solo se emite en circustancias muy concretas), va a un R3, No Autoriza a Trabajar",
@@ -2294,7 +2294,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Residencia\nTEMPORAL REAGRUPAC FAMILIAR reagrupación",
+    "ANVERSO": "Residencia\nTEMPORAL REAGRUPAC FAMILIAR reagrupación autoziza a trabajar",
     "REVERSO": "REAGRUPANTE",
     "Palabras_Clave": "",
     "Condicionantes": "",
@@ -8856,7 +8856,7 @@
     "Alcance de la Autorización": "",
     "Alcance de la Autorización OPCIONAL": "",
     "Alcance de la Autorización OPCIONAL2": "",
-    "Observaciones": "Consultar datos que aparecen en los apartados **Anverso**, ** Reverso** Y **Observaciones** del Resguardo presentado y realizar una nueva búsqueda con estos datos.",
+    "Observaciones": "/nConsultar datos que aparecen en los apartados **Anverso**, ** Reverso** Y **Observaciones** del Resguardo presentado y realizar una nueva búsqueda con estos datos.",
     "Observaciones OPCIONAL": "",
     "Observaciones OPCIONAL2": "",
     "Documentación": "",
