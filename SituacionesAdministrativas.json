@@ -592,7 +592,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Permanencia provisional. Articulo 5 RD 865/2001 20 julio",
+    "ANVERSO": "Permanencia provisional. Articulo 5 RD 865/2001 20 julio apatrida ",
     "REVERSO": "",
     "Palabras_Clave": "",
     "Condicionantes": "",
@@ -999,7 +999,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Menor tutelado por la entidad de protección de menores CON Autorización de Residencia temporal. (Menores extranjeros no acompañados). Concesión Autorización Residencia temporal inicial junta de andalucia ART. 172 habilita trabajar",
+    "ANVERSO": "Menor tutelado por la entidad de protección de menores CON Autorización de Residencia temporal. (Menores extranjeros no acompañados). Concesión Autorización Residencia temporal inicial junta de andalucia ART. 172 habilita trabajar aut trabajo en edad laboral tutelado residencial autoriza cuenta ajena propia",
     "REVERSO": "",
     "Palabras_Clave": "",
     "Condicionantes": "Preguntar al técnico fecha nacimiento.\n>16 años, podra trabajar aunque la TIE fuera expedida anteriormente y dijera que no.\n<16 años, no procede inscripción.",
@@ -1409,7 +1409,7 @@
     "ANVERSO": "Solicitud de Autorización de Residencia temporal de familiares de personas con nacionalidad española\n(LO 4/2000 y RD 1155/2024)\nFamiliar de ciudadano español inicial.",
     "REVERSO": "Padres y madres, conyuge y pareja de hecho. Padre y madre de un menor de nacionalidad española. Familiar segundo grado cuidados, cuid, cuidador nacionalidad española.",
     "Palabras_Clave": "",
-    "Condicionantes": "- Se debe preguntar al técnico fecha Solicitud: condignará en fecha de vigencia la de presentacion Solicitud mas dos meses.",
+    "Condicionantes": "- Se debe preguntar al técnico fecha Solicitud: consignará en fecha de vigencia la de presentacion Solicitud mas dos meses.",
     "Código de inscripción en SILA": "R0",
     "Código de inscripción en SILA OPCIONAL": "",
     "Código de inscripción en SILA OPCIONAL2": "",
@@ -1446,7 +1446,7 @@
     "ANVERSO": "Solicitud de Autorización de Residencia temporal de familiares de personas con nacionalidad española\n(LO 4/2000 y RD 1155/2024)\nFamiliar de ciudadano español inicial.",
     "REVERSO": "Cónyuge. Pareja extranjera . Mayor de 18 años. Pareja de hecho. HIjos. Pareja registrada",
     "Palabras_Clave": "",
-    "Condicionantes": "- Se debe preguntar al técnico fecha Solicitud: condignará en fecha de vigencia la de presentacion Solicitud mas dos meses.",
+    "Condicionantes": "- Se debe preguntar al técnico fecha Solicitud: consignará en fecha de vigencia la de presentacion Solicitud mas dos meses.",
     "Código de inscripción en SILA": "R0",
     "Código de inscripción en SILA OPCIONAL": "",
     "Código de inscripción en SILA OPCIONAL2": "",
