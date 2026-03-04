@@ -562,7 +562,27 @@ function renderKeywordSuggestionItem(rec, highlightTokens = [], tolerant=false){
     </div>
   `;
 }
+function appendHelpResult(){
+  const tmp = document.createElement('div');
+  tmp.innerHTML = `
+    <div class="result-item help-item" style="cursor:pointer">
+      <div style="flex:1">
+        <h4>¿No encuentras lo que buscas? <a href="ayuda.html" target="_blank" rel="noopener noreferrer">Pulsa aquí y te ayudo a buscar</a></h4>
+        <div class="small">Consejos para escribir mejor la búsqueda y ejemplos habituales.</div>
+      </div>
+    </div>
+  `;
+  const item = tmp.firstElementChild;
 
+  // si quieres que al clicar en cualquier parte abra la ayuda:
+  item.addEventListener('click', (e) => {
+    // si clican el link, ya abre él solo
+    if (e.target.tagName.toLowerCase() === 'a') return;
+    window.open('ayuda.html', '_blank', 'noopener,noreferrer');
+  });
+
+  resultsEl.appendChild(item);
+}
   function containsTokenExact(text, token) {
     const words = text.split(/\s+/).map(w => w.toLowerCase());
     token = token.toLowerCase();
@@ -1242,7 +1262,9 @@ function doSearch() {
         item.addEventListener('click', () => openRecord(x.rec));
         resultsEl.appendChild(item);
       });
-  
+     // ✅ AYUDA al final
+      appendHelpResult();
+      
       logBusquedaToSheets(rawQuery, 0, ctx.cobra, ctx.inscrito);
       return;
     }
@@ -1275,13 +1297,18 @@ function doSearch() {
         item.addEventListener('click', () => openRecord(x.rec));
         resultsEl.appendChild(item);
       });
-  
+      // ✅ AYUDA al final
+      appendHelpResult();
+      
       logBusquedaToSheets(rawQuery, 0, ctx.cobra, ctx.inscrito);
       return;
     }
   
     // B3) Nada de nada
     resultsEl.innerHTML = '<div class="small">No se han encontrado registros con el filtro aplicado.</div>';
+  // ✅ AYUDA también aquí
+    appendHelpResult();
+    
     logBusquedaToSheets(rawQuery, 0, ctx.cobra, ctx.inscrito);
     return;
   }
@@ -1358,6 +1385,8 @@ matches.forEach(m => {
 
     resultsEl.appendChild(wrapper);
 });
+  // ✅ AYUDA al final de la lista normal (cuando hay >1 resultados)
+appendHelpResult();
 
 }
 
