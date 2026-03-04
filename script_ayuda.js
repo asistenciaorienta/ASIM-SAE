@@ -568,7 +568,6 @@ function appendHelpResult(){
     <div class="result-item help-item" style="cursor:pointer">
       <div style="flex:1">
         <h4>¿No encuentras lo que buscas? <a href="ayuda.html" target="_blank" rel="noopener noreferrer">Pulsa aquí y te ayudo a buscar</a></h4>
-        <div class="small">Consejos para escribir mejor la búsqueda y ejemplos habituales.</div>
       </div>
     </div>
   `;
