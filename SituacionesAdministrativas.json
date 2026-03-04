@@ -39,7 +39,7 @@
   {
     "ANVERSO": "Resguardo de presentación de Solicitud de protección internacional \n(Art 18.1 a) Ley 12/2009) Tarjeta blanca (+ 6 meses desde Solicitud). Solicitud asilo\nentre 1 y expediente OAR",
     "REVERSO": "",
-    "Palabras_Clave": "protección, internacional, asilo, oar, tarjeta blanca",
+    "Palabras_Clave": "protección, internacional, asilo, oar, tarjeta blanca, solicitud, solicitante, resguardo, presentación, 18.1, ",
     "Condicionantes": "Preguntar: Fecha Solicitud o Tarjeta blanca:\nSi ha pasado mas de 6 meses desde presentación de la Solicitud va en A1 (casilla 3). \nSi ha pasado entre 1 y 6 meses va al C1.\n\n¿y si no ha pasado todavía el mes? No puede inscribirse",
     "Código de inscripción en SILA": "A1",
     "Código de inscripción en SILA OPCIONAL": "C1",
@@ -76,7 +76,7 @@
   {
     "ANVERSO": "Resguardo de presentación de Solicitud de protección internacional \n(Art 18.1 a) Ley 12/2009) Tarjeta blanca (+ 6 meses desde Solicitud). Solicitud asilo\nentre 1 y  expediente OAR ",
     "REVERSO": "",
-    "Palabras_Clave": "protección, internacional, asilo, oar, tarjeta blanca",
+    "Palabras_Clave": "protección, internacional, asilo, oar, tarjeta blanca, solicitud , solicitante, resguardo, presentación, 18.1, ",
     "Condicionantes": "Preguntar: Fecha Solicitud o Tarjeta blanca:\nSi ha pasado mas de 6 meses desde presentación de la Solicitud va en A1 (casilla 3). \nSi ha pasado entre 1 y 6 meses va al C1.\n\n¿y si no ha pasado todavía el mes? No puede inscribirse",
     "Código de inscripción en SILA": "A1",
     "Código de inscripción en SILA OPCIONAL": "C1",
@@ -113,7 +113,7 @@
   {
     "ANVERSO": "Resguardo de prórroga de derechos por recurso contra la denegacion de protección internacional",
     "REVERSO": "",
-    "Palabras_Clave": "prórroga, recurso, protección, internacional",
+    "Palabras_Clave": "prórroga, recurso, protección, internacional,resguardo, denegación",
     "Condicionantes": "",
     "Código de inscripción en SILA": "A1",
     "Código de inscripción en SILA OPCIONAL": "",
@@ -150,7 +150,7 @@
   {
     "ANVERSO": "Resguardo de prórroga de derechos por recurso administrativo / judicial\nDirectiva 2013/32/UE del Parlamento Europeo y del Consejo de 26 de junio de 2013\nExpediente O.A.R. OAR Union Europea",
     "REVERSO": "",
-    "Palabras_Clave": "prórroga, recurso, oar",
+    "Palabras_Clave": "resguardo, prórroga, derechos, recurso, oar",
     "Condicionantes": "",
     "Código de inscripción en SILA": "A1",
     "Código de inscripción en SILA OPCIONAL": "",
@@ -179,7 +179,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "**Resguardo de PRÓRROGA** de derechos por recurso administrativo / judicial. Directiva 2013/32/UE del Parlamento Europeo y del Consejo de 25 de junio de 2013. Expediente O.A.R.",
-    "Tipo de documento": "Resolución",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -290,7 +290,7 @@
     "Opción b": "No",
     "Opción c": "No se indica",
     "Mostrar": "**Tarjeta Roja**",
-    "Tipo de documento": "",
+    "Tipo de documento": "Otros",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -327,7 +327,7 @@
     "Opción b": "No",
     "Opción c": "No se indica",
     "Mostrar": "**Tarjeta Roja**",
-    "Tipo de documento": "",
+    "Tipo de documento": "Otros",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -400,8 +400,8 @@
     "Opción a": "hoy > fecha1 y hoy <= fecha1 + 90 dias",
     "Opción b": "hoy > fecha1 + 90 dias",
     "Opción c": "hoy <= fecha1",
-    "Mostrar": "Autorización (**Resolución o TIE**) de **Asilo**. **Protección internacional**. Autorización de Residencia y Trabajo de Larga Duración",
-    "Tipo de documento": "TIE",
+    "Mostrar": "Autorización (**Resolución o TIE**) . **Protección internacional (Asilo ó Protección Subsidiaria)**.  Autorización de Residencia y Trabajo de Larga Duración",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "13/02/2026",
     "¿Revisado?": "Revisado"
@@ -438,7 +438,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**): Residencia. ESTATUTO DE **APÁTRIDA**. Autoriza a Trabajar. ",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -460,7 +460,7 @@
     "Observaciones": "",
     "Observaciones OPCIONAL": "",
     "Observaciones OPCIONAL2": "",
-    "Documentación": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/PERMISO-A4.pdf",
+    "Documentación": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/Plantilla-PERMISO-A4.pdf",
     "Documentación OPCIONAL": "",
     "Documentación OPCIONAL2": "",
     "¿Inscrito anteriormente?": "",
@@ -497,7 +497,7 @@
     "Observaciones": "",
     "Observaciones OPCIONAL": "",
     "Observaciones OPCIONAL2": "",
-    "Documentación": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/PERMISO-A4.pdf",
+    "Documentación": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/Plantilla-PERMISO-A4.pdf",
     "Documentación OPCIONAL": "",
     "Documentación OPCIONAL2": "",
     "¿Inscrito anteriormente?": "",
@@ -512,7 +512,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**): Residencia temporal **prorrogada** Autoriza a Trabajar . **Protección Temporal Desplazados**",
-    "Tipo de documento": "",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -534,7 +534,7 @@
     "Observaciones": "Validez de la TIE: prorrogada hasta **04/03/2027**, según la [Orden INT/96/2026, de 12 de febrero](https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-3712) .",
     "Observaciones OPCIONAL": "",
     "Observaciones OPCIONAL2": "",
-    "Documentación": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/PERMISO-A4.pdf",
+    "Documentación": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/Plantilla-PERMISO-A4.pdf",
     "Documentación OPCIONAL": "",
     "Documentación OPCIONAL2": "",
     "¿Inscrito anteriormente?": "",
@@ -549,7 +549,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**): Residencia temporal Autoriza a Trabajar . **Protección Temporal Desplazados**",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -623,7 +623,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "**Autorización de permanencia provisional** ( Artículo 5 Real Decreto 865/2001 de 20 de Julio) (Solicitante **Apátrida**)",
-    "Tipo de documento": "Resolución",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -660,7 +660,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "**Autorización de permanencia provisional** ( Artículo 5 Real Decreto 865/2001 de 20 de Julio) (Solicitante **Apátrida**)",
-    "Tipo de documento": "Resolución",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -734,7 +734,7 @@
     "Opción b": "No son estudios superiores",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**): Resolucion  de concesión de **estancia por estudios**. ",
-    "Tipo de documento": "Resolución",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -771,7 +771,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "**Autorización** de Residencia de estudiante para **búsqueda de empleo o emprendimiento** Ley 14/2013.",
-    "Tipo de documento": "",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -808,7 +808,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "**Autorización** de Residencia de estudiante para **búsqueda de empleo o emprendimiento** Ley 14/2013.",
-    "Tipo de documento": "",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -919,7 +919,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**): PERMANENTE. **MIEMBRO DE LA FAMILIA UE**. ART. 20 DIR. 2004/38/CE. ",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -956,7 +956,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**): RÉGIMEN COMUNITARIO. **FAMILIAR CIUDADANO DE LA UNION**. ",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -1067,7 +1067,7 @@
     "Opción b": "hoy < fecha1 + 16 anos",
     "Opción c": "hoy > fecha1 + 18 anos + 90 dias",
     "Mostrar": "**Autorización**. **Menor tutelado** por la entidad de protección de menores SIN Autorización de Residencia temporal.",
-    "Tipo de documento": "",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -1104,7 +1104,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolucion o TIE**) de Residencia Régimen de **Menores Mayoría de edad**.",
-    "Tipo de documento": "",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -1141,7 +1141,7 @@
     "Opción b": "No está caducada",
     "Opción c": "",
     "Mostrar": "Autorización (Resolución o TIE) Miembro responsable de la Familia UE artículo 50 TUE. Art. 189 acuerdo de retirada.",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -1178,7 +1178,7 @@
     "Opción b": "**TIE Caducada y presenta** comprobante de cita para su renovación",
     "Opción c": "**TIE Caducada y NO presenta** comprobante de cita para su renovación",
     "Mostrar": "Autorización (Resolución o TIE) PERMANENTE. Artículo 50 TUE emitido bajo art. 18.4 acuerdo retirad",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": ""
@@ -1215,7 +1215,7 @@
     "Opción b": "Sí, está caducada",
     "Opción c": "",
     "Mostrar": "Autorización (Resolución o TIE): **FAMILIAR CIUDADANO REINO UNIDO**. FAMILIAR CIUDADANO UK. ACUERDO DE RETIRADA",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -1252,7 +1252,7 @@
     "Opción b": "**TIE Caducada y presenta** comprobante de cita para su renovación",
     "Opción c": "**TIE Caducada y NO presenta** comprobante de cita para su renovación",
     "Mostrar": "Autorización (Resolución o TIE): RESI Y TRABAJO. TEMPORAL. NACIONAL DE REINO UNIDO. EMITIDO BAJO ART. 18.4 ACUERDO RETIRAD",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": ""
@@ -1289,7 +1289,7 @@
     "Opción b": "**TIE Caducada y presenta** comprobante de cita para su renovación",
     "Opción c": "**TIE Caducada y NO presenta** comprobante de cita para su renovación",
     "Mostrar": "Autorización (Resolución o TIE): Residencia LARGA DURACIÓN. Autoriza a Trabajar.",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "28/11/2025",
     "¿Revisado?": ""
@@ -1309,10 +1309,10 @@
     "Alcance de la Autorización OPCIONAL": "",
     "Alcance de la Autorización OPCIONAL2": "",
     "Observaciones": "La persona está habilitada para trabajar, a pesar de la anotacion NO Autoriza a Trabajar.",
-    "Observaciones OPCIONAL": "Al estar emitida después de la edad laboral, no Autoriza a Trabajar.",
+    "Observaciones OPCIONAL": "Este tipo de autorización autoriza a trabajar sin restricciones siempre que se emita después de la edad laboral . Revisa el documento y vuelve a realizar la búsqueda.",
     "Observaciones OPCIONAL2": "**No procede Inscripción** al no alcanzar mayoría de edad laboral.",
     "Documentación": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/PERMISO-P1.pdf",
-    "Documentación OPCIONAL": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/PERMISO-P1.pdf",
+    "Documentación OPCIONAL": "",
     "Documentación OPCIONAL2": "",
     "¿Inscrito anteriormente?": "",
     "¿Cobra prestación?": "",
@@ -1326,7 +1326,7 @@
     "Opción b": "hoy >= fecha2 + 16 anos and fecha1 < fecha2 + 16 anos",
     "Opción c": "hoy < fecha2 + 16 anos",
     "Mostrar": "Autorización (Resolución o TIE): Residencia LARGA DURACIÓN. NO Autoriza a Trabajar.",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "28/11/2025",
     "¿Revisado?": "Revisado"
@@ -1363,7 +1363,7 @@
     "Opción b": "hoy > fecha + 16 años",
     "Opción c": "",
     "Mostrar": "Autorización (Resolución o TIE). Residencia RE LARGA DU UE Autoriza a Trabajar.",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -1400,7 +1400,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Solicitud DE Autorización DE Residencia DE LARGA DURACIÓN **RENOVADA**",
-    "Tipo de documento": "",
+    "Tipo de documento": "Solicitud",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "16/02/2026",
     "¿Revisado?": "Revisado"
@@ -1419,7 +1419,7 @@
     "Alcance de la Autorización": "NO Autoriza a Trabajar ",
     "Alcance de la Autorización OPCIONAL": "",
     "Alcance de la Autorización OPCIONAL2": "",
-    "Observaciones": "Deberá aportar documento de afliacion con los progenitores y/o cuidador de dependiente.\n/n\nSe consignará en **fecha de caducidad** la de presentacion de la **Solicitud + dos meses**.\n/n\nSe inscribirá en colectivo Especial 17 (Demandante de Servicios Previos al Empleo).",
+    "Observaciones": "Deberá aportar documento de fliacion con los progenitores y/o cuidador de dependiente.\n/n\nSe consignará en **fecha de caducidad** la de presentacion de la **Solicitud + dos meses**.\nSi pasado este plazo,se acredita que el expediente sigue en tramitación, se consignará la fecha de caducidad fecha de consulta de expediente+dos meses y así sucesivamente hasta tener resolución.                                                                                                Se inscribirá en colectivo Especial 17 (Demandante de Servicios Previos al Empleo). ",
     "Observaciones OPCIONAL": "",
     "Observaciones OPCIONAL2": "",
     "Documentación": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/PERMISO-R0.pdf",
@@ -1436,7 +1436,7 @@
     "Opción a": "",
     "Opción b": "",
     "Opción c": "",
-    "Mostrar": "**Solicitud familiares de personas con nacionalidad española**: Padres y madres. Padre y madre de un menor de nacionalidad española. Único Familiar de segundo grado que sea cuidador a persona de nacionalidad española.",
+    "Mostrar": "**Solicitud familiares de personas con nacionalidad española**: **Padres y madres**. Padre y madre de un menor de nacionalidad española. Único Familiar de segundo grado que sea **cuidador** a persona de nacionalidad española.",
     "Tipo de documento": "Solicitud",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
@@ -1456,7 +1456,7 @@
     "Alcance de la Autorización": "Autoriza a Trabajar",
     "Alcance de la Autorización OPCIONAL": "",
     "Alcance de la Autorización OPCIONAL2": "",
-    "Observaciones": "Deberá aportar Certificado matrimonio o Certificado pareja de hecho y/o documento de afliacion de los hijos en su caso.\n/n\nSe consignará en **fecha de caducidad** la de presentacion de la **Solicitud + dos meses**.",
+    "Observaciones": "Deberá aportar Certificado matrimonio o Certificado pareja de hecho y/o documento de fliacion de los hijos en su caso.\n/n\nSe consignará en **fecha de caducidad** la de presentacion de la **Solicitud + dos meses**.Si pasado este plazo,se acredita que el expediente sigue en tramitación, se consignará la fecha de caducidad fecha de consulta de expediente+dos meses y así sucesivamente hasta tener resolución. ",
     "Observaciones OPCIONAL": "",
     "Observaciones OPCIONAL2": "",
     "Documentación": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/PERMISO-R0.pdf",
@@ -1473,7 +1473,7 @@
     "Opción a": "",
     "Opción b": "",
     "Opción c": "",
-    "Mostrar": "**Solicitud presentada familiares de personas con nacionalidad española**: HIJOS (propios o de pareja ) O Cónyuge/ Pareja de hecho / Pareja registrada / Pareja Extranjera, mayor de 18 años.",
+    "Mostrar": "**Solicitud presentada familiares de personas con nacionalidad española**: **HIJOS** (propios o de pareja ) O **Cónyuge**/ **Pareja** de hecho / Pareja registrada / Pareja Extranjera, mayor de 18 años.",
     "Tipo de documento": "Solicitud",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
@@ -1511,7 +1511,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**); Residencia TEMPORAL DE FAMILIAR DE CIUDADANO ESPAÑOL-INICIAL. ",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -1548,7 +1548,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**): Residencia TEMPORAL. NO Autoriza a Trabajar. ",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -1585,7 +1585,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**): Residencia TEMPORAL. NO Autoriza a Trabajar. ",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -1622,7 +1622,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "**Residencia TEMPORAL 1ª RENOVACIÓN**. NO Autoriza a Trabajar. ",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -1659,7 +1659,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "**Residencia TEMPORAL 1ª RENOVACIÓN**. NO Autoriza a Trabajar. ",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -1770,7 +1770,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**) CIRCUNSTANCIAS EXCEPCIONALES / **RAZONES HUMANITARIAS Autoriza a Trabajar. Víctima de trata, violencia de género o sexual**.",
-    "Tipo de documento": "Autorización o TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -1807,7 +1807,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**) CIRCUNSTANCIAS EXCEPCIONALES Autoriza a Trabajar. **Arraigo Segunda oportunidad. Arraigo Familiar.**",
-    "Tipo de documento": "Autorización o TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -1844,7 +1844,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**) CIRCUNSTANCIAS EXCEPCIONALES Autoriza a Trabajar.: **Menor extranjero no acompañado alcanza mayoria de edad sin ser titular de Autorización Residencia**",
-    "Tipo de documento": "Autorización o TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -1881,7 +1881,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**): CIRSCUNTANCIAS EXCEPCIONALES Autoriza a Trabajar **Razones Humanitarias artículo 142** y siguientes RD1155/2024.",
-    "Tipo de documento": "Autorización o TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -1918,7 +1918,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**): CIRSCUNTANCIAS EXCEPCIONALES Autoriza a Trabajar **Razones Humanitarias artículo 148** y siguientes RD1155/2024.",
-    "Tipo de documento": "Autorización o TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -1955,7 +1955,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**): CIRSCUNTANCIAS EXCEPCIONALES Autoriza a Trabajar **Razones Humanitarias artículos 37.b, 46.3** y otros de la Ley 12/2009",
-    "Tipo de documento": "Autorización o TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -1992,7 +1992,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**): CIRSCUNTANCIAS EXCEPCIONALES Autoriza a Trabajar **Razones Humanitarias enfermedad sobrevenida** de carácter grave.",
-    "Tipo de documento": "Autorización o TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -2029,7 +2029,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**): CIRSCUNTANCIAS EXCEPCIONALES Autoriza a Trabajar **Razones Humanitarias peligro para su seguridad o la de su familia**.",
-    "Tipo de documento": "Autorización o TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -2066,7 +2066,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**): CIRSCUNTANCIAS EXCEPCIONALES Autoriza a Trabajar **Razones Humanitarias víctima de delitos** de los arts.311 a 318,510, 511.1 y 512 Ley orgánica 10/1995",
-    "Tipo de documento": "Autorización o TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -2103,7 +2103,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**): Conceder la Autorización de Residencia temporal por circunstancias excepcionales **inicial \narraigo social**.",
-    "Tipo de documento": "Autorización o TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -2140,7 +2140,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**):CIRCUNSTANCIAS EXCEPCIONALES. Autoriza a Trabajar. **Arraigo Socio-laboral**.",
-    "Tipo de documento": "Autorización o TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -2251,7 +2251,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**) . Residencia TEMPORAL **REAGRUPACIÓN FAMILIAR**.",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -2288,7 +2288,7 @@
     "Opción b": "hoy >= fecha2 + 16 anos y fecha1 >= fecha2 + 18 anos",
     "Opción c": "hoy < fecha2 + 16 anos",
     "Mostrar": "Autorización (**Resolución o TIE**). **Residencia TEMPORAL / REAGRUPACIÓN FAMILIAR** /  Autoriza a Trabajar. ",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -2325,7 +2325,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**).Residencia. TEMPORAL **REAGRUPAC FAMILIAR. REAGRUPANTE**",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -2917,7 +2917,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (Resolución o TIE): Residencia INICIAL Y RENOVADA PARA** FAMILIARES** MOVILIDAD INTERNACIONAL LEY 14/2013",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -2991,7 +2991,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (Resolución o TIE): de Residencia temporal por circunstancias excepcionales inicial. Arraigo para la formación.",
-    "Tipo de documento": "Resolución",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -3028,7 +3028,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (Resolucion o TIE): Residencia Temporal AU Trabajo en edad laboral. Máximo 30 horas/Semanda.SMI",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -3102,7 +3102,7 @@
     "Opción b": "Sí, está codicionada",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**): RESI Y TRABAJO TEMPORAL. Autoriza a Trabajar. ",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -3139,7 +3139,7 @@
     "Opción b": "Sí, está codicionada",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**): Residencia Y TRABAJO. **TEMPORAL CUENTA AJENA**",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -3176,7 +3176,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (Resolución o TIE): Autorización Residencia Y TRABAJO TEMPORAL POR CUENTA AJENA INICIAL. NO TIENE LIMITACION DE OCUPACION O TERRITORIAL",
-    "Tipo de documento": "Resolución",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -3213,7 +3213,7 @@
     "Opción b": "No está condicionada",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**): RESI Y TRABAJO TEMPORAL. Autoriza a Trabajar POR CUENTA AJENA. **TIENE LIMITACION DE OCUPACION O TERRITORIAL**",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n* Ámbito territorial\n* Actividad\n* Ocupación\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -3250,7 +3250,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (Resolución o TIE): RESI Y TRABAJO TEMPORAL. Autoriza a Trabajar POR CUENTA AJENA. PLURIANUAL GECCO",
-    "Tipo de documento": "TIE / Resolución",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -3259,7 +3259,7 @@
     "ANVERSO": "DOCUMENTO IMPOSIBILIDAD INICIO RELACION LABORAL",
     "REVERSO": "",
     "Palabras_Clave": "",
-    "Condicionantes": "Debemos preguntar al técnico la fecha de emision del documeneto. Validez del documento: Fecha emsion mas tres meses (de fecha a fecha)",
+    "Condicionantes": "Debemos preguntar al técnico la fecha de emision del documento. Validez del documento: Fecha emsion mas tres meses (de fecha a fecha)",
     "Código de inscripción en SILA": "T1",
     "Código de inscripción en SILA OPCIONAL": "",
     "Código de inscripción en SILA OPCIONAL2": "",
@@ -3287,7 +3287,7 @@
     "Opción b": "hoy < fecha + 3 meses",
     "Opción c": "",
     "Mostrar": "",
-    "Tipo de documento": "",
+    "Tipo de documento": "Otros",
     "¿Que pide SILA?": "* Fecha de caducidad\n* Ámbito territorial\n* Actividad\n* Ocupación\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -3324,7 +3324,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**) **RENOVACION** DE Residencia Y TRABAJO TEMPORAL.  TRABAJAR POR **CUENTA AJENA Y/O PROPIA**",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -3361,7 +3361,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (**Resolución o TIE**) **RENOVACION** DE Residencia Y TRABAJO TEMPORAL. TRABAJAR POR **CUENTA AJENA Y/O PROPIA**",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -3435,7 +3435,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización (Resolución o TIE) de Residencia Temporal y Trabajo inicial. Autoriza a Trabajar cuenta propia con limitacion de ocupacion o territorio",
-    "Tipo de documento": "Resolución",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -3472,7 +3472,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Visado de búsqueda de empleo para hijos o nietos de español de origen.",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -3509,7 +3509,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Visados de búsqueda de empleo para determinadas ocupaciones y ámbitos territoriales.",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -3583,7 +3583,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "**MANIFESTACIÓN O DECLARACION** de voluntad de presentar Solicitud de protección internacional. ",
-    "Tipo de documento": "Resolución",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -3620,7 +3620,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "**Pasaporte**.",
-    "Tipo de documento": "Pasaporte",
+    "Tipo de documento": "Otros",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "05/02/2026",
     "¿Revisado?": "Revisado"
@@ -3731,7 +3731,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "**Resolución que deniega** el derecho de asilo y protección subsidiaria.",
-    "Tipo de documento": "Resolución",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -4101,7 +4101,7 @@
     "Opción b": "fecha1 < hoy Y fecha2 <= fecha1 + 92 dias Y hoy <= fecha2 + 92 dias",
     "Opción c": "fecha1 < hoy Y fecha2 > fecha1 + 92 dias O hoy > fecha2 + 92 dias",
     "Mostrar": "**Solicitud** DE Autorización DE Residencia DE LARGA DURACIÓN **INICIAL**",
-    "Tipo de documento": "",
+    "Tipo de documento": "Solicitud",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "",
     "¿Revisado?": ""
@@ -8541,7 +8541,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Autorización de Residencia por circunstancias excepcionales inicial.",
-    "Tipo de documento": "Resolución",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -8578,7 +8578,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Certificado asignado en el Registro Central de Extranjeros de la dirección General de la policía el numero de Identidad Extranjero (NIE).",
-    "Tipo de documento": "Resolución",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -8615,7 +8615,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Certificado de actos presuntos expedido por la Administración",
-    "Tipo de documento": "Resolución",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -8652,7 +8652,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Certificado de registro de ciudadano de la Unión.",
-    "Tipo de documento": "Resolución",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -8726,7 +8726,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Concesión Autorización de Residencia temporal inicial. (Preguntar con que está relacionada, por ejemplo menores o lo que sea.)",
-    "Tipo de documento": "Resolución",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -8763,7 +8763,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "Esta persona pertenece a un estado Miembro de la Unión Europea. Se registra como **persona COMUNITARIA**.",
-    "Tipo de documento": "",
+    "Tipo de documento": "Otros",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -8800,7 +8800,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "FICHA inscripción MENA",
-    "Tipo de documento": "",
+    "Tipo de documento": "Otros",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "",
     "¿Revisado?": ""
@@ -8837,7 +8837,7 @@
     "Opción b": "",
     "Opción c": "",
     "Mostrar": "INFORMACIÓN DEL ESTADO DE EXPEDIENTE. ",
-    "Tipo de documento": "Resolución",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
@@ -8873,7 +8873,7 @@
     "Opción a": "",
     "Opción b": "",
     "Opción c": "",
-    "Mostrar": "Resguardo Solicitud ó renovación de tarjeta de extranjero.",
+    "Mostrar": "Resguardo Solicitud ó renovación de **tarjeta de extranjero**.",
     "Tipo de documento": "Solicitud",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "9/02/2026",
