@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ASIM-SAE — Aplicación de soporte para la inscripción de migrantes en SILA</title>
+<!-- Enlace al CSS (¡colócalo aquí!) -->
+<link rel="stylesheet" href="style_diseno2.css">
+</head>
+<body>
+  <!-- Diseño e idea original de la Dirección Provincial de Granada, en concreto de:
+  Jefe de Servicio: Francisco Escabias García.
+  Diseñador: Valentín Jiménez Extremera.
+  Contenido: Elisabeth Huertas García y José Manuel Robles Chaves.
+  Testeo y verificación: Isabel Peláez Carmona, Silvia Gómez Martín, Inmaculada Ortega Avilés, Beatriz Girela Muñoz.
+  Aporte de información: Todas las oficinas SAE de la provincia de Granada y sus direcciones de ATE.
+  JSON actualizado a 04/12/2025 9:33 horas -->  
+<div class="container">
+  <header>
+    <img class="logo-izquierda" src="images/SAE_Junta_de_Andalucia_Documentacion.png" alt="Logo Junta de Andalucía">
+    <div class="titulo-header">
+      <h1>ASIM-SAE</h1>
+      <h2>Aplicación de soporte para la inscripción de migrantes en SILA</h2>
+    </div>
+    <img class="logo-derecha" src="images/Logo_SILA_Migrantes2_corto.png" alt="Logo proyecto">
+  </header>
+  
+  <div id="doc" class="search-container">
+    <p><strong>Documentación necesaria para la inscripción de una persona extranjera:</strong></p>
+    <ul>
+      <li>Identificación de la persona usuaria: documentación expedida por España con foto (Tarjeta TIE, Resolución con Foto, Pasaporte).</li>
+      <li>Tarjeta TIE o Resolución en Vigor.</li>
+      <li>Solicitud (sólo en los casos habilitados).</li>
+    </ul>
+  </div>
+
+  <div class="search-container2" role="region" aria-labelledby="intro">  
+    <div id="intro" class="search-intro">
+      <p><strong>Consulta SILA y marca lo que corresponda:</strong></p>
+    </div>
+
+    <div class="filters" aria-label="Opciones SILA">
+      <label><input type="checkbox" id="chkInscrito"> Consta una inscripción previa en SILA</label>
+      <label><input type="checkbox" id="chkPrestacion"> Cobra prestación o subsidio</label>
+      <label><input type="checkbox" id="chkNada"> Ninguna de las anteriores</label>
+    </div>
+
+  <div id="searchArea" class="search-area" aria-live="polite">
+    <div class="search-top">
+      <div class="search-input-wrapper">
+        <input id="searchInput" type="text" placeholder="Marca una opción e introduce la denominación de la autorización o solicitud a buscar…" aria-label="Introduce el texto a buscar" disabled>
+        <span class="clear-btn-wrapper" id="clearSearchInline">
+          <svg class="clear-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </span>
+      </div>
+      <button id="btnSearch" class="btn btn-nocomunitario">Buscar</button>
+    </div>
+    <div class="search-meta">
+      <!-- <span class="small">Filtros SILA marcados: <span id="inscritoEstado" class="small no-data">no definido</span></span>-->
+      <span class="small">Resultados: <span id="countResults">0</span></span>
+    </div>
+    <div class="results" id="results" aria-live="polite"></div>
+    <div class="results" aria-live="polite" style="color:var(--muted);font-size:13px;text-align: center;" >La información ofrecida con esta herramienta es meramente orientativa y pretende ser un apoyo a la inscripción de las personas migrantes en SILA.<br> <u>En ningún caso puede sustituir al sistema de resolución de incidencias establecido vía SAEclick.</u></div>
+  </div>
+
+  <div id="modalDetalle" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document">
+      <div class="modal-header-sae">Datos para la Inscripción:<h4 id="modalDetalleTitulo"></h4></div>
+      <div class="modal-body-sae" id="modalDetalleContent"></div>
+      <div class="actions">
+        <button id="btnVolverDetalle" class="btn">Volver</button>
+      </div>
+    </div>
+  </div>
+  <div id="modalPreguntas" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document">
+      <div class="modal-header-sae">
+        <h3 id="modalPreguntasTitulo" style="margin:6px 0 0"></h3>
+        <hr>
+        <div>Indica la información que se solicita</div>
+      </div>
+  
+      <div class="modal-body-sae" id="modalPreguntasContent"></div>
+  
+      <div class="actions">
+        <button id="btnCancelarPreguntas" class="btn">Cancelar</button>
+        <button id="btnContinuarPreguntas" class="btn">Continuar</button>
+      </div>
+    </div>
+  </div>
+    
+</div>  
+
+</div>
+  <footer>
+    <div class="footer-logo">
+      <div class="logo-text">
+        <img class="logo-izquierda" src="images/Icono_verde.png" alt="Icono Verde Junta de Andalucía" height="50px">
+        <b>Versión pruebas 19-02-2026 — Dirección Provincial de Granada</b>
+      </div>
+    </div>
+    <div class="footer-datos">
+      <b>Apoyo durante la fase de testeo, para la resolución de dudas y la recogida de incidencias:</b><br>
+      <hr>
+      Elisabeth Huertas García &lt;<a href="mailto:elisabeth.huertas.garcia@juntadeandalucia.es">elisabeth.huertas.garcia@juntadeandalucia.es</a>&gt; – 765145<br>
+      José Manuel Robles Chaves &lt;<a href="mailto:josem.robles@juntadeandalucia.es">josem.robles@juntadeandalucia.es</a>&gt; – 653467
+    </div>
+  </footer>
+  <script src="script_diseno2.js"></script>
+</body>
+</html>
