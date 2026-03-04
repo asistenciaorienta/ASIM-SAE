@@ -563,6 +563,167 @@ function renderKeywordSuggestionItem(rec, highlightTokens = [], tolerant=false){
   `;
 }
 
+function normalizeSimple(s){
+  return String(s || '')
+    .toLowerCase()
+    .normalize('NFD').replace(/\p{Diacritic}/gu,'')
+    .trim();
+}
+
+// Intenta sacar el tipo desde el JSON (si tienes una columna tipo_doc / tipo_documento / documento / etc.)
+function getDocTypeFromRecord(rec){
+  const raw =
+    getField(rec, ['Tipo_Documento','Tipo documento','TipoDocumento','Tipo','Documento','Tipo_doc','tipo_documento','tipo']) || '';
+  return normalizeSimple(raw);
+}
+
+// Clasifica en las 4 categorías pedidas
+function classifyDocType(rec){
+  // 1) si existe campo tipo en el JSON, úsalo
+  const t = getDocTypeFromRecord(rec);
+
+  // normaliza algunas variantes comunes
+  if (t){
+    if (t.includes('resol') || t.includes('tie')) return 'res_tie';
+    if (t.includes('solic')) return 'solicitud';
+    if (t.includes('recur')) return 'recurso';
+    return 'otros';
+  }
+
+  // 2) si NO existe campo tipo, inferimos por texto
+  const mostrar = normalizeSimple(getField(rec, ['Mostrar','mostrar']) || '');
+  const anverso = normalizeSimple(getField(rec, ['ANVERSO','Anverso','anverso']) || '');
+  const reverso = normalizeSimple(getField(rec, ['REVERSO','Reverso','reverso']) || '');
+  const hay = `${mostrar} ${anverso} ${reverso}`;
+
+  if (/\btie\b/.test(hay) || hay.includes('tarjeta') || hay.includes('resoluc')) return 'res_tie';
+  if (hay.includes('solicitud') || hay.includes('solicita')) return 'solicitud';
+  if (hay.includes('recurso')) return 'recurso';
+  return 'otros';
+}
+
+// Crea un wrapper result-item (reutiliza tu UI actual)
+function buildResultItem({ rec, idx }, tokens){
+  const wrapper = document.createElement('div');
+  wrapper.className = 'result-item';
+  wrapper.style.cursor = 'pointer';
+  wrapper.style.display = 'flex';
+  wrapper.style.alignItems = 'center';
+
+  // Checkbox
+  const chkWrap = document.createElement('div');
+  chkWrap.className = 'check';
+  chkWrap.style.display = 'flex';
+  chkWrap.style.alignItems = 'center';
+
+  const chk = document.createElement('input');
+  chk.type = 'checkbox';
+  chk.name = 'selectRec';
+  chk.dataset.index = idx;
+  chkWrap.appendChild(chk);
+
+  // Contenido
+  const content = document.createElement('div');
+  content.style.flex = '1';
+  content.style.display = 'flex';
+  content.style.alignItems = 'center';
+  content.style.gap = '4px';
+
+  const title = document.createElement('h4');
+  title.style.margin = '0';
+
+  const mostrarTxt = getField(rec, ['Mostrar','mostrar']) || 'Registro sin campo Mostrar';
+  title.innerHTML = renderBoldMarkdownWithHighlights(mostrarTxt, tokens);
+
+  content.appendChild(title);
+
+  wrapper.appendChild(chkWrap);
+  wrapper.appendChild(content);
+
+  // Eventos
+  wrapper.addEventListener('click', e => {
+    if (e.target.tagName.toLowerCase() === 'input') return;
+    const all = Array.from(document.querySelectorAll('input[name="selectRec"]'));
+    all.forEach(inp => inp.checked = false);
+    chk.checked = true;
+    openRecord(rec);
+  });
+
+  chk.addEventListener('change', e => {
+    const all = Array.from(document.querySelectorAll('input[name="selectRec"]'));
+    all.forEach(inp => { if (inp !== e.target) inp.checked = false; });
+    if (e.target.checked) openRecord(rec);
+  });
+
+  return wrapper;
+}
+
+// Pinta secciones por tipo, en el orden pedido
+function renderGroupedResults(items, tokens){
+  // items: [{rec, idx}, ...]
+  const groups = {
+    res_tie: [],
+    solicitud: [],
+    recurso: [],
+    otros: []
+  };
+
+  items.forEach(x => {
+    const cat = classifyDocType(x.rec);
+    (groups[cat] || groups.otros).push(x);
+  });
+
+  const order = [
+    ['res_tie', 'Resoluciones / TIE'],
+    ['solicitud', 'Solicitudes'],
+    ['recurso', 'Recursos'],
+    ['otros', 'Otros']
+  ];
+
+  order.forEach(([key, label]) => {
+    const arr = groups[key];
+    if (!arr || arr.length === 0) return;
+
+    const section = document.createElement('div');
+    section.className = 'result-section';
+
+    const header = document.createElement('div');
+    header.className = 'result-section-header';
+    header.innerHTML = `<span>${label}</span><span class="result-section-count">${arr.length}</span>`;
+
+    const body = document.createElement('div');
+    body.className = 'result-section-body';
+
+    arr.forEach(x => body.appendChild(buildResultItem(x, tokens)));
+
+    section.appendChild(header);
+    section.appendChild(body);
+    resultsEl.appendChild(section);
+  });
+}
+
+
+  
+function appendHelpResult(){
+  const tmp = document.createElement('div');
+  tmp.innerHTML = `
+    <div class="result-item help-item" style="cursor:pointer">
+      <div style="flex:1">
+        <h4>¿No encuentras lo que buscas? <a href="ayuda.html" target="_blank" rel="noopener noreferrer">Pulsa aquí y te ayudo a buscar</a></h4>
+      </div>
+    </div>
+  `;
+  const item = tmp.firstElementChild;
+
+  // si quieres que al clicar en cualquier parte abra la ayuda:
+  item.addEventListener('click', (e) => {
+    // si clican el link, ya abre él solo
+    if (e.target.tagName.toLowerCase() === 'a') return;
+    window.open('ayuda.html', '_blank', 'noopener,noreferrer');
+  });
+
+  resultsEl.appendChild(item);
+}
   function containsTokenExact(text, token) {
     const words = text.split(/\s+/).map(w => w.toLowerCase());
     token = token.toLowerCase();
@@ -1242,7 +1403,11 @@ function doSearch() {
         item.addEventListener('click', () => openRecord(x.rec));
         resultsEl.appendChild(item);
       });
-  
+// ✅ Pintado agrupado por tipo de documento
+renderGroupedResults(matches, tokens);      
+     // ✅ AYUDA al final
+      appendHelpResult();
+      
       logBusquedaToSheets(rawQuery, 0, ctx.cobra, ctx.inscrito);
       return;
     }
@@ -1275,13 +1440,22 @@ function doSearch() {
         item.addEventListener('click', () => openRecord(x.rec));
         resultsEl.appendChild(item);
       });
-  
+      // ✅ Pintado agrupado por tipo de documento
+renderGroupedResults(matches, tokens);
+      // ✅ AYUDA al final
+      appendHelpResult();
+      
       logBusquedaToSheets(rawQuery, 0, ctx.cobra, ctx.inscrito);
       return;
     }
   
     // B3) Nada de nada
     resultsEl.innerHTML = '<div class="small">No se han encontrado registros con el filtro aplicado.</div>';
+    // ✅ Pintado agrupado por tipo de documento
+renderGroupedResults(matches, tokens);
+  // ✅ AYUDA también aquí
+    appendHelpResult();
+    
     logBusquedaToSheets(rawQuery, 0, ctx.cobra, ctx.inscrito);
     return;
   }
@@ -1358,6 +1532,10 @@ matches.forEach(m => {
 
     resultsEl.appendChild(wrapper);
 });
+  // ✅ Pintado agrupado por tipo de documento
+renderGroupedResults(matches, tokens);
+  // ✅ AYUDA al final de la lista normal (cuando hay >1 resultados)
+appendHelpResult();
 
 }
 
