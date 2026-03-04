@@ -185,3 +185,33 @@ mark.hit{
   text-decoration: underline;
   font-weight: 700;
 }
+.result-section{
+  margin-top: 12px;
+}
+
+.result-section-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #f3f6f4;
+  border: 1px solid #dfe9e2;
+  font-weight: 700;
+  color: #1f2a1f;
+  margin-bottom: 8px;
+}
+
+.result-section-count{
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: white;
+  border: 1px solid #dfe9e2;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.result-section-body .result-item{
+  margin-bottom: 8px;
+}
