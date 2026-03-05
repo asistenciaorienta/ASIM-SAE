@@ -659,8 +659,10 @@ function buildResultItem({ rec, idx }, tokens){
 }
 
 // Pinta secciones por tipo, en el orden pedido
-function renderGroupedResults(items, tokens){
-  // items: [{rec, idx}, ...]
+function renderGroupedResults(items, tokens, { includeHelp = true } = {}){
+  // 🔒 Limpieza total: nada debe sobrevivir fuera de grupos
+  resultsEl.innerHTML = '';
+
   const groups = {
     res_tie: [],
     solicitud: [],
@@ -680,16 +682,22 @@ function renderGroupedResults(items, tokens){
     ['otros', 'Otros']
   ];
 
+  const frag = document.createDocumentFragment();
+
   order.forEach(([key, label]) => {
     const arr = groups[key];
     if (!arr || arr.length === 0) return;
 
-    const section = document.createElement('div');
+    const section = document.createElement('section');
     section.className = 'result-section';
+    section.dataset.cat = key; // ✅ para colorear por CSS
 
     const header = document.createElement('div');
     header.className = 'result-section-header';
-    header.innerHTML = `<span>${label}</span><span class="result-section-count">${arr.length}</span>`;
+    header.innerHTML = `
+      <span>${label}</span>
+      <span class="result-section-count">${arr.length}</span>
+    `;
 
     const body = document.createElement('div');
     body.className = 'result-section-body';
@@ -698,8 +706,48 @@ function renderGroupedResults(items, tokens){
 
     section.appendChild(header);
     section.appendChild(body);
-    resultsEl.appendChild(section);
+    frag.appendChild(section);
   });
+
+  // ✅ Panel de ayuda independiente (si quieres que SIEMPRE salga como “otro resultado”)
+  if (includeHelp){
+    const helpSection = document.createElement('section');
+    helpSection.className = 'result-section';
+    helpSection.dataset.cat = 'help';
+
+    const header = document.createElement('div');
+    header.className = 'result-section-header';
+    header.innerHTML = `<span>¿No encuentras lo que buscas?</span>`;
+
+    const body = document.createElement('div');
+    body.className = 'result-section-body';
+
+    // Reutilizamos tu help-item pero lo metemos dentro del panel
+    const tmp = document.createElement('div');
+    tmp.innerHTML = `
+      <div class="result-item help-item" style="cursor:pointer">
+        <div style="flex:1">
+          <h4>¿No encuentras lo que buscas?
+            <a href="ayuda.html" target="_blank" rel="noopener noreferrer">Pulsa aquí y te ayudo a buscar</a>
+          </h4>
+          <div class="small">Te guío para encontrar la situación correcta.</div>
+        </div>
+      </div>
+    `;
+    const item = tmp.firstElementChild;
+
+    item.addEventListener('click', (e) => {
+      if (e.target.tagName.toLowerCase() === 'a') return;
+      window.open('ayuda.html', '_blank', 'noopener,noreferrer');
+    });
+
+    body.appendChild(item);
+    helpSection.appendChild(header);
+    helpSection.appendChild(body);
+    frag.appendChild(helpSection);
+  }
+
+  resultsEl.appendChild(frag);
 }
 
 
@@ -1403,10 +1451,10 @@ function doSearch() {
         item.addEventListener('click', () => openRecord(x.rec));
         resultsEl.appendChild(item);
       });
-// ✅ Pintado agrupado por tipo de documento
-renderGroupedResults(matches, tokens);      
-     // ✅ AYUDA al final
-      appendHelpResult();
+      // ✅ Pintado agrupado por tipo de documento
+      renderGroupedResults(matches, tokens);      
+       // ✅ AYUDA al final
+        appendHelpResult();
       
       logBusquedaToSheets(rawQuery, 0, ctx.cobra, ctx.inscrito);
       return;
@@ -1475,67 +1523,8 @@ renderGroupedResults(matches, tokens);
   countResults.textContent = String(matches.length);
   logBusquedaToSheets(rawQuery, matches.length, ctx.cobra, ctx.inscrito);
   
-matches.forEach(m => {
-    const rec = m.rec;
-
-    const wrapper = document.createElement('div');
-    wrapper.className = 'result-item';
-    wrapper.style.cursor = 'pointer';
-    wrapper.style.display = 'flex';
-    wrapper.style.alignItems = 'center'; // centra verticalmente
-
-    // --- Checkbox ---
-    const chkWrap = document.createElement('div');
-    chkWrap.className = 'check';
-    chkWrap.style.display = 'flex';
-    chkWrap.style.alignItems = 'center';
-
-    const chk = document.createElement('input');
-    chk.type = 'checkbox';
-    chk.name = 'selectRec';
-    chk.dataset.index = m.idx;
-    chkWrap.appendChild(chk);
-
-    // --- Contenido ---
-    const content = document.createElement('div');
-    content.style.flex = '1';
-    content.style.display = 'flex';       // fuerza línea horizontal
-    content.style.alignItems = 'center';  // centra vertical
-    content.style.gap = '4px';            // opcional, separación entre elementos internos
-
-    const title = document.createElement('h4');
-    title.style.margin = '0';
-    
-    const mostrarTxt = getField(rec, ['Mostrar','mostrar']) || 'Registro sin campo Mostrar';
-    title.innerHTML = renderBoldMarkdownWithHighlights(mostrarTxt, tokens);
-
-    content.appendChild(title);
-
-    // --- Añadir al wrapper ---
-    wrapper.appendChild(chkWrap);
-    wrapper.appendChild(content);
-
-    // --- Eventos ---
-    wrapper.addEventListener('click', e => {
-        if (e.target.tagName.toLowerCase() === 'input') return;
-        const all = Array.from(document.querySelectorAll('input[name="selectRec"]'));
-        all.forEach(inp => inp.checked = false);
-        chk.checked = true;
-        openRecord(rec);
-    });
-
-    chk.addEventListener('change', e => {
-        const all = Array.from(document.querySelectorAll('input[name="selectRec"]'));
-        all.forEach(inp => { if (inp !== e.target) inp.checked = false; });
-        if (e.target.checked) openRecord(rec);
-    });
-
-    resultsEl.appendChild(wrapper);
-});
   // ✅ Pintado agrupado por tipo de documento
-renderGroupedResults(matches, tokens);
-  // ✅ AYUDA al final de la lista normal (cuando hay >1 resultados)
-appendHelpResult();
+renderGroupedResults(matches, tokens, { includeHelp: true });
 
 }
 
