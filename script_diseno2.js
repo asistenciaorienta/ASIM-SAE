@@ -602,6 +602,204 @@ function classifyDocType(rec){
   return 'otros';
 }
 
+// --- 1) Clasificación (ajusta según tu JSON) ---
+function classifyDocType(rec){
+  // ✅ Ejemplo: intenta deducir por "Mostrar" o por un campo tipo si existe
+  const mostrar = String(getField(rec, ['Mostrar','mostrar']) || '').toLowerCase();
+
+  // Si tienes un campo específico en el JSON, úsalo mejor:
+  // const tipo = String(getField(rec, ['Tipo_Documento','tipo_documento','Tipo documento']) || '').toLowerCase();
+
+  if (/\btie\b/.test(mostrar) || /\bresoluci/.test(mostrar)) return 'res_tie';
+  if (/\bsolicitud\b/.test(mostrar)) return 'solicitud';
+  if (/\brecurso\b/.test(mostrar)) return 'recurso';
+  return 'otros';
+}
+
+// --- 2) Construye item "normal" reutilizando tu UI actual ---
+function buildResultItem(x, tokens){
+  const rec = x.rec;
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'result-item';
+  wrapper.style.cursor = 'pointer';
+  wrapper.style.display = 'flex';
+  wrapper.style.alignItems = 'center';
+
+  // Checkbox
+  const chkWrap = document.createElement('div');
+  chkWrap.className = 'check';
+  chkWrap.style.display = 'flex';
+  chkWrap.style.alignItems = 'center';
+
+  const chk = document.createElement('input');
+  chk.type = 'checkbox';
+  chk.name = 'selectRec';
+  chk.dataset.index = x.idx;
+  chkWrap.appendChild(chk);
+
+  // Contenido
+  const content = document.createElement('div');
+  content.style.flex = '1';
+  content.style.display = 'flex';
+  content.style.alignItems = 'center';
+  content.style.gap = '4px';
+
+  const title = document.createElement('h4');
+  title.style.margin = '0';
+
+  const mostrarTxt = getField(rec, ['Mostrar','mostrar']) || 'Registro sin campo Mostrar';
+  title.innerHTML = renderBoldMarkdownWithHighlights(mostrarTxt, tokens);
+
+  content.appendChild(title);
+
+  wrapper.appendChild(chkWrap);
+  wrapper.appendChild(content);
+
+  // Eventos
+  wrapper.addEventListener('click', e => {
+    if (e.target.tagName.toLowerCase() === 'input') return;
+    const all = Array.from(document.querySelectorAll('input[name="selectRec"]'));
+    all.forEach(inp => inp.checked = false);
+    chk.checked = true;
+    openRecord(rec);
+  });
+
+  chk.addEventListener('change', e => {
+    const all = Array.from(document.querySelectorAll('input[name="selectRec"]'));
+    all.forEach(inp => { if (inp !== e.target) inp.checked = false; });
+    if (e.target.checked) openRecord(rec);
+  });
+
+  return wrapper;
+}
+
+// --- 3) Item sugerencia (B1/B2) reutiliza tu renderKeywordSuggestionItem ---
+function buildSuggestionItem(x, highlightTokens = [], tolerant = false){
+  const tmp = document.createElement('div');
+  tmp.innerHTML = renderKeywordSuggestionItem(x.rec, highlightTokens, tolerant);
+  const item = tmp.firstElementChild;
+
+  item.addEventListener('click', () => openRecord(x.rec));
+  return item;
+}
+
+// --- 4) Panel ayuda (item) como nodo ---
+function buildHelpItem(){
+  const tmp = document.createElement('div');
+  tmp.innerHTML = `
+    <div class="result-item help-item" style="cursor:pointer">
+      <div style="flex:1">
+        <h4>¿No encuentras lo que buscas?
+          <a href="ayuda.html" target="_blank" rel="noopener noreferrer">Pulsa aquí y te ayudo a buscar</a>
+        </h4>
+        <div class="small">Te guío para encontrar la situación correcta.</div>
+      </div>
+    </div>
+  `;
+  const item = tmp.firstElementChild;
+
+  item.addEventListener('click', (e) => {
+    if (e.target.tagName.toLowerCase() === 'a') return;
+    window.open('ayuda.html', '_blank', 'noopener,noreferrer');
+  });
+
+  return item;
+}
+
+// --- 5) Motor ÚNICO de render: normal + B1 + B2 ---
+function renderResultsUnified({
+  items = [],                // [{rec, idx}, ...]
+  tokens = [],               // tokens del buscador (para resaltar)
+  mode = 'normal',           // 'normal' | 'b1' | 'b2'
+  noteHtml = '',             // texto superior opcional (B1/B2)
+  suggestion = null,         // { kind:'keywords', tolerantUsed:boolean, hitTokensFn:(x)=>[] }
+  includeHelp = true
+}){
+  resultsEl.innerHTML = '';
+
+  const frag = document.createDocumentFragment();
+
+  // Nota superior (solo si quieres)
+  if (noteHtml){
+    const note = document.createElement('div');
+    note.className = 'small';
+    note.innerHTML = noteHtml;
+    frag.appendChild(note);
+  }
+
+  // Agrupar
+  const groups = { res_tie: [], solicitud: [], recurso: [], otros: [] };
+  items.forEach(x => {
+    const cat = classifyDocType(x.rec);
+    (groups[cat] || groups.otros).push(x);
+  });
+
+  const order = [
+    ['res_tie', 'Resoluciones / TIE'],
+    ['solicitud', 'Solicitudes'],
+    ['recurso', 'Recursos'],
+    ['otros', 'Otros']
+  ];
+
+  order.forEach(([key, label]) => {
+    const arr = groups[key];
+    if (!arr || arr.length === 0) return;
+
+    const section = document.createElement('section');
+    section.className = 'result-section';
+    section.dataset.cat = key;
+
+    const header = document.createElement('div');
+    header.className = 'result-section-header';
+    header.innerHTML = `
+      <span>${label}</span>
+      <span class="result-section-count">${arr.length}</span>
+    `;
+
+    const body = document.createElement('div');
+    body.className = 'result-section-body';
+
+    // Pintado según modo:
+    arr.forEach(x => {
+      if (mode === 'normal'){
+        body.appendChild(buildResultItem(x, tokens));
+      } else {
+        // B1/B2: sugerencias
+        const tolerant = suggestion?.tolerantUsed || false;
+        const hitTokens = suggestion?.hitTokensFn ? suggestion.hitTokensFn(x) : [];
+        body.appendChild(buildSuggestionItem(x, hitTokens, tolerant));
+      }
+    });
+
+    section.appendChild(header);
+    section.appendChild(body);
+    frag.appendChild(section);
+  });
+
+  // Si no hay ningún grupo (items vacíos), lo dejamos sin grupos.
+  // Aun así puedes poner ayuda siempre:
+  if (includeHelp){
+    const helpSection = document.createElement('section');
+    helpSection.className = 'result-section';
+    helpSection.dataset.cat = 'help';
+
+    const header = document.createElement('div');
+    header.className = 'result-section-header';
+    header.innerHTML = `<span>Ayuda</span>`;
+
+    const body = document.createElement('div');
+    body.className = 'result-section-body';
+    body.appendChild(buildHelpItem());
+
+    helpSection.appendChild(header);
+    helpSection.appendChild(body);
+    frag.appendChild(helpSection);
+  }
+
+  resultsEl.appendChild(frag);
+}
+  
 // Crea un wrapper result-item (reutiliza tu UI actual)
 function buildResultItem({ rec, idx }, tokens){
   const wrapper = document.createElement('div');
@@ -1437,25 +1635,19 @@ function doSearch() {
     // B1) Si el filtro de Palabras_Clave encontró filas pero el texto completo no,
     //     mostramos esas filas como sugerencias (con TODAS sus keywords)
     if (kwCandidates.length > 0) {
-      resultsEl.innerHTML = `
-        <div class="small">
-          No se han encontrado coincidencias en el texto completo con el filtro aplicado, pero sí hay situaciones sugeridas por <strong>Palabras_Clave</strong>:
-        </div>
-      `;
-  
-      kwCandidates.slice(0, 20).forEach(x => {
-        const tmp = document.createElement('div');
-        tmp.innerHTML = renderKeywordSuggestionItem(x.rec);
-        const item = tmp.firstElementChild;
-  
-        item.addEventListener('click', () => openRecord(x.rec));
-        resultsEl.appendChild(item);
+      renderResultsUnified({
+        items: kwCandidates.slice(0, 20),
+        tokens,
+        mode: 'b1',
+        noteHtml: `No se han encontrado coincidencias en el texto completo con el filtro aplicado, pero sí hay situaciones sugeridas por <strong>Palabras_Clave</strong>:`,
+        // en B1 normalmente no necesitas resaltar hits (porque son ALL tokens), pero puedes si quieres:
+        suggestion: {
+          tolerantUsed: false,
+          hitTokensFn: (x) => [] // o tokens si quieres marcar todo
+        },
+        includeHelp: true
       });
-      // ✅ Pintado agrupado por tipo de documento
-      renderGroupedResults(matches, tokens);      
-       // ✅ AYUDA al final
-        appendHelpResult();
-      
+    
       logBusquedaToSheets(rawQuery, 0, ctx.cobra, ctx.inscrito);
       return;
     }
@@ -1472,38 +1664,30 @@ function doSearch() {
     }
 
     if (kwAny.length > 0) {
-      resultsEl.innerHTML = `
-        <div class="small">
-          No hay coincidencias exactas, pero he encontrado situaciones con alguna palabra clave coincidente:
-        </div>
-      `;
-  
-      kwAny.slice(0, 20).forEach(x => {
-        const hitTokens = getMatchedTokensInKeywords(x.rec, tokens, kwAnyTolerantUsed);
-      
-        const tmp = document.createElement('div');
-        tmp.innerHTML = renderKeywordSuggestionItem(x.rec, hitTokens, kwAnyTolerantUsed);
-        const item = tmp.firstElementChild;
-      
-        item.addEventListener('click', () => openRecord(x.rec));
-        resultsEl.appendChild(item);
+      renderResultsUnified({
+        items: kwAny.slice(0, 20),
+        tokens,
+        mode: 'b2',
+        noteHtml: `No hay coincidencias exactas, pero he encontrado situaciones con alguna palabra clave coincidente:`,
+        suggestion: {
+          tolerantUsed: kwAnyTolerantUsed,
+          hitTokensFn: (x) => getMatchedTokensInKeywords(x.rec, tokens, kwAnyTolerantUsed)
+        },
+        includeHelp: true
       });
-      // ✅ Pintado agrupado por tipo de documento
-renderGroupedResults(matches, tokens);
-      // ✅ AYUDA al final
-      appendHelpResult();
-      
+    
       logBusquedaToSheets(rawQuery, 0, ctx.cobra, ctx.inscrito);
       return;
     }
   
     // B3) Nada de nada
-    resultsEl.innerHTML = '<div class="small">No se han encontrado registros con el filtro aplicado.</div>';
-    // ✅ Pintado agrupado por tipo de documento
-renderGroupedResults(matches, tokens);
-  // ✅ AYUDA también aquí
-    appendHelpResult();
-    
+    renderResultsUnified({
+      items: [],
+      tokens,
+      mode: 'b2',
+      noteHtml: `No se han encontrado registros con el filtro aplicado.`,
+      includeHelp: true
+    });
     logBusquedaToSheets(rawQuery, 0, ctx.cobra, ctx.inscrito);
     return;
   }
@@ -1523,8 +1707,12 @@ renderGroupedResults(matches, tokens);
   countResults.textContent = String(matches.length);
   logBusquedaToSheets(rawQuery, matches.length, ctx.cobra, ctx.inscrito);
   
-  // ✅ Pintado agrupado por tipo de documento
-renderGroupedResults(matches, tokens, { includeHelp: true });
+  renderResultsUnified({
+    items: matches,
+    tokens,
+    mode: 'normal',
+    includeHelp: true
+  });
 
 }
 
