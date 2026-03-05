@@ -253,3 +253,8 @@ mark.hit{
 /* Ajuste visual de items dentro del panel */
 .result-section .result-item{ margin-bottom: 8px; }
 .result-section .result-item:last-child{ margin-bottom: 0; }
+.result-section-body{
+  margin-left: 22px;
+  padding-left: 10px;
+  border-left: 2px solid #dfe9e2;
+}
