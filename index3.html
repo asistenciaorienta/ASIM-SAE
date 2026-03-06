@@ -639,7 +639,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Carga JSON ---
   async function loadJSON(){
     try{
-      const res = await fetch('./SituacionesAdministrativas.json', {cache:'no-store'});
+      const res = await fetch('./SituacionesAdministrativas_prueba.json', {cache:'no-store'});
       if(!res.ok) throw new Error('No se pudo cargar SituacionesAdministrativas.json');
       db = await res.json();
       console.log('Registros cargados:', db.length);
