@@ -698,6 +698,66 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  function normalizeText(s){
+    if (!s) return '';
+    return String(s)
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu,'')
+      .replace(/[^\p{L}\p{N}]+/gu,' ')
+      .toLowerCase()
+      .trim();
+  }
+
+  function getKeywordsRaw(rec){
+    return (getField(rec, [
+      'Palabras_Clave',
+      'palabras_clave',
+      'PALABRAS_CLAVE'
+    ]) || '').toString();
+  }
+
+  function splitKeywordsToList(raw){
+    return String(raw || '')
+      .replace(/(\r\n|\r|\n|\\n|\/n|\|\|)/g, ';')
+      .split(/[;,|]+/g)
+      .map(x => normalizeText(x))
+      .filter(Boolean);
+  }
+
+  function keywordIsFullyContainedInQuery(rec, queryNorm){
+    const keywords = splitKeywordsToList(getKeywordsRaw(rec));
+    if (!keywords.length) return false;
+
+    for (const kw of keywords){
+      const kwTokens = kw.split(/\s+/).filter(Boolean);
+      if (kwTokens.length === 0) continue;
+
+      const allInside = kwTokens.every(tok => containsTokenExact(queryNorm, tok));
+      if (allInside) return true;
+    }
+
+    return false;
+  }
+
+  function getTextMatchScore(rec, tokens, tolerant=false){
+    const anversoRaw = getField(rec, ['ANVERSO','Anverso','anverso']) || '';
+    const reversoRaw = getField(rec, ['REVERSO','Reverso','reverso']) || '';
+    const combinedNorm = normalizeText(`${anversoRaw} ${reversoRaw}`);
+
+    if (!tokens || tokens.length === 0) return 0;
+
+    let hits = 0;
+    for (const tok of tokens){
+      const ok = tolerant
+        ? containsTokenTolerant(combinedNorm, tok)
+        : containsTokenExact(combinedNorm, tok);
+
+      if (ok) hits++;
+    }
+
+    return hits / tokens.length;
+  }
+  
   function doSearch() {
     resultsEl.innerHTML = '';
     const rawQuery = searchInput.value.trim();
@@ -844,14 +904,32 @@ document.addEventListener('DOMContentLoaded', () => {
       .map((rec, idx) => ({ rec, idx }))
       .filter(x => recordPassesSilaFilters(x.rec));
 
-    let matches = dbFiltrada
-      .map(x => recordMatches(x.rec, tokens, queryNorm, false) ? x : null)
-      .filter(Boolean);
+    // 1) PRIMERO: coincidencia 100% con alguna expresión de Palabras_Clave
+    let matches = dbFiltrada.filter(x => keywordIsFullyContainedInQuery(x.rec, queryNorm));
 
+    // 2) Si no hay coincidencias exactas en Palabras_Clave,
+    //    buscamos en ANVERSO + REVERSO por porcentaje de acierto
     if (matches.length === 0) {
-      matches = dbFiltrada
-        .map(x => recordMatches(x.rec, tokens, queryNorm, true) ? x : null)
-        .filter(Boolean);
+      let scored = dbFiltrada.map(x => ({
+        ...x,
+        score: getTextMatchScore(x.rec, tokens, false),
+        tolerantUsed: false
+      }));
+
+      let bestScore = Math.max(...scored.map(x => x.score), 0);
+
+      // Si no hubo ningún acierto exacto, probamos con tolerancia
+      if (bestScore === 0) {
+        scored = dbFiltrada.map(x => ({
+          ...x,
+          score: getTextMatchScore(x.rec, tokens, true),
+          tolerantUsed: true
+        }));
+        bestScore = Math.max(...scored.map(x => x.score), 0);
+      }
+
+      // Nos quedamos solo con los de mayor porcentaje
+      matches = scored.filter(x => x.score === bestScore && x.score > 0);
     }
 
     const ctx = getContextoChecksSiNo();
