@@ -346,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (chkNada.checked){
       return (cobra === '' || cobra === 'no') && (inscr === '' || inscr === 'no');
     }
-    if (chkPrestacion.checked) && (chkInscrito.checked){
+    if ((chkPrestacion.checked) & (chkInscrito.checked)){
       return (cobra === 'si' || cobra === '') && (inscr === '' || inscr === 'si');
     }
     if (chkPrestacion.checked){
