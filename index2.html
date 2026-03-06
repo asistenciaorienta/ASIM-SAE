@@ -522,18 +522,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // Si tienes un campo real (p.ej. "Tipo_Documento"), aquí sería ideal:
   // const tipo = normTxt(getField(rec, ['Tipo_Documento','Tipo documento','Tipo']) || '');
   function getDocGroup(rec){
-    const mostrar = normTxt(getField(rec, ['Mostrar','mostrar']) || '');
-    const anverso = normTxt(getField(rec, ['ANVERSO','Anverso','anverso']) || '');
-    const reverso = normTxt(getField(rec, ['REVERSO','Reverso','reverso']) || '');
-    const blob = `${mostrar} ${anverso} ${reverso}`;
-
-    // Resolución/TIE
-    if (/\btie\b/.test(blob) || blob.includes('resolucion') || blob.includes('resolución')) return 'res';
-    // Solicitud
-    if (blob.includes('solicitud') || blob.includes('solicita')) return 'sol';
-    // Recurso
-    if (blob.includes('recurso') || blob.includes('alzada') || blob.includes('reposicion') || blob.includes('reposición')) return 'rec';
-    // Otros
+    const tipoDoc = normTxt(
+      getField(rec, [
+        'Tipo de documento',
+        'tipo de documento',
+        'Tipo_documento',
+        'tipo_documento'
+      ]) || ''
+    );
+  
+    if (tipoDoc === 'resolucion o tie') return 'res';
+    if (tipoDoc === 'solicitud') return 'sol';
+    if (tipoDoc === 'recurso') return 'rec';
+    if (tipoDoc === 'otros') return 'oth';
+  
     return 'oth';
   }
 
