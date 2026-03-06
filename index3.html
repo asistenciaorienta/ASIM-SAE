@@ -724,6 +724,59 @@ document.addEventListener('DOMContentLoaded', () => {
       .filter(Boolean);
   }
 
+  function levenshtein(a, b) {
+    const matrix = Array.from({ length: a.length + 1 }, (_, i) =>
+      Array.from({ length: b.length + 1 }, (__, j) => i === 0 ? j : j === 0 ? i : 0)
+    );
+    for (let i = 1; i <= a.length; i++) {
+      for (let j = 1; j <= b.length; j++) {
+        const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j] + 1,
+          matrix[i][j - 1] + 1,
+          matrix[i - 1][j - 1] + cost
+        );
+      }
+    }
+    return matrix[a.length][b.length];
+  }
+  
+  function containsTokenExact(text, token) {
+    const words = text.split(/\s+/).map(w => w.toLowerCase());
+    token = token.toLowerCase();
+    if (token === 'autoriza') {
+      for (let i = 0; i < words.length; i++) {
+        if (words[i] === 'autoriza' && (i === 0 || words[i-1] !== 'no')) return true;
+      }
+      return false;
+    }
+    if (token === 'no autoriza') {
+      for (let i = 0; i < words.length - 1; i++) {
+        if (words[i] === 'no' && words[i+1] === 'autoriza') return true;
+      }
+      return false;
+    }
+    return words.includes(token);
+  }
+  
+  function containsTokenTolerant(text, token) {
+    const words = text.split(/\s+/);
+    token = token.toLowerCase();
+  
+    for (const w of words) {
+      const word = w.toLowerCase();
+      if (word === token) return true;
+      if (word.startsWith(token) && token.length >= 3) return true;
+  
+      if (token.length >= 4 && word.length >= 4) {
+        const maxLen = Math.max(word.length, token.length);
+        const threshold = Math.max(1, Math.ceil(maxLen * 0.2));
+        if (levenshtein(word, token) <= threshold) return true;
+      }
+    }
+    return false;
+  }
+  
   function keywordIsFullyContainedInQuery(rec, queryNorm){
     const keywords = splitKeywordsToList(getKeywordsRaw(rec));
     if (!keywords.length) return false;
@@ -794,59 +847,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       return merged.length > 0 ? merged : filtered;
-    }
-
-    function levenshtein(a, b) {
-      const matrix = Array.from({ length: a.length + 1 }, (_, i) =>
-        Array.from({ length: b.length + 1 }, (__, j) => i === 0 ? j : j === 0 ? i : 0)
-      );
-      for (let i = 1; i <= a.length; i++) {
-        for (let j = 1; j <= b.length; j++) {
-          const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-          matrix[i][j] = Math.min(
-            matrix[i - 1][j] + 1,
-            matrix[i][j - 1] + 1,
-            matrix[i - 1][j - 1] + cost
-          );
-        }
-      }
-      return matrix[a.length][b.length];
-    }
-
-    function containsTokenExact(text, token) {
-      const words = text.split(/\s+/).map(w => w.toLowerCase());
-      token = token.toLowerCase();
-      if (token === 'autoriza') {
-        for (let i = 0; i < words.length; i++) {
-          if (words[i] === 'autoriza' && (i === 0 || words[i-1] !== 'no')) return true;
-        }
-        return false;
-      }
-      if (token === 'no autoriza') {
-        for (let i = 0; i < words.length - 1; i++) {
-          if (words[i] === 'no' && words[i+1] === 'autoriza') return true;
-        }
-        return false;
-      }
-      return words.includes(token);
-    }
-
-    function containsTokenTolerant(text, token) {
-      const words = text.split(/\s+/);
-      token = token.toLowerCase();
-
-      for (const w of words) {
-        const word = w.toLowerCase();
-        if (word === token) return true;
-        if (word.startsWith(token) && token.length >= 3) return true;
-
-        if (token.length >= 4 && word.length >= 4) {
-          const maxLen = Math.max(word.length, token.length);
-          const threshold = Math.max(1, Math.ceil(maxLen * 0.2));
-          if (levenshtein(word, token) <= threshold) return true;
-        }
-      }
-      return false;
     }
 
     function extractQuotedPhrases(text) {
