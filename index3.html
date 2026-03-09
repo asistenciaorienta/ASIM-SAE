@@ -343,20 +343,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const cobra = normalizeYesNo(getField(rec, ['¿Cobra prestación?', 'Cobra prestación', '¿Cobra prestacion?']));
     const inscr = normalizeYesNo(getField(rec, ['¿Inscrito anteriormente?', '¿Inscrito anteriormente', 'Inscrito anteriormente?']));
 
-    if (chkNada.checked){
+    if (chkNada.checked) {
       return (cobra === '' || cobra === 'no') && (inscr === '' || inscr === 'no');
     }
-    if ((chkPrestacion.checked) & (chkInscrito.checked)){
-      return (cobra === 'si' || cobra === '') && (inscr === '' || inscr === 'si');
+    
+    if (chkPrestacion.checked && chkInscrito.checked) {
+      return cobra === 'si' && inscr === 'si';
     }
-    if (chkPrestacion.checked){
-      return (cobra === 'si' || cobra === '') && (inscr === '' || inscr === 'no');
+    
+    if (chkPrestacion.checked) {
+      return cobra === 'si' && (inscr === '' || inscr === 'no');
     }
-    if (chkInscrito.checked){
-      return (cobra === '' || cobra === 'no') && (inscr === 'si' || inscr === '');
+    
+    if (chkInscrito.checked) {
+      return (cobra === '' || cobra === 'no') && inscr === 'si';
     }
+    
     return (cobra === '' || cobra === 'no') && (inscr === '' || inscr === 'no');
-  }
 
   // ✅ convierte **texto** a <strong>texto</strong> + linkifica
   function renderBoldMarkdown(text){
