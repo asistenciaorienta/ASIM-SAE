@@ -346,19 +346,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     if (chkPrestacion.checked & chkInscrito.checked) {
-      return cobra === 'si' && inscr === 'si';
+      return (cobra === 'si' && inscr === 'si');
     }
     
     if (chkPrestacion.checked) {
-      return cobra === 'si' && (inscr === '' || inscr === 'no');
+      return (cobra === 'si') && (inscr === '' || inscr === 'no');
     }
     
     if (chkInscrito.checked) {
-      return (cobra === '' || cobra === 'no') && inscr === 'si';
+      return (cobra === '' || cobra === 'no') && (inscr === 'si');
     }
     
     return (cobra === '' || cobra === 'no') && (inscr === '' || inscr === 'no');
-
+  }
   // ✅ convierte **texto** a <strong>texto</strong> + linkifica
   function renderBoldMarkdown(text){
     if (text === undefined || text === null) return '';
