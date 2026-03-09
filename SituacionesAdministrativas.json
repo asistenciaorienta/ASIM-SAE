@@ -2220,9 +2220,9 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Residencia\nTEMPORAL REAGRUPAC FAMILIAR autoriza a trabajar reagrupación",
+    "ANVERSO": "Residencia\nTEMPORAL REAGRUPAC FAMILIAR autoriza a trabajar reagrupación 1ª PRIMERA RENOVAC RENOVACIÓN TEMP  FAM AUT CTA CUENTA  AJENA PROPIA PROP",
     "REVERSO": "REAGRUPANTE",
-    "Palabras_Clave": "Residencia\nTEMPORAL REAGRUPAC FAMILIAR reagrupación autoriza a trabajar REAGRUPANTE",
+    "Palabras_Clave": "Residencia\nTEMPORAL REAGRUPAC FAMILIAR reagrupación autoziza a trabajar REAGRUPANTE",
     "Condicionantes": "",
     "Código de inscripción en SILA": "R7",
     "Código de inscripción en SILA OPCIONAL": "",
@@ -2657,7 +2657,7 @@
     "Opción a": "",
     "Opción b": "",
     "Opción c": "",
-    "Mostrar": "Autorización (Resolución): Residencia o Visado por Movilidad Internacional. Ley 14/2013. Apoyo emprendedores y su internacionalización. INVERSOR.**Por haber realizado inversión en España**",
+    "Mostrar": "Autorización (Resolución): Residencia o Visado por Movilidad Internacional. Ley 14/2013. Apoyo emprendedores y su internacionalización. INVERSOR.Por haber realizado inversión en España.**No autoriza a Trababajar.**",
     "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
@@ -2694,7 +2694,7 @@
     "Opción a": "",
     "Opción b": "",
     "Opción c": "",
-    "Mostrar": "Autorización (Resolución): Residencia o Visado por Movilidad Internacional. Ley 14/2013. Apoyo emprendedores y su internacionalización. INVERSOR.**Viene a España para realizar inversión.**",
+    "Mostrar": "Autorización (Resolución): Residencia o Visado por Movilidad Internacional. Ley 14/2013. Apoyo emprendedores y su internacionalización. INVERSOR.Viene a España para realizar inversión.**Autoriza a Trabajar.**",
     "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
@@ -2825,7 +2825,7 @@
     "Alcance de la Autorización": "Autoriza a Trabajar",
     "Alcance de la Autorización OPCIONAL": "",
     "Alcance de la Autorización OPCIONAL2": "",
-    "Observaciones": "ES SOLO PARA LOS FAMILIARES./n\nLOS TITULARES VAN AL R8./n\nLa vigencia de la Autorización será la misma que la del familiar de quien dependen.",
+    "Observaciones": "ES SOLO PARA LOS FAMILIARES./n\nLOS TITULARES (reagrupante) se inscriben en el código R8./n\nLa vigencia de la Autorización será la misma que la del familiar de quien dependen.",
     "Observaciones OPCIONAL": "",
     "Observaciones OPCIONAL2": "",
     "Documentación": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/PERMISO-R9.pdf",
@@ -2960,7 +2960,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Circunstancias excepcionales. Arraigo Socioformativo. Socio-formativo. Arraigo para la formación.",
+    "ANVERSO": "Circunstancias excepcionales. Arraigo Socioformativo. Socio-formativo. Arraigo para la formación. 127.D DT5",
     "REVERSO": "",
     "Palabras_Clave": "Circunstancias excepcionales. Arraigo Socioformativo. Socio-formativo. Arraigo para la formación.",
     "Condicionantes": "",
@@ -3071,7 +3071,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Autorización Residencia Y TRABAJO TEMPORAL CUENTA AJENA INICIAL SIN RESTRICCIONES",
+    "ANVERSO": "Autorización Residencia Y TRABAJO TEMPORAL CUENTA AJENA INICIAL SIN RESTRICCIONES CTA  AUTORIZA A TRABAJAR  AUT TRABAJO EDAD LABORAL",
     "REVERSO": "",
     "Palabras_Clave": "Autorización Residencia Y TRABAJO TEMPORAL CUENTA AJENA INICIAL SIN RESTRICCIONES",
     "Condicionantes": "",
