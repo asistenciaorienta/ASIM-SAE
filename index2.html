@@ -342,10 +342,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const inscr = normalizeYesNo(getField(rec, ['¿Inscrito anteriormente?', '¿Inscrito anteriormente', 'Inscrito anteriormente?']));
 
     if (chkNada.checked) {
-      return (cobra === '' || cobra === 'no') && (inscr === '' || inscr === 'no');
+      return (cobra === '' || cobra === 'no') & (inscr === '' || inscr === 'no');
     }
     
-    if (chkPrestacion.checked && chkInscrito.checked) {
+    if (chkPrestacion.checked & chkInscrito.checked) {
       return cobra === 'si' && inscr === 'si';
     }
     
