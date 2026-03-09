@@ -342,22 +342,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const inscr = normalizeYesNo(getField(rec, ['¿Inscrito anteriormente?', '¿Inscrito anteriormente', 'Inscrito anteriormente?']));
 
     if (chkNada.checked) {
-      return (cobra === '' || cobra === 'no') & (inscr === '' || inscr === 'no');
+      return (cobra === '' || cobra === 'no') &&
+             (inscr === '' || inscr === 'no');
     }
     
-    if (chkPrestacion.checked & chkInscrito.checked) {
-      return (cobra === 'si' && inscr === 'si');
+    if (chkPrestacion.checked && chkInscrito.checked) {
+      return (cobra === 'si' || cobra === '') &&
+             (inscr === 'si' || inscr === '');
     }
     
     if (chkPrestacion.checked) {
-      return (cobra === 'si') && (inscr === '' || inscr === 'no');
+      return (cobra === 'si' || cobra === '') &&
+             (inscr === 'no' || inscr === '');
     }
     
     if (chkInscrito.checked) {
-      return (cobra === '' || cobra === 'no') && (inscr === 'si');
+      return (cobra === 'no' || cobra === '') &&
+             (inscr === 'si' || inscr === '');
     }
     
-    return (cobra === '' || cobra === 'no') && (inscr === '' || inscr === 'no');
+    return (cobra === '' || cobra === 'no') &&
+           (inscr === '' || inscr === 'no');
   }
   // ✅ convierte **texto** a <strong>texto</strong> + linkifica
   function renderBoldMarkdown(text){
