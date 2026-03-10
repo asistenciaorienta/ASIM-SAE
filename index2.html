@@ -1225,14 +1225,22 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Introduce una fecha válida.');
         return;
       }
-
-      const hoy = new Date();
-      const plus30  = addDays(fecha, 30);
-      const plus180 = addDays(fecha, 180);
-
-      if(hoy > plus180) branch = 'a';
-      else if(hoy >= plus30 && hoy <= plus180) branch = 'b';
-      else branch = 'c';
+    
+      const ruleA = (getField(rec, ['Opción a','Opcion a']) || '').trim();
+      const ruleB = (getField(rec, ['Opción b','Opcion b']) || '').trim();
+      const ruleC = (getField(rec, ['Opción c','Opcion c']) || '').trim();
+    
+      const okA = ruleA ? evalRule(ruleA, fecha, fecha) : false;
+      const okB = ruleB ? evalRule(ruleB, fecha, fecha) : false;
+      const okC = ruleC ? evalRule(ruleC, fecha, fecha) : false;
+    
+      if(okA === true) branch = 'a';
+      else if(okB === true) branch = 'b';
+      else if(okC === true) branch = 'c';
+      else {
+        alert('No se ha podido determinar A/B/C con las reglas.');
+        return;
+      }
     }
 
     else if(tipo === 'dosfechas'){
