@@ -938,7 +938,7 @@ document.addEventListener('DOMContentLoaded', () => {
     else if (/^hoy\b|^now\b/.test(s)) base = new Date();
     else return null;
 
-    const m = s.match(/(fecha\s*1|fecha1|fecha\s*2|fecha2|hoy|now)\s*([+-])\s*(\d+)\s*(dias|dia|anos|ano|years|year|days|day)\b/);
+    const m = s.match(/(fecha\s*1|fecha1|fecha\s*2|fecha2|hoy|now)\s*([+-])\s*(\d+)\s*(dias|dia|anos|años|año|ano|years|year|days|day)\b/);
     if (m){
       const sign = m[2] === '-' ? -1 : 1;
       const n = parseInt(m[3], 10) * sign;
