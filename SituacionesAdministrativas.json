@@ -400,7 +400,7 @@
     "Opción a": "hoy > fecha1 y hoy <= fecha1 + 90 dias",
     "Opción b": "hoy > fecha1 + 90 dias",
     "Opción c": "hoy <= fecha1",
-    "Mostrar": "Autorización de LARGA DURACIÓN  para **Protección internacional (Asilo o Protección Subsidiaria)** ",
+    "Mostrar": "Autorización de residencia de LARGA DURACIÓN  para **Protección internacional (Asilo o Protección Subsidiaria)** ",
     "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "* Fecha de caducidad (lo informa el documento)\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "13/02/2026",
@@ -925,7 +925,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Solicitud renovacion o prorroga Menor tutelado por la entidad de protección de menores . (Menores extranjeros no acompañados).  junta de andalucia",
+    "ANVERSO": "Solicitud renovacion o prorroga Menor tutelado por la entidad de protección de menores . (Menores extranjeros no acompañados).  junta de andalucia menor extranjero no acompañado",
     "REVERSO": "",
     "Palabras_Clave": "Solicitud renovacion o prorroga Menor tutelado por la entidad de protección de menores . (Menores extranjeros no acompañados).  junta de andalucia",
     "Condicionantes": "Preguntar al técnico fecha nacimiento.\n>16 años, podra trabajar aunque la TIE fuera expedida anteriormente y dijera que no.\n<16 años, no procede inscripción.",
@@ -962,7 +962,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Menor tutelado por la entidad de protección de menores CON Autorización de Residencia temporal. (Menores extranjeros no acompañados). Concesión Autorización Residencia temporal inicial junta de andalucia ART. 172 habilita trabajar aut trabajo en edad laboral tutelado residencial autoriza cuenta ajena propia",
+    "ANVERSO": "Menor tutelado por la entidad de protección de menores CON Autorización de Residencia temporal. (Menores extranjeros no acompañados). Concesión Autorización Residencia temporal inicial junta de andalucia ART. 172 habilita trabajar aut trabajo en edad laboral tutelado residencial autoriza cuenta ajena propia menor extranjero no acompañado",
     "REVERSO": "",
     "Palabras_Clave": "Menor tutelado por la entidad de protección de menores CON Autorización de Residencia temporal. (Menores extranjeros no acompañados). Concesión Autorización Residencia temporal inicial junta de andalucia ART. 172 habilita trabajar aut trabajo en edad laboral tutelado residencial autoriza cuenta ajena propia",
     "Condicionantes": "Preguntar al técnico fecha nacimiento.\n>16 años, podra trabajar aunque la TIE fuera expedida anteriormente y dijera que no.\n<16 años, no procede inscripción.",
@@ -993,13 +993,13 @@
     "Opción b": "hoy < fecha1 + 16 anos",
     "Opción c": "",
     "Mostrar": "Autorización para MENOR TUTELADO por la entidad de protección de menores **CON Autorización de Residencia temporal.** (Menores extranjeros no acompañados)",
-    "Tipo de documento": "TIE",
+    "Tipo de documento": "Resolución o TIE",
     "¿Que pide SILA?": "",
     "Fecha de la última actualización": "6/02/2026",
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Menor tutelado por la entidad de protección de menores SIN Autorización de Residencia temporal. Acreditación de Servicios de Protección de Menores  junta de andalucia MENA  Certificado  Servicio certifica menor acogido",
+    "ANVERSO": "Menor tutelado por la entidad de protección de menores SIN Autorización de Residencia temporal. Acreditación de Servicios de Protección de Menores  junta de andalucia MENA  Certificado  Servicio certifica menor acogido menor extranjero no acompañado menores extranjeros no acompañados menor extranjero no acompañado",
     "REVERSO": "",
     "Palabras_Clave": "Menor tutelado por la entidad de protección de menores SIN Autorización de Residencia temporal. Acreditación de Servicios de Protección de Menores  junta de andalucia MENA  Certificado  Servicio certifica menor acogido",
     "Condicionantes": "Preguntar al técnico fecha nacimiento.\nVigencia: Ver cuando cumple 18 años + 90 dias\n\nentre 16 y 18años +90 días servicios previos\n<16 no inscribe\n>18 años + 90 días no inscribe",
