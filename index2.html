@@ -781,21 +781,55 @@ document.addEventListener('DOMContentLoaded', () => {
       return words.includes(token);
     }
 
+    function normalizePluralSingular(word){
+      let w = String(word || '').toLowerCase();
+    
+      // plurales muy simples en español
+      if (w.endsWith('es') && w.length > 4) {
+        return w.slice(0, -2);
+      }
+      if (w.endsWith('s') && w.length > 3) {
+        return w.slice(0, -1);
+      }
+    
+      return w;
+    }
+    
     function containsTokenTolerant(text, token) {
       const words = text.split(/\s+/);
       token = token.toLowerCase();
-
+    
+      const tokenBase = normalizePluralSingular(token);
+    
       for (const w of words) {
         const word = w.toLowerCase();
+        const wordBase = normalizePluralSingular(word);
+    
+        // 1. Exacta
         if (word === token) return true;
+    
+        // 2. Singular/plural simple
+        if (wordBase === tokenBase) return true;
+    
+        // 3. Prefijo
         if (word.startsWith(token) && token.length >= 3) return true;
-
+        if (wordBase.startsWith(tokenBase) && tokenBase.length >= 3) return true;
+    
+        // 4. Levenshtein
         if (token.length >= 4 && word.length >= 4) {
           const maxLen = Math.max(word.length, token.length);
           const threshold = Math.max(1, Math.ceil(maxLen * 0.2));
           if (levenshtein(word, token) <= threshold) return true;
         }
+    
+        // 5. Levenshtein sobre base singular/plural
+        if (tokenBase.length >= 4 && wordBase.length >= 4) {
+          const maxLenBase = Math.max(wordBase.length, tokenBase.length);
+          const thresholdBase = Math.max(1, Math.ceil(maxLenBase * 0.2));
+          if (levenshtein(wordBase, tokenBase) <= thresholdBase) return true;
+        }
       }
+    
       return false;
     }
 
