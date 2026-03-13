@@ -708,6 +708,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  function getBestTokenMatchResults(records, tokens, tolerant=false){
+    if (!tokens || tokens.length === 0) return [];
+  
+    const scored = records.map(x => {
+      const anversoRaw = getField(x.rec, ['ANVERSO','Anverso','anverso']) || '';
+      const reversoRaw = getField(x.rec, ['REVERSO','Reverso','reverso']) || '';
+      const text = normalizeText(`${anversoRaw} ${reversoRaw}`);
+  
+      let hits = 0;
+  
+      for (const tok of tokens){
+        const ok = tolerant
+          ? containsTokenTolerant(text, tok)
+          : containsTokenExact(text, tok);
+  
+        if (ok) hits++;
+      }
+  
+      return {
+        ...x,
+        hits,
+        total: tokens.length,
+        score: hits / tokens.length
+      };
+    });
+  
+    const maxScore = Math.max(...scored.map(x => x.score), 0);
+  
+    if (maxScore <= 0) return [];
+  
+    return scored.filter(x => x.score === maxScore);
+  }
+  
   function doSearch() {
     resultsEl.innerHTML = '';
     const rawQuery = searchInput.value.trim();
@@ -887,15 +920,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const dbFiltrada = db
       .map((rec, idx) => ({ rec, idx }))
       .filter(x => recordPassesSilaFilters(x.rec));
-
-    let matches = dbFiltrada
-      .map(x => recordMatches(x.rec, tokens, queryNorm, false) ? x : null)
-      .filter(Boolean);
-
+    
+    // 1) coincidencia fuerte en Palabras_Clave
+    let matches = dbFiltrada.filter(x => keywordIsFullyContainedInQuery(x.rec, queryNorm));
+    
+    // 2) si no hay, buscar por mejor porcentaje en ANVERSO/REVERSO
     if (matches.length === 0) {
-      matches = dbFiltrada
-        .map(x => recordMatches(x.rec, tokens, queryNorm, true) ? x : null)
-        .filter(Boolean);
+      matches = getBestTokenMatchResults(dbFiltrada, tokens, false);
+    }
+    
+    // 3) si tampoco hay, búsqueda tolerante por mejor porcentaje
+    if (matches.length === 0) {
+      matches = getBestTokenMatchResults(dbFiltrada, tokens, true);
     }
 
     const ctx = getContextoChecksSiNo();
