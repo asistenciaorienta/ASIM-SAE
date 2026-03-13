@@ -740,6 +740,33 @@ document.addEventListener('DOMContentLoaded', () => {
   
     return scored.filter(x => x.score === maxScore);
   }
+  
+  function areSimplePluralVariants(a, b){
+    a = String(a || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu,'');
+  
+    b = String(b || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu,'');
+  
+    if (!a || !b) return false;
+    if (a === b) return true;
+  
+    // evitar palabras demasiado cortas
+    if (a.length < 5 || b.length < 5) return false;
+  
+    // tarjeta / tarjetas
+    if (a + 's' === b || b + 's' === a) return true;
+  
+    // opcion simple para -es
+    if (a + 'es' === b || b + 'es' === a) return true;
+  
+    return false;
+  }
+  
   /*========================================================DOSEARCH========================================================================*/
    function doSearch() {   
     resultsEl.innerHTML = '';
@@ -839,32 +866,27 @@ document.addEventListener('DOMContentLoaded', () => {
     function containsTokenTolerant(text, token) {
       const words = text.split(/\s+/);
       token = token.toLowerCase();
-  
-      const tokenBase = normalizePluralSingular(token);
-  
+    
       for (const w of words) {
         const word = w.toLowerCase();
-        const wordBase = normalizePluralSingular(word);
-  
+    
+        // 1. Exacta
         if (word === token) return true;
-        if (wordBase === tokenBase) return true;
-  
+    
+        // 2. Singular/plural simple
+        if (areSimplePluralVariants(word, token)) return true;
+    
+        // 3. Prefijo
         if (word.startsWith(token) && token.length >= 3) return true;
-        if (wordBase.startsWith(tokenBase) && tokenBase.length >= 3) return true;
-  
+    
+        // 4. Levenshtein
         if (token.length >= 4 && word.length >= 4) {
           const maxLen = Math.max(word.length, token.length);
           const threshold = Math.max(1, Math.ceil(maxLen * 0.2));
           if (levenshtein(word, token) <= threshold) return true;
         }
-  
-        if (tokenBase.length >= 4 && wordBase.length >= 4) {
-          const maxLenBase = Math.max(wordBase.length, tokenBase.length);
-          const thresholdBase = Math.max(1, Math.ceil(maxLenBase * 0.2));
-          if (levenshtein(wordBase, tokenBase) <= thresholdBase) return true;
-        }
       }
-  
+    
       return false;
     }
   
