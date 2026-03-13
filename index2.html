@@ -740,9 +740,10 @@ document.addEventListener('DOMContentLoaded', () => {
   
     return scored.filter(x => x.score === maxScore);
   }
-  
-  function doSearch() {
+  /*========================================================DOSEARCH========================================================================*/
+   function doSearch() {   
     resultsEl.innerHTML = '';
+  
     const rawQuery = searchInput.value.trim();
     if (!rawQuery) {
       resultsEl.innerHTML = '<div class="small">Escribe una o varias palabras para buscar.</div>';
@@ -750,23 +751,29 @@ document.addEventListener('DOMContentLoaded', () => {
       appendHelpResult();
       return;
     }
-
+  
     function normalize(s) {
       if (!s) return '';
       return String(s)
         .normalize('NFD')
-        .replace(/\p{Diacritic}/gu,'')
-        .replace(/[^\p{L}\p{N}]+/gu,' ')
+        .replace(/\p{Diacritic}/gu, '')
+        .replace(/[^\p{L}\p{N}]+/gu, ' ')
         .toLowerCase()
         .trim();
     }
-
-    const STOPWORDS = new Set(['a','la','el','los','las','de','del','y','o','en','por','para','con','sin','que','un','una','al','se','su','sus']);
+  
+    const STOPWORDS = new Set([
+      'a','la','el','los','las','de','del','y','o','en','por',
+      'para','con','sin','que','un','una','al','se','su','sus'
+    ]);
+  
     function tokenizeQuery(q) {
       const norm = normalize(q);
       if (!norm) return [];
+  
       const toks = Array.from(new Set(norm.split(/\s+/).filter(Boolean)));
       const filtered = toks.filter(t => !STOPWORDS.has(t));
+  
       const merged = [];
       for (let i = 0; i < filtered.length; i++) {
         if (filtered[i] === 'no' && filtered[i + 1] === 'autoriza') {
@@ -776,13 +783,15 @@ document.addEventListener('DOMContentLoaded', () => {
           merged.push(filtered[i]);
         }
       }
+  
       return merged.length > 0 ? merged : filtered;
     }
-
+  
     function levenshtein(a, b) {
       const matrix = Array.from({ length: a.length + 1 }, (_, i) =>
         Array.from({ length: b.length + 1 }, (__, j) => i === 0 ? j : j === 0 ? i : 0)
       );
+  
       for (let i = 1; i <= a.length; i++) {
         for (let j = 1; j <= b.length; j++) {
           const cost = a[i - 1] === b[j - 1] ? 0 : 1;
@@ -793,88 +802,144 @@ document.addEventListener('DOMContentLoaded', () => {
           );
         }
       }
+  
       return matrix[a.length][b.length];
     }
-
+  
     function containsTokenExact(text, token) {
       const words = text.split(/\s+/).map(w => w.toLowerCase());
       token = token.toLowerCase();
+  
       if (token === 'autoriza') {
         for (let i = 0; i < words.length; i++) {
-          if (words[i] === 'autoriza' && (i === 0 || words[i-1] !== 'no')) return true;
+          if (words[i] === 'autoriza' && (i === 0 || words[i - 1] !== 'no')) return true;
         }
         return false;
       }
+  
       if (token === 'no autoriza') {
         for (let i = 0; i < words.length - 1; i++) {
-          if (words[i] === 'no' && words[i+1] === 'autoriza') return true;
+          if (words[i] === 'no' && words[i + 1] === 'autoriza') return true;
         }
         return false;
       }
+  
       return words.includes(token);
     }
-
-    function normalizePluralSingular(word){
+  
+    function normalizePluralSingular(word) {
       let w = String(word || '').toLowerCase();
-    
-      // plurales muy simples en español
-      if (w.endsWith('es') && w.length > 4) {
-        return w.slice(0, -2);
-      }
-      if (w.endsWith('s') && w.length > 3) {
-        return w.slice(0, -1);
-      }
-    
+  
+      if (w.endsWith('es') && w.length > 4) return w.slice(0, -2);
+      if (w.endsWith('s') && w.length > 3) return w.slice(0, -1);
+  
       return w;
     }
-    
+  
     function containsTokenTolerant(text, token) {
       const words = text.split(/\s+/);
       token = token.toLowerCase();
-    
+  
       const tokenBase = normalizePluralSingular(token);
-    
+  
       for (const w of words) {
         const word = w.toLowerCase();
         const wordBase = normalizePluralSingular(word);
-    
-        // 1. Exacta
+  
         if (word === token) return true;
-    
-        // 2. Singular/plural simple
         if (wordBase === tokenBase) return true;
-    
-        // 3. Prefijo
+  
         if (word.startsWith(token) && token.length >= 3) return true;
         if (wordBase.startsWith(tokenBase) && tokenBase.length >= 3) return true;
-    
-        // 4. Levenshtein
+  
         if (token.length >= 4 && word.length >= 4) {
           const maxLen = Math.max(word.length, token.length);
           const threshold = Math.max(1, Math.ceil(maxLen * 0.2));
           if (levenshtein(word, token) <= threshold) return true;
         }
-    
-        // 5. Levenshtein sobre base singular/plural
+  
         if (tokenBase.length >= 4 && wordBase.length >= 4) {
           const maxLenBase = Math.max(wordBase.length, tokenBase.length);
           const thresholdBase = Math.max(1, Math.ceil(maxLenBase * 0.2));
           if (levenshtein(wordBase, tokenBase) <= thresholdBase) return true;
         }
       }
-    
+  
       return false;
     }
-
-    function extractQuotedPhrases(text) {
-      const quotes = [];
-      for (const m of text.matchAll(/"([^"]+)"/g)) {
-        quotes.push(normalize(m[1]));
-      }
-      const normalizedText = normalize(text);
-      return { quotes, normalizedText };
+  
+    function normalizeText(s) {
+      if (!s) return '';
+      return String(s)
+        .normalize('NFD')
+        .replace(/\p{Diacritic}/gu, '')
+        .replace(/[^\p{L}\p{N}]+/gu, ' ')
+        .toLowerCase()
+        .trim();
     }
-
+  
+    function getKeywordsRaw(rec) {
+      return (getField(rec, [
+        'Palabras_Clave',
+        'palabras_clave',
+        'PALABRAS_CLAVE'
+      ]) || '').toString();
+    }
+  
+    function splitKeywordsToList(raw) {
+      return String(raw || '')
+        .replace(/(\r\n|\r|\n|\\n|\/n|\|\|)/g, ';')
+        .split(/[;,|]+/g)
+        .map(x => normalizeText(x))
+        .filter(Boolean);
+    }
+  
+    function keywordIsFullyContainedInQuery(rec, queryNorm) {
+      const keywords = splitKeywordsToList(getKeywordsRaw(rec));
+      if (!keywords.length) return false;
+  
+      for (const kw of keywords) {
+        const kwTokens = kw.split(/\s+/).filter(Boolean);
+        if (kwTokens.length === 0) continue;
+  
+        const allInside = kwTokens.every(tok => containsTokenExact(queryNorm, tok));
+        if (allInside) return true;
+      }
+  
+      return false;
+    }
+  
+    function getBestTokenMatchResults(records, tokens, tolerant = false) {
+      if (!tokens || tokens.length === 0) return [];
+  
+      const scored = records.map(x => {
+        const anversoRaw = getField(x.rec, ['ANVERSO', 'Anverso', 'anverso']) || '';
+        const reversoRaw = getField(x.rec, ['REVERSO', 'Reverso', 'reverso']) || '';
+        const text = normalizeText(`${anversoRaw} ${reversoRaw}`);
+  
+        let hits = 0;
+        for (const tok of tokens) {
+          const ok = tolerant
+            ? containsTokenTolerant(text, tok)
+            : containsTokenExact(text, tok);
+  
+          if (ok) hits++;
+        }
+  
+        return {
+          ...x,
+          hits,
+          total: tokens.length,
+          score: hits / tokens.length
+        };
+      });
+  
+      const maxScore = Math.max(...scored.map(x => x.score), 0);
+      if (maxScore <= 0) return [];
+  
+      return scored.filter(x => x.score === maxScore);
+    }
+  
     const tokens = tokenizeQuery(rawQuery);
     if (tokens.length === 0) {
       resultsEl.innerHTML = '<div class="small">Escribe una o varias palabras para buscar.</div>';
@@ -882,60 +947,28 @@ document.addEventListener('DOMContentLoaded', () => {
       appendHelpResult();
       return;
     }
+  
     const queryNorm = normalize(rawQuery);
-
-    function recordMatches(rec, tokens, queryNorm, tolerant=false) {
-      const anversoRaw = getField(rec, ['ANVERSO','Anverso','anverso']) || '';
-      const reversoRaw = getField(rec, ['REVERSO','Reverso','reverso']) || '';
-      const combinedRaw = `${anversoRaw} ${reversoRaw}`.trim();
-      const { quotes: quotedPhrases, normalizedText: combinedNorm } = extractQuotedPhrases(combinedRaw);
-
-      for (const qp of quotedPhrases) {
-        if (!queryNorm.includes(qp)) {
-          const qpWords = qp.split(/\s+/).filter(Boolean);
-          for (const tok of tokens) {
-            if (qpWords.includes(tok)) return false;
-          }
-        }
-      }
-
-      for (const tok of tokens) {
-        if (tok === 'autoriza') {
-          if (!combinedNorm.includes('autoriza') || combinedNorm.includes('no autoriza')) return false;
-        } else if (tok === 'no autoriza') {
-          if (!combinedNorm.includes('no autoriza')) return false;
-        } else if (quotedPhrases.includes(tok)) {
-          continue;
-        } else {
-          if (tolerant) {
-            if (!containsTokenTolerant(combinedNorm, tok)) return false;
-          } else {
-            if (!containsTokenExact(combinedNorm, tok)) return false;
-          }
-        }
-      }
-      return true;
-    }
-
+  
     const dbFiltrada = db
       .map((rec, idx) => ({ rec, idx }))
       .filter(x => recordPassesSilaFilters(x.rec));
-    
+  
     // 1) coincidencia fuerte en Palabras_Clave
     let matches = dbFiltrada.filter(x => keywordIsFullyContainedInQuery(x.rec, queryNorm));
-    
-    // 2) si no hay, buscar por mejor porcentaje en ANVERSO/REVERSO
+  
+    // 2) si no hay, mejor porcentaje exacto en ANVERSO/REVERSO
     if (matches.length === 0) {
       matches = getBestTokenMatchResults(dbFiltrada, tokens, false);
     }
-    
-    // 3) si tampoco hay, búsqueda tolerante por mejor porcentaje
+  
+    // 3) si tampoco hay, mejor porcentaje tolerante en ANVERSO/REVERSO
     if (matches.length === 0) {
       matches = getBestTokenMatchResults(dbFiltrada, tokens, true);
     }
-
+  
     const ctx = getContextoChecksSiNo();
-
+  
     if (matches.length === 0) {
       resultsEl.innerHTML = '<div class="small">No se han encontrado registros con el filtro aplicado.</div>';
       countResults.textContent = '0';
@@ -943,8 +976,7 @@ document.addEventListener('DOMContentLoaded', () => {
       logBusquedaToSheets(rawQuery, 0, ctx.cobra, ctx.inscrito);
       return;
     }
-
-    // Si hay 1, abre modal y no pintes lista
+  
     if (matches.length === 1) {
       countResults.textContent = '1';
       openRecord(matches[0].rec);
@@ -952,14 +984,13 @@ document.addEventListener('DOMContentLoaded', () => {
       logBusquedaToSheets(rawQuery, 1, ctx.cobra, ctx.inscrito);
       return;
     }
-
+  
     countResults.textContent = String(matches.length);
     logBusquedaToSheets(rawQuery, matches.length, ctx.cobra, ctx.inscrito);
-
-    // ✅ NUEVO: render por grupos
+  
     renderGroupedResults(matches);
   }
-
+  /*========================================================FIN DO SEARCH========================================================================*/
   btnSearch.addEventListener('click', doSearch);
 
   searchInput.addEventListener('keydown', e => {
