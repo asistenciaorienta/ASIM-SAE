@@ -49,15 +49,232 @@ header .titulo-header{position:absolute;text-align:center;flex:1;left:50%;transf
 .result-item h4{margin:0;font-weight:normal;}
 .results .result-item p{white-space:pre-wrap;}
 
-.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);justify-content:center;align-items:center;z-index:9999;}
-.modal{background:var(--card-bg);border-radius:10px;padding:0;width:90%;max-width:720px;max-height:80vh;overflow:auto;box-shadow:0 20px 40px rgba(0,0,0,0.25);}
-.modal-header-sae{background:var(--sae-green);color:#fff;padding:14px 18px;border-top-left-radius:10px;border-top-right-radius:10px;}
-.modal-body-sae{padding:16px 18px;line-height:1.8;}
-.actions{display:flex;gap:10px;justify-content:center;padding:12px;}
-.actions button{padding:11px 18px;border-radius:8px;border:none;background:var(--sae-green);color:#fff;font-weight:600;cursor:pointer;}
 .no-data{color:var(--muted);font-style:italic;}
 @media (max-width:600px){.filters{flex-direction:column;align-items:flex-start}}
+/* =========================
+   MODALES - NUEVO DISEÑO
+========================= */
+.modal-backdrop{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(20, 30, 25, 0.42);
+  backdrop-filter: blur(2px);
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  padding:18px;
+}
 
+.modal{
+  background:linear-gradient(180deg, #ffffff 0%, #fbfcfb 100%);
+  border-radius:18px;
+  padding:0;
+  width:100%;
+  max-width:760px;
+  max-height:85vh;
+  overflow:auto;
+  box-shadow:
+    0 24px 60px rgba(0,0,0,0.22),
+    0 6px 16px rgba(0,0,0,0.10);
+  border:1px solid #dfe8e1;
+}
+
+/* cabecera */
+.modal-header-sae{
+  background:linear-gradient(135deg, #007A33 0%, #0a8f42 100%);
+  color:#fff;
+  padding:18px 22px 16px;
+  border-top-left-radius:18px;
+  border-top-right-radius:18px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  box-shadow: inset 0 -1px 0 rgba(255,255,255,0.12);
+}
+
+.modal-header-label{
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  opacity:.9;
+}
+
+.modal-header-sae h3,
+.modal-header-sae h4{
+  margin:0;
+  line-height:1.35;
+}
+
+#modalDetalleTitulo,
+#modalPreguntasTitulo{
+  font-size:22px;
+  font-weight:800;
+  color:#fff;
+}
+
+.modal-header-help{
+  font-size:13px;
+  opacity:.92;
+}
+
+/* cuerpo */
+.modal-body-sae{
+  padding:20px 22px;
+  line-height:1.65;
+  background:#f7faf8;
+}
+
+/* campos del detalle */
+.modal-body-sae .field{
+  background:#fff;
+  border:1px solid #e3ebe5;
+  border-radius:14px;
+  padding:14px 16px;
+  margin-bottom:12px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.03);
+}
+
+.modal-body-sae .field > strong:first-child,
+.modal-body-sae .field > span:first-child{
+  display:block;
+  margin-bottom:6px;
+  color:#0f5132;
+  font-size:13px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+}
+
+.modal-body-sae .field a{
+  color:#006c2e;
+  font-weight:700;
+  text-decoration:underline;
+}
+
+.modal-body-sae .small{
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* preguntas */
+#modalPreguntasContent .field{
+  background:#fff;
+  border:1px solid #e3ebe5;
+  border-radius:14px;
+  padding:14px 16px;
+  margin-bottom:12px;
+}
+
+#modalPreguntasContent input[type="date"]{
+  margin-top:8px;
+  width:100%;
+  max-width:220px;
+  padding:10px 12px;
+  border:1px solid #cfdcd2;
+  border-radius:10px;
+  font-size:14px;
+  background:#fff;
+  box-sizing:border-box;
+}
+
+#modalPreguntasContent label{
+  color:#1f2d24;
+}
+
+#modalPreguntasContent input[type="radio"]{
+  transform:scale(1.08);
+}
+
+/* separador del modal de preguntas */
+.modal-header-sae hr{
+  border:none;
+  border-top:1px solid rgba(255,255,255,0.25);
+  margin:4px 0 2px;
+}
+
+/* pie / acciones */
+.actions{
+  display:flex;
+  gap:12px;
+  justify-content:flex-end;
+  padding:16px 22px 20px;
+  background:#ffffff;
+  border-top:1px solid #e5ece6;
+  position:sticky;
+  bottom:0;
+}
+
+.actions button{
+  min-width:120px;
+  padding:11px 18px;
+  border-radius:12px;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+  transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.actions button:hover{
+  transform:translateY(-1px);
+}
+
+#btnVolverDetalle,
+#btnContinuarPreguntas{
+  background:var(--sae-green);
+  color:#fff;
+}
+
+#btnCancelarPreguntas{
+  background:#e9efea;
+  color:#1f2d24;
+}
+
+/* scroll bonito */
+.modal::-webkit-scrollbar{
+  width:10px;
+}
+.modal::-webkit-scrollbar-thumb{
+  background:#c8d8cb;
+  border-radius:999px;
+}
+.modal::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+@media (max-width: 640px){
+  .modal{
+    max-height:90vh;
+    border-radius:16px;
+  }
+
+  .modal-header-sae{
+    padding:16px 16px 14px;
+    border-top-left-radius:16px;
+    border-top-right-radius:16px;
+  }
+
+  .modal-body-sae{
+    padding:16px;
+  }
+
+  .actions{
+    padding:14px 16px 16px;
+    justify-content:stretch;
+    flex-direction:column-reverse;
+  }
+
+  .actions button{
+    width:100%;
+  }
+
+  #modalDetalleTitulo,
+  #modalPreguntasTitulo{
+    font-size:19px;
+  }
+}
 footer{
   display:flex;justify-content:space-between;align-items:center;
   padding:10px 20px;background-color:#f5f5f5;flex-wrap:wrap;
@@ -222,20 +439,24 @@ input.enabled.flash{animation:inputFlash 0.4s ease-out;}
 
     <div id="modalDetalle" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
       <div class="modal" role="document">
-        <div class="modal-header-sae">Datos para la Inscripción:<h4 id="modalDetalleTitulo"></h4></div>
+        <div class="modal-header-sae">
+          <div class="modal-header-label">Datos para la inscripción</div>
+          <h4 id="modalDetalleTitulo"></h4>
+        </div>
         <div class="modal-body-sae" id="modalDetalleContent"></div>
         <div class="actions">
           <button id="btnVolverDetalle" class="btn">Volver</button>
         </div>
       </div>
     </div>
-
+    
     <div id="modalPreguntas" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
       <div class="modal" role="document">
         <div class="modal-header-sae">
-          <h3 id="modalPreguntasTitulo" style="margin:6px 0 0"></h3>
+          <div class="modal-header-label">Formulario previo</div>
+          <h3 id="modalPreguntasTitulo"></h3>
           <hr>
-          <div>Indica la información que se solicita</div>
+          <div class="modal-header-help">Indica la información que se solicita para determinar la opción correcta</div>
         </div>
         <div class="modal-body-sae" id="modalPreguntasContent"></div>
         <div class="actions">
@@ -244,12 +465,13 @@ input.enabled.flash{animation:inputFlash 0.4s ease-out;}
         </div>
       </div>
     </div>
+    
   </div>
 </div>
 
 <footer>
   <div class="footer-logo">
-    <div class="logo-text"><b>Versión pruebas 09-03-2026 — Dirección Provincial de Granada</b></div>
+    <div class="logo-text"><b>Versión pruebas 16-03-2026 — Dirección Provincial de Granada</b></div>
   </div>
 </footer>
 
