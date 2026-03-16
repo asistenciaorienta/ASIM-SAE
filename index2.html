@@ -1790,6 +1790,49 @@ document.addEventListener('DOMContentLoaded', () => {
     modalPreguntasContent.appendChild(box);
   }
 
+  function addTextInput(id, labelText, placeholder = ''){
+    const wrap = document.createElement('div');
+    wrap.className = 'field';
+    wrap.innerHTML = `
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label for="${id}"><strong>${labelText}</strong></label>
+        <input
+          id="${id}"
+          type="text"
+          placeholder="${placeholder}"
+          style="
+            width:100%;
+            padding:10px 12px;
+            border:1px solid #cfdcd2;
+            border-radius:10px;
+            font-size:14px;
+            background:#fff;
+            box-sizing:border-box;
+          "
+        >
+      </div>
+    `;
+    modalPreguntasContent.appendChild(wrap);
+  }
+  
+  function addYesNoRadios(idName, labelText){
+    const wrap = document.createElement('div');
+    wrap.className = 'field';
+    wrap.innerHTML = `
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <strong>${labelText}</strong>
+        <div style="display:flex;gap:18px;flex-wrap:wrap">
+          <label style="display:flex;align-items:center;gap:8px;">
+            <input type="radio" name="${idName}" value="si"> Sí
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;">
+            <input type="radio" name="${idName}" value="no"> No
+          </label>
+        </div>
+      </div>
+    `;
+    modalPreguntasContent.appendChild(wrap);
+  }
   function openModalPreguntas(rec, tipo){
     _pregState = { rec, tipo, selectedBranch: null, phase: 'initial', fecha1: null, fecha2: null };
 
@@ -1798,6 +1841,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const p1 = (getField(rec, ['Pregunta1']) || '').trim();
     const p2 = (getField(rec, ['Pregunta2']) || '').trim();
+    const p3 = (getField(rec, ['Pregunta3']) || '').trim();
 
     function addDateInput(id, labelText){
       const wrap = document.createElement('div');
@@ -1858,6 +1902,18 @@ document.addEventListener('DOMContentLoaded', () => {
       if(p2) addQuestion(p2);
       addABCRadios();
     }
+    else if (tipo === 'mas_datos') {
+      if (p1) addTextInput('pregTexto1', p1, 'Introduce aquí el texto...');
+      if (p2) addTextInput('pregTexto2', p2, 'Introduce aquí el texto...');
+      if (p3) addTextInput('pregTexto3', p3, 'Introduce aquí el texto...');
+    
+      const pABC = (getField(rec, ['PreguntaABC','preguntaabc']) || '').trim();
+      if (pABC) {
+        addYesNoRadios('pregMasDatosABC', pABC);
+      }
+    
+      _pregState.phase = 'mas_datos';
+    }      
     else {
       const box = document.createElement('div');
       box.className = 'field';
@@ -1969,7 +2025,36 @@ document.addEventListener('DOMContentLoaded', () => {
         branch = checked.value;
       }
     }
-
+    else if (tipo === 'mas_datos') {
+      const t1 = (document.getElementById('pregTexto1')?.value || '').trim();
+      const t2 = (document.getElementById('pregTexto2')?.value || '').trim();
+      const t3 = (document.getElementById('pregTexto3')?.value || '').trim();
+    
+      const abcChecked = document.querySelector('input[name="pregMasDatosABC"]:checked');
+      const abcValue = abcChecked ? abcChecked.value : '';
+    
+      const partesBusqueda = [];
+    
+      if (t1) partesBusqueda.push(t1);
+      if (t2) partesBusqueda.push(t2);
+      if (t3) partesBusqueda.push(t3);
+    
+      if (abcValue === 'si') {
+        partesBusqueda.push('renovación');
+      }
+    
+      const busquedaFinal = partesBusqueda.join(' ').trim();
+    
+      if (!busquedaFinal) {
+        alert('Introduce al menos un dato para realizar la búsqueda.');
+        return;
+      }
+    
+      closeModalPreguntas();
+      searchInput.value = busquedaFinal;
+      doSearch();
+      return;
+    }
     else if(tipo === 'fecha'){
       const v = document.getElementById('pregFecha1')?.value || '';
       const fecha = parseDateInputToDate(v);
