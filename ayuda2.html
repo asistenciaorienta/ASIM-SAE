@@ -357,6 +357,16 @@ footer{
     grid-template-columns:1fr;
   }
 }
+.zoom-wrapper{
+  overflow:hidden;
+  cursor:grab;
+}
+
+.zoom-wrapper img{
+  transition:transform .15s ease;
+  transform-origin:center center;
+  user-select:none;
+}
 </style>
 </head>
 
@@ -441,7 +451,9 @@ footer{
 <div id="imageModal" class="image-modal" aria-hidden="true">
   <div class="image-modal-content">
     <button id="imageModalClose" class="image-modal-close" type="button" aria-label="Cerrar imagen">×</button>
-    <img id="imageModalImg" src="" alt="">
+    <div class="zoom-wrapper">
+      <img id="imageModalImg" src="" alt="">
+    </div>
     <div id="imageModalCaption" class="image-modal-caption"></div>
   </div>
 </div>
@@ -451,41 +463,96 @@ const modal = document.getElementById('imageModal');
 const modalImg = document.getElementById('imageModalImg');
 const modalCaption = document.getElementById('imageModalCaption');
 const modalClose = document.getElementById('imageModalClose');
+const zoomWrapper = document.querySelector('.zoom-wrapper');
+
+let scale = 1;
+let posX = 0;
+let posY = 0;
+let isDragging = false;
+let startX, startY;
+
+function updateTransform(){
+  modalImg.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+}
 
 document.querySelectorAll('.thumb-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    const full = btn.dataset.full;
-    const caption = btn.dataset.caption || '';
-    const img = btn.querySelector('img');
 
-    modalImg.src = full;
-    modalImg.alt = img ? img.alt : caption;
-    modalCaption.textContent = caption;
+    modalImg.src = btn.dataset.full;
+    modalCaption.textContent = btn.dataset.caption || '';
+
+    scale = 1;
+    posX = 0;
+    posY = 0;
+    updateTransform();
 
     modal.classList.add('open');
-    modal.setAttribute('aria-hidden', 'false');
   });
 });
 
-function closeImageModal(){
-  modal.classList.remove('open');
-  modal.setAttribute('aria-hidden', 'true');
-  modalImg.src = '';
-  modalImg.alt = '';
-  modalCaption.textContent = '';
-}
-
 modalClose.addEventListener('click', closeImageModal);
 
-modal.addEventListener('click', (e) => {
-  if (e.target === modal) closeImageModal();
+function closeImageModal(){
+  modal.classList.remove('open');
+  modalImg.src='';
+}
+
+modal.addEventListener('click', (e)=>{
+  if(e.target === modal) closeImageModal();
 });
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && modal.classList.contains('open')) {
-    closeImageModal();
-  }
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape') closeImageModal();
 });
+
+/* ZOOM con rueda */
+zoomWrapper.addEventListener('wheel', e=>{
+  e.preventDefault();
+
+  const zoomIntensity = 0.1;
+
+  if(e.deltaY < 0){
+    scale += zoomIntensity;
+  } else {
+    scale -= zoomIntensity;
+  }
+
+  scale = Math.min(Math.max(1, scale), 5);
+
+  updateTransform();
+});
+
+/* DRAG */
+zoomWrapper.addEventListener('mousedown', e=>{
+  isDragging = true;
+  startX = e.clientX - posX;
+  startY = e.clientY - posY;
+  zoomWrapper.style.cursor = "grabbing";
+});
+
+document.addEventListener('mousemove', e=>{
+  if(!isDragging) return;
+
+  posX = e.clientX - startX;
+  posY = e.clientY - startY;
+
+  updateTransform();
+});
+
+document.addEventListener('mouseup', ()=>{
+  isDragging = false;
+  zoomWrapper.style.cursor = "grab";
+});
+
+/* doble click reset */
+zoomWrapper.addEventListener('dblclick', ()=>{
+  scale = 1;
+  posX = 0;
+  posY = 0;
+  updateTransform();
+});
+
+
 </script>
 </body>
 </html>
