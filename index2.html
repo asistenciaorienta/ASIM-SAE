@@ -1975,12 +1975,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const pABC = (getField(rec, ['PreguntaABC','preguntaabc']) || '').trim();
       if (pABC) {
         addYesNoRadios('pregMasDatosABC', pABC);
-      }        
-      else{
-          alert('Por favor, marque si el motivo de expedición es RENOVACIÓN o no.');
-          return;
-        }
-    
+      }          
       _pregState.phase = 'mas_datos';
     }      
     else {
@@ -2099,9 +2094,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const t2 = (document.getElementById('pregTexto2')?.value || '').trim();
       const t3 = (document.getElementById('pregTexto3')?.value || '').trim();
     
+      const pABC = (getField(rec, ['PreguntaABC','preguntaabc']) || '').trim();
       const abcChecked = document.querySelector('input[name="pregMasDatosABC"]:checked');
-      const abcValue = abcChecked ? abcChecked.value : '';
     
+      // ✅ Si existe PreguntaABC, contestarla es obligatorio
+      if (pABC && !abcChecked) {
+        alert('Debes indicar si es renovación o no antes de continuar.');
+        return;
+      }
+    
+      const abcValue = abcChecked ? abcChecked.value : '';
       const partesBusqueda = [];
     
       if (t1) partesBusqueda.push(t1);
