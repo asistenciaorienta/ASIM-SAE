@@ -1975,7 +1975,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const pABC = (getField(rec, ['PreguntaABC','preguntaabc']) || '').trim();
       if (pABC) {
         addYesNoRadios('pregMasDatosABC', pABC);
-      }
+      }        
+      else{
+          alert('Por favor, marque si el motivo de expedición es RENOVACIÓN o no.');
+          return;
+        }
     
       _pregState.phase = 'mas_datos';
     }      
