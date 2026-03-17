@@ -783,6 +783,15 @@ footer{
     padding-left:10px;
   }
 }
+
+mark.token-hit{
+  background:#fff3a3;
+  color:#1f2a24;
+  padding:0 3px;
+  border-radius:4px;
+  font-weight:700;
+}  
+  
 </style>
 </head>
 
@@ -1190,42 +1199,95 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     return section;
   }
-
-  function buildResultItem(m){
+  
+  function normalizeForCompare(s){
+    return String(s || '')
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu,'')
+      .toLowerCase();
+  }
+  
+  function highlightTokensInHtml(html, tokens){
+    if (!html || !tokens || tokens.length < 1) return html;
+  
+    const cleanTokens = Array.from(new Set(
+      tokens
+        .map(t => String(t || '').trim())
+        .filter(Boolean)
+        .filter(t => t.length >= 2)
+    ));
+  
+    if (cleanTokens.length === 0) return html;
+  
+    const parts = String(html).split(/(<[^>]+>)/g);
+  
+    for (let i = 0; i < parts.length; i++) {
+      const chunk = parts[i];
+      if (!chunk || chunk.startsWith('<')) continue;
+  
+      parts[i] = chunk.replace(/\b[\p{L}\p{N}]+\b/gu, (word) => {
+        const wordNorm = normalizeForCompare(word);
+  
+        for (const tok of cleanTokens) {
+          const tokNorm = normalizeForCompare(tok);
+  
+          if (
+            wordNorm === tokNorm ||
+            areSimplePluralVariants(wordNorm, tokNorm)
+          ) {
+            return `<mark class="token-hit">${word}</mark>`;
+          }
+        }
+  
+        return word;
+      });
+    }
+  
+    return parts.join('');
+  }
+  
+  function renderBoldMarkdownWithHighlights(text, tokens){
+    const html = renderBoldMarkdown(text);
+    return highlightTokensInHtml(html, tokens);
+  }
+  
+  function buildResultItem(m, tokens = []){
     const rec = m.rec;
-
+  
     const wrapper = document.createElement('div');
     wrapper.className = 'result-item';
     wrapper.style.cursor = 'pointer';
     wrapper.style.display = 'flex';
     wrapper.style.alignItems = 'center';
-
+  
     const chkWrap = document.createElement('div');
     chkWrap.className = 'check';
     chkWrap.style.display = 'flex';
     chkWrap.style.alignItems = 'center';
-
+  
     const chk = document.createElement('input');
     chk.type = 'checkbox';
     chk.name = 'selectRec';
     chk.dataset.index = m.idx;
     chkWrap.appendChild(chk);
-
+  
     const content = document.createElement('div');
     content.style.flex = '1';
     content.style.display = 'flex';
     content.style.alignItems = 'center';
     content.style.gap = '4px';
-
+  
     const title = document.createElement('h4');
     title.style.margin = '0';
-    title.innerHTML = renderBoldMarkdown(getField(rec, ['Mostrar','mostrar']) || 'Registro sin campo Mostrar');
-
+  
+    const mostrarTxt = getField(rec, ['Mostrar','mostrar']) || 'Registro sin campo Mostrar';
+    title.innerHTML = renderBoldMarkdownWithHighlights(mostrarTxt, tokens);
+  
     content.appendChild(title);
-
+  
     wrapper.appendChild(chkWrap);
     wrapper.appendChild(content);
-
+  
     wrapper.addEventListener('click', e => {
       if (e.target.tagName.toLowerCase() === 'input') return;
       const all = Array.from(document.querySelectorAll('input[name="selectRec"]'));
@@ -1233,45 +1295,48 @@ document.addEventListener('DOMContentLoaded', () => {
       chk.checked = true;
       openRecord(rec);
     });
-
+  
     chk.addEventListener('change', e => {
       const all = Array.from(document.querySelectorAll('input[name="selectRec"]'));
       all.forEach(inp => { if (inp !== e.target) inp.checked = false; });
       if (e.target.checked) openRecord(rec);
     });
-
+  
     return wrapper;
   }
 
-  function renderGroupedResults(matches){
-    // Vaciar
+  function renderGroupedResults(matches, tokens = []){
     resultsEl.innerHTML = '';
-
+  
     const buckets = { res:[], sol:[], rec:[], oth:[] };
     for (const m of matches){
       const g = getDocGroup(m.rec);
       (buckets[g] || buckets.oth).push(m);
     }
-
+  
     const order = [
       { key:'res', title:'Resoluciones / TIE', cssClass:'group-res' },
       { key:'sol', title:'Solicitudes',       cssClass:'group-sol' },
       { key:'rec', title:'Recursos',          cssClass:'group-rec' },
       { key:'oth', title:'Otros',             cssClass:'group-oth' },
     ];
-
+  
     order.forEach(g => {
       const list = buckets[g.key];
       if (!list || list.length === 0) return;
-
-      const section = createGroupSection({ title:g.title, cssClass:g.cssClass, count:list.length });
+  
+      const section = createGroupSection({
+        title: g.title,
+        cssClass: g.cssClass,
+        count: list.length
+      });
+  
       const body = section.querySelector('.result-section-body');
-
-      list.forEach(m => body.appendChild(buildResultItem(m)));
+      list.forEach(m => body.appendChild(buildResultItem(m, tokens)));
+  
       resultsEl.appendChild(section);
     });
-
-    // ✅ Siempre ayuda al final
+  
     appendHelpResult();
   }
 
@@ -1639,7 +1704,7 @@ document.addEventListener('DOMContentLoaded', () => {
     countResults.textContent = String(matches.length);
     logBusquedaToSheets(rawQuery, matches.length, ctx.cobra, ctx.inscrito);
   
-    renderGroupedResults(matches);
+    renderGroupedResults(matches, tokens);
   }
   /*========================================================FIN DO SEARCH========================================================================*/
   btnSearch.addEventListener('click', doSearch);
