@@ -159,9 +159,9 @@ header h2{
 ========================= */
 .gallery{
   display:grid;
-  grid-template-columns:repeat(4, minmax(0,1fr));
-  gap:16px;
-  margin-top:16px;
+  grid-template-columns:repeat(auto-fit, 180px);
+  justify-content:center;
+  gap:20px;
 }
 
 .thumb-card{
@@ -188,8 +188,9 @@ header h2{
 }
 
 .thumb-btn img{
+  width:180px;
+  height:120px;
   display:block;
-  width:100%;
   aspect-ratio:4/3;
   object-fit:cover;
   border-radius:12px;
