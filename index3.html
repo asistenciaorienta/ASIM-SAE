@@ -809,13 +809,16 @@ mark.token-hit{
 } 
 
 .header-help-footer{
-  /*position:absolute;*/
-  right:20px;
-  bottom:10px;
+  position:absolute;
+  bottom:12px;
+  right:16px;
   font-size:13px;
   color:var(--sae-green);
   font-weight:700;
   text-decoration:none;
+  background:#eef6f0;
+  padding:6px 10px;
+  border-radius:8px;
 }  
 </style>
 </head>
@@ -2005,7 +2008,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (pABC) {
         addYesNoRadios('pregMasDatosABC', pABC);
       }
-    
       _pregState.phase = 'mas_datos';
     }      
     else {
@@ -2124,9 +2126,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const t2 = (document.getElementById('pregTexto2')?.value || '').trim();
       const t3 = (document.getElementById('pregTexto3')?.value || '').trim();
     
+      const pABC = (getField(rec, ['PreguntaABC','preguntaabc']) || '').trim();
       const abcChecked = document.querySelector('input[name="pregMasDatosABC"]:checked');
-      const abcValue = abcChecked ? abcChecked.value : '';
     
+      // ✅ Si existe PreguntaABC, contestarla es obligatorio
+      if (pABC && !abcChecked) {
+        alert('Debes indicar si es renovación o no antes de continuar.');
+        return;
+      }
+    
+      const abcValue = abcChecked ? abcChecked.value : '';
       const partesBusqueda = [];
     
       if (t1) partesBusqueda.push(t1);
