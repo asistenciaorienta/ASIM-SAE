@@ -367,6 +367,127 @@ footer{
   transform-origin:center center;
   user-select:none;
 }
+.img-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.72);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  padding:20px;
+}
+
+.img-modal.open{
+  display:flex;
+}
+
+.img-modal-box{
+  position:relative;
+  width:min(1100px, 96vw);
+  max-height:92vh;
+  background:#fff;
+  border-radius:18px;
+  padding:18px 18px 14px;
+  box-shadow:0 24px 60px rgba(0,0,0,.30);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.img-modal-close{
+  position:absolute;
+  top:10px;
+  right:12px;
+  width:40px;
+  height:40px;
+  border:none;
+  border-radius:999px;
+  background:#eef3ef;
+  color:#233128;
+  font-size:28px;
+  line-height:1;
+  cursor:pointer;
+  font-weight:700;
+}
+
+.img-modal-close:hover{
+  background:#dfe9e2;
+}
+
+.img-toolbar{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-top:4px;
+}
+
+.img-tool-btn{
+  border:none;
+  border-radius:12px;
+  background:#007A33;
+  color:#fff;
+  padding:10px 14px;
+  font-weight:700;
+  cursor:pointer;
+  min-width:54px;
+}
+
+.img-tool-btn:hover{
+  opacity:.92;
+}
+
+.zoom-stage{
+  position:relative;
+  overflow:hidden;
+  background:#f5f7f5;
+  border:1px solid #dbe5dd;
+  border-radius:14px;
+  min-height:320px;
+  max-height:68vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  touch-action:none;
+  cursor:grab;
+}
+
+.zoom-stage.dragging{
+  cursor:grabbing;
+}
+
+.zoom-stage img{
+  max-width:100%;
+  max-height:68vh;
+  object-fit:contain;
+  user-select:none;
+  -webkit-user-drag:none;
+  transform-origin:center center;
+  transition:transform .12s ease;
+}
+
+.img-modal-caption{
+  text-align:center;
+  color:#4f6155;
+  font-size:14px;
+  line-height:1.4;
+}
+
+@media (max-width:640px){
+  .img-modal-box{
+    padding:14px 14px 12px;
+    width:98vw;
+  }
+
+  .zoom-stage{
+    min-height:240px;
+    max-height:60vh;
+  }
+
+  .zoom-stage img{
+    max-height:60vh;
+  }
+}  
 </style>
 </head>
 
@@ -387,7 +508,7 @@ footer{
   </section>
 
   <section class="card">
-    <h3>Qué hacer si no encuentras lo que buscas</h3>
+    <h3>¿Qué hacer si no encuentras lo que buscas?</h3>
 
     <p class="section-text">
       Identifica el documento que se pretende hacer valer y transcribe la situación administrativa que regula.
@@ -431,10 +552,10 @@ footer{
   </section>
 
   <section class="card">
-    <h3>Qué hacer si mi búsqueda proporciona varias opciones</h3>
+    <h3>¿Qué hacer si mi búsqueda proporciona varias opciones?</h3>
 
     <p class="section-text">
-      Texto provisional de ejemplo. Aquí podrás explicar cómo comparar las distintas opciones que devuelve la herramienta, en qué campos fijarse primero y cómo decidir cuál es la más adecuada según la documentación presentada por la persona usuaria.
+      Existen circunstancias parecidas en materia de extranjería, sí el documento no concreta alguna condición, limitación o derecho, descarta las opciones específicas y selecciona la más genérica.
     </p>
   </section>
 
@@ -448,13 +569,21 @@ footer{
   Dirección Provincial de Granada · Página de ayuda ASIM-SAE
 </footer>
 
-<div id="imageModal" class="image-modal" aria-hidden="true">
-  <div class="image-modal-content">
-    <button id="imageModalClose" class="image-modal-close" type="button" aria-label="Cerrar imagen">×</button>
-    <div class="zoom-wrapper">
+<div id="imageModal" class="img-modal" aria-hidden="true">
+  <div class="img-modal-box" role="dialog" aria-modal="true" aria-label="Vista ampliada de imagen">
+    <button id="imageModalClose" class="img-modal-close" aria-label="Cerrar">×</button>
+
+    <div class="img-toolbar">
+      <button type="button" id="zoomOutBtn" class="img-tool-btn">−</button>
+      <button type="button" id="zoomResetBtn" class="img-tool-btn">Reset</button>
+      <button type="button" id="zoomInBtn" class="img-tool-btn">+</button>
+    </div>
+
+    <div id="zoomStage" class="zoom-stage">
       <img id="imageModalImg" src="" alt="">
     </div>
-    <div id="imageModalCaption" class="image-modal-caption"></div>
+
+    <div id="imageModalCaption" class="img-modal-caption"></div>
   </div>
 </div>
 
@@ -463,96 +592,106 @@ const modal = document.getElementById('imageModal');
 const modalImg = document.getElementById('imageModalImg');
 const modalCaption = document.getElementById('imageModalCaption');
 const modalClose = document.getElementById('imageModalClose');
-const zoomWrapper = document.querySelector('.zoom-wrapper');
+
+const zoomStage = document.getElementById('zoomStage');
+const zoomInBtn = document.getElementById('zoomInBtn');
+const zoomOutBtn = document.getElementById('zoomOutBtn');
+const zoomResetBtn = document.getElementById('zoomResetBtn');
 
 let scale = 1;
-let posX = 0;
-let posY = 0;
-let isDragging = false;
-let startX, startY;
+let x = 0;
+let y = 0;
+let dragging = false;
+let startX = 0;
+let startY = 0;
 
-function updateTransform(){
-  modalImg.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+function applyTransform() {
+  modalImg.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+}
+
+function resetZoom() {
+  scale = 1;
+  x = 0;
+  y = 0;
+  applyTransform();
+}
+
+function openImageModal(src, caption = '') {
+  modalImg.src = src;
+  modalCaption.textContent = caption;
+  resetZoom();
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeImageModal() {
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+  modalImg.src = '';
+  modalCaption.textContent = '';
+  resetZoom();
+}
+
+function changeZoom(delta) {
+  const next = Math.min(4, Math.max(1, scale + delta));
+  scale = Number(next.toFixed(2));
+
+  if (scale === 1) {
+    x = 0;
+    y = 0;
+  }
+
+  applyTransform();
 }
 
 document.querySelectorAll('.thumb-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-
-    modalImg.src = btn.dataset.full;
-    modalCaption.textContent = btn.dataset.caption || '';
-
-    scale = 1;
-    posX = 0;
-    posY = 0;
-    updateTransform();
-
-    modal.classList.add('open');
+    openImageModal(btn.dataset.full, btn.dataset.caption || '');
   });
 });
 
+zoomInBtn.addEventListener('click', () => changeZoom(0.25));
+zoomOutBtn.addEventListener('click', () => changeZoom(-0.25));
+zoomResetBtn.addEventListener('click', resetZoom);
+
 modalClose.addEventListener('click', closeImageModal);
 
-function closeImageModal(){
-  modal.classList.remove('open');
-  modalImg.src='';
-}
-
-modal.addEventListener('click', (e)=>{
-  if(e.target === modal) closeImageModal();
+modal.addEventListener('click', e => {
+  if (e.target === modal) closeImageModal();
 });
 
-document.addEventListener('keydown', (e)=>{
-  if(e.key === 'Escape') closeImageModal();
-});
-
-/* ZOOM con rueda */
-zoomWrapper.addEventListener('wheel', e=>{
-  e.preventDefault();
-
-  const zoomIntensity = 0.1;
-
-  if(e.deltaY < 0){
-    scale += zoomIntensity;
-  } else {
-    scale -= zoomIntensity;
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && modal.classList.contains('open')) {
+    closeImageModal();
   }
-
-  scale = Math.min(Math.max(1, scale), 5);
-
-  updateTransform();
 });
 
-/* DRAG */
-zoomWrapper.addEventListener('mousedown', e=>{
-  isDragging = true;
-  startX = e.clientX - posX;
-  startY = e.clientY - posY;
-  zoomWrapper.style.cursor = "grabbing";
+zoomStage.addEventListener('wheel', e => {
+  e.preventDefault();
+  changeZoom(e.deltaY < 0 ? 0.2 : -0.2);
+}, { passive:false });
+
+zoomStage.addEventListener('mousedown', e => {
+  if (scale <= 1) return;
+  dragging = true;
+  zoomStage.classList.add('dragging');
+  startX = e.clientX - x;
+  startY = e.clientY - y;
 });
 
-document.addEventListener('mousemove', e=>{
-  if(!isDragging) return;
-
-  posX = e.clientX - startX;
-  posY = e.clientY - startY;
-
-  updateTransform();
+window.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  x = e.clientX - startX;
+  y = e.clientY - startY;
+  applyTransform();
 });
 
-document.addEventListener('mouseup', ()=>{
-  isDragging = false;
-  zoomWrapper.style.cursor = "grab";
+window.addEventListener('mouseup', () => {
+  dragging = false;
+  zoomStage.classList.remove('dragging');
 });
 
-/* doble click reset */
-zoomWrapper.addEventListener('dblclick', ()=>{
-  scale = 1;
-  posX = 0;
-  posY = 0;
-  updateTransform();
-});
-
-
+zoomStage.addEventListener('dblclick', resetZoom);
 </script>
 </body>
 </html>
