@@ -783,6 +783,28 @@ footer{
     padding-left:10px;
   }
 }
+
+mark.token-hit{
+  background:#fff3a3;
+  color:#1f2a24;
+  padding:0 3px;
+  border-radius:4px;
+  font-weight:700;
+}  
+.header-help{
+  position:absolute;
+  right:20px;
+  bottom:10px;
+  font-size:13px;
+  color:var(--sae-green);
+  font-weight:700;
+  text-decoration:none;
+}
+
+.header-help:hover{
+  text-decoration:underline;
+}  
+  
 </style>
 </head>
 
@@ -795,6 +817,7 @@ footer{
       <h2>Aplicación de soporte para la inscripción de migrantes en SILA</h2>
     </div>
     <img class="logo-derecha" src="images/Logo_SILA_Migrantes2_corto.png" alt="Logo proyecto">
+    <a class="header-help" href="ayuda.html" target="_blank">Ayuda</a>
   </header>
 
   <div id="doc" class="search-container">
@@ -879,6 +902,10 @@ footer{
 <footer>
   <div class="footer-logo">
     <div class="logo-text"><b>Versión pruebas 16-03-2026 — Dirección Provincial de Granada</b></div>
+  </div>
+
+  <div>
+    <a href="ayuda.html" target="_blank">Ayuda de la aplicación</a>
   </div>
 </footer>
 
@@ -1190,42 +1217,95 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     return section;
   }
-
-  function buildResultItem(m){
+  
+  function normalizeForCompare(s){
+    return String(s || '')
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu,'')
+      .toLowerCase();
+  }
+  
+  function highlightTokensInHtml(html, tokens){
+    if (!html || !tokens || tokens.length < 1) return html;
+  
+    const cleanTokens = Array.from(new Set(
+      tokens
+        .map(t => String(t || '').trim())
+        .filter(Boolean)
+        .filter(t => t.length >= 2)
+    ));
+  
+    if (cleanTokens.length === 0) return html;
+  
+    const parts = String(html).split(/(<[^>]+>)/g);
+  
+    for (let i = 0; i < parts.length; i++) {
+      const chunk = parts[i];
+      if (!chunk || chunk.startsWith('<')) continue;
+  
+      parts[i] = chunk.replace(/\b[\p{L}\p{N}]+\b/gu, (word) => {
+        const wordNorm = normalizeForCompare(word);
+  
+        for (const tok of cleanTokens) {
+          const tokNorm = normalizeForCompare(tok);
+  
+          if (
+            wordNorm === tokNorm ||
+            areSimplePluralVariants(wordNorm, tokNorm)
+          ) {
+            return `<mark class="token-hit">${word}</mark>`;
+          }
+        }
+  
+        return word;
+      });
+    }
+  
+    return parts.join('');
+  }
+  
+  function renderBoldMarkdownWithHighlights(text, tokens){
+    const html = renderBoldMarkdown(text);
+    return highlightTokensInHtml(html, tokens);
+  }
+  
+  function buildResultItem(m, tokens = []){
     const rec = m.rec;
-
+  
     const wrapper = document.createElement('div');
     wrapper.className = 'result-item';
     wrapper.style.cursor = 'pointer';
     wrapper.style.display = 'flex';
     wrapper.style.alignItems = 'center';
-
+  
     const chkWrap = document.createElement('div');
     chkWrap.className = 'check';
     chkWrap.style.display = 'flex';
     chkWrap.style.alignItems = 'center';
-
+  
     const chk = document.createElement('input');
     chk.type = 'checkbox';
     chk.name = 'selectRec';
     chk.dataset.index = m.idx;
     chkWrap.appendChild(chk);
-
+  
     const content = document.createElement('div');
     content.style.flex = '1';
     content.style.display = 'flex';
     content.style.alignItems = 'center';
     content.style.gap = '4px';
-
+  
     const title = document.createElement('h4');
     title.style.margin = '0';
-    title.innerHTML = renderBoldMarkdown(getField(rec, ['Mostrar','mostrar']) || 'Registro sin campo Mostrar');
-
+  
+    const mostrarTxt = getField(rec, ['Mostrar','mostrar']) || 'Registro sin campo Mostrar';
+    title.innerHTML = renderBoldMarkdownWithHighlights(mostrarTxt, tokens);
+  
     content.appendChild(title);
-
+  
     wrapper.appendChild(chkWrap);
     wrapper.appendChild(content);
-
+  
     wrapper.addEventListener('click', e => {
       if (e.target.tagName.toLowerCase() === 'input') return;
       const all = Array.from(document.querySelectorAll('input[name="selectRec"]'));
@@ -1233,52 +1313,55 @@ document.addEventListener('DOMContentLoaded', () => {
       chk.checked = true;
       openRecord(rec);
     });
-
+  
     chk.addEventListener('change', e => {
       const all = Array.from(document.querySelectorAll('input[name="selectRec"]'));
       all.forEach(inp => { if (inp !== e.target) inp.checked = false; });
       if (e.target.checked) openRecord(rec);
     });
-
+  
     return wrapper;
   }
 
-  function renderGroupedResults(matches){
-    // Vaciar
+  function renderGroupedResults(matches, tokens = []){
     resultsEl.innerHTML = '';
-
+  
     const buckets = { res:[], sol:[], rec:[], oth:[] };
     for (const m of matches){
       const g = getDocGroup(m.rec);
       (buckets[g] || buckets.oth).push(m);
     }
-
+  
     const order = [
       { key:'res', title:'Resoluciones / TIE', cssClass:'group-res' },
       { key:'sol', title:'Solicitudes',       cssClass:'group-sol' },
       { key:'rec', title:'Recursos',          cssClass:'group-rec' },
       { key:'oth', title:'Otros',             cssClass:'group-oth' },
     ];
-
+  
     order.forEach(g => {
       const list = buckets[g.key];
       if (!list || list.length === 0) return;
-
-      const section = createGroupSection({ title:g.title, cssClass:g.cssClass, count:list.length });
+  
+      const section = createGroupSection({
+        title: g.title,
+        cssClass: g.cssClass,
+        count: list.length
+      });
+  
       const body = section.querySelector('.result-section-body');
-
-      list.forEach(m => body.appendChild(buildResultItem(m)));
+      list.forEach(m => body.appendChild(buildResultItem(m, tokens)));
+  
       resultsEl.appendChild(section);
     });
-
-    // ✅ Siempre ayuda al final
+  
     appendHelpResult();
   }
 
   // --- Carga JSON ---
   async function loadJSON(){
     try{
-      const res = await fetch('./SituacionesAdministrativas_pruebas.json', {cache:'no-store'});
+      const res = await fetch('./SituacionesAdministrativasPruebas.json', {cache:'no-store'});
       if(!res.ok) throw new Error('No se pudo cargar SituacionesAdministrativas.json');
       db = await res.json();
       console.log('Registros cargados:', db.length);
@@ -1639,7 +1722,7 @@ document.addEventListener('DOMContentLoaded', () => {
     countResults.textContent = String(matches.length);
     logBusquedaToSheets(rawQuery, matches.length, ctx.cobra, ctx.inscrito);
   
-    renderGroupedResults(matches);
+    renderGroupedResults(matches, tokens);
   }
   /*========================================================FIN DO SEARCH========================================================================*/
   btnSearch.addEventListener('click', doSearch);
@@ -1790,6 +1873,49 @@ document.addEventListener('DOMContentLoaded', () => {
     modalPreguntasContent.appendChild(box);
   }
 
+  function addTextInput(id, labelText, placeholder = ''){
+    const wrap = document.createElement('div');
+    wrap.className = 'field';
+    wrap.innerHTML = `
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label for="${id}"><strong>${labelText}</strong></label>
+        <input
+          id="${id}"
+          type="text"
+          placeholder="${placeholder}"
+          style="
+            width:100%;
+            padding:10px 12px;
+            border:1px solid #cfdcd2;
+            border-radius:10px;
+            font-size:14px;
+            background:#fff;
+            box-sizing:border-box;
+          "
+        >
+      </div>
+    `;
+    modalPreguntasContent.appendChild(wrap);
+  }
+  
+  function addYesNoRadios(idName, labelText){
+    const wrap = document.createElement('div');
+    wrap.className = 'field';
+    wrap.innerHTML = `
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <strong>${labelText}</strong>
+        <div style="display:flex;gap:18px;flex-wrap:wrap">
+          <label style="display:flex;align-items:center;gap:8px;">
+            <input type="radio" name="${idName}" value="si"> Sí
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;">
+            <input type="radio" name="${idName}" value="no"> No
+          </label>
+        </div>
+      </div>
+    `;
+    modalPreguntasContent.appendChild(wrap);
+  }
   function openModalPreguntas(rec, tipo){
     _pregState = { rec, tipo, selectedBranch: null, phase: 'initial', fecha1: null, fecha2: null };
 
@@ -1798,6 +1924,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const p1 = (getField(rec, ['Pregunta1']) || '').trim();
     const p2 = (getField(rec, ['Pregunta2']) || '').trim();
+    const p3 = (getField(rec, ['Pregunta3']) || '').trim();
 
     function addDateInput(id, labelText){
       const wrap = document.createElement('div');
@@ -1858,6 +1985,18 @@ document.addEventListener('DOMContentLoaded', () => {
       if(p2) addQuestion(p2);
       addABCRadios();
     }
+    else if (tipo === 'mas_datos') {
+      if (p1) addTextInput('pregTexto1', p1, 'Introduce aquí el texto...');
+      if (p2) addTextInput('pregTexto2', p2, 'Introduce aquí el texto...');
+      if (p3) addTextInput('pregTexto3', p3, 'Introduce aquí el texto...');
+    
+      const pABC = (getField(rec, ['PreguntaABC','preguntaabc']) || '').trim();
+      if (pABC) {
+        addYesNoRadios('pregMasDatosABC', pABC);
+      }
+    
+      _pregState.phase = 'mas_datos';
+    }      
     else {
       const box = document.createElement('div');
       box.className = 'field';
@@ -1969,7 +2108,36 @@ document.addEventListener('DOMContentLoaded', () => {
         branch = checked.value;
       }
     }
-
+    else if (tipo === 'mas_datos') {
+      const t1 = (document.getElementById('pregTexto1')?.value || '').trim();
+      const t2 = (document.getElementById('pregTexto2')?.value || '').trim();
+      const t3 = (document.getElementById('pregTexto3')?.value || '').trim();
+    
+      const abcChecked = document.querySelector('input[name="pregMasDatosABC"]:checked');
+      const abcValue = abcChecked ? abcChecked.value : '';
+    
+      const partesBusqueda = [];
+    
+      if (t1) partesBusqueda.push(t1);
+      if (t2) partesBusqueda.push(t2);
+      if (t3) partesBusqueda.push(t3);
+    
+      if (abcValue === 'si') {
+        partesBusqueda.push('renovación');
+      }
+    
+      const busquedaFinal = partesBusqueda.join(' ').trim();
+    
+      if (!busquedaFinal) {
+        alert('Introduce al menos un dato para realizar la búsqueda.');
+        return;
+      }
+    
+      closeModalPreguntas();
+      searchInput.value = busquedaFinal;
+      doSearch();
+      return;
+    }
     else if(tipo === 'fecha'){
       const v = document.getElementById('pregFecha1')?.value || '';
       const fecha = parseDateInputToDate(v);
