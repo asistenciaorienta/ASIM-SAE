@@ -528,6 +528,41 @@ footer{
 .volver-btn:hover{
   background:#e2f0e6;
 } 
+.notice{
+  animation: noticeBounce 0.9s ease-out, noticeGlow 1.4s ease-out;
+}
+
+@keyframes noticeBounce{
+  0%{
+    transform: translateY(-25px);
+    opacity:0;
+  }
+  60%{
+    transform: translateY(6px);
+    opacity:1;
+  }
+  80%{
+    transform: translateY(-3px);
+  }
+  100%{
+    transform: translateY(0);
+  }
+@keyframes noticeGlow{
+
+  0%{
+    box-shadow:0 0 0 rgba(0,122,51,0);
+  }
+
+  50%{
+    box-shadow:0 0 18px rgba(0,122,51,0.25);
+  }
+
+  100%{
+    box-shadow:var(--shadow-sm);
+  }
+
+}
+}  
 </style>
 </head>
 
@@ -552,7 +587,7 @@ footer{
     <a class="volver-btn" href="https://asistenciaorienta.github.io/ASIM-SAE/">Volver al buscador</a>
   
     <p class="section-text">
-      Identifica el documento que se pretende hacer valer y transcribe la situación administrativa que regula.
+      Primero tienes que identificar el documento que se pretende hacer valer y transcribir la situación administrativa que regula.
     </p>
 
     <div class="gallery">
