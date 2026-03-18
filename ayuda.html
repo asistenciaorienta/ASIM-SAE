@@ -126,8 +126,62 @@ header h2{
   padding-right:180px;
 }
 
+/* =========================
+   TARJETAS TIPO BLOQUES DE RESULTADOS
+========================= */
+.card-tipo{
+  padding:12px;
+  border-radius:18px;
+  border:1px solid #e6efe7;
+  box-shadow:0 3px 10px rgba(0,0,0,.03);
+}
+
+.card-tipo-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 14px;
+  border-radius:14px;
+  margin-bottom:12px;
+}
+
+.card-tipo-header h3{
+  margin:0;
+  font-size:1.18rem;
+  font-weight:800;
+  color:#1b1b1b;
+}
+
+.card-tipo-body{
+  margin-left:22px;
+  padding-left:14px;
+  border-left:2px solid #dfe9e2;
+}
+
+/* Bloque 1: ayuda búsqueda */
+.card-tipo-busqueda{
+  background:#e7f2f2;
+}
+
+.card-tipo-busqueda .card-tipo-header{
+  background:#cee5e4;
+}
+
+/* Bloque 2: varias opciones */
+.card-tipo-opciones{
+  background:#f2ede7;
+}
+
+.card-tipo-opciones .card-tipo-header{
+  background:#e5dbce;
+}  
+  .card-tipo-saeclick .card-tipo-header{
+  background:var(--sae-green-soft);
+}  
+  
 .notice{
-  background:linear-gradient(180deg, #ffffff 0%, #fafdfb 100%);
+  background:var(--sae-green-soft);
   border-left:6px solid var(--sae-green);
 }
 
@@ -135,6 +189,9 @@ header h2{
   margin:0;
   font-size:1.02rem;
   line-height:1.6;
+}
+.notice strong{
+  color:var(--sae-green);
 }
 
 .section-text{
@@ -146,7 +203,7 @@ header h2{
 .tip-box{
   margin-top:16px;
   padding:14px 16px;
-  background:var(--sae-green-soft);
+  /*background:#fff;*/
   border:1px solid var(--sae-green-border);
   border-radius:16px;
   line-height:1.7;
@@ -161,9 +218,9 @@ header h2{
 ========================= */
 .gallery{
   display:grid;
-  grid-template-columns:repeat(4, minmax(0,1fr));
-  gap:16px;
-  margin-top:16px;
+  grid-template-columns:repeat(auto-fit, 190px);
+  justify-content:center;
+  gap:20px;
 }
 
 .thumb-card{
@@ -191,7 +248,8 @@ header h2{
 
 .thumb-btn img{
   display:block;
-  width:100%;
+  width:160px;
+  height: 108px;
   aspect-ratio:4/3;
   object-fit:cover;
   border-radius:12px;
@@ -508,10 +566,9 @@ footer{
     max-height:60vh;
   }
 }  
-  .volver-btn{
-  position:absolute;
-  top:18px;
-  right:22px;
+.volver-btn{
+  position:static;
+  flex-shrink:0;
   font-size:13px;
   color:var(--sae-green);
   font-weight:700;
@@ -519,11 +576,89 @@ footer{
   background:#eef6f0;
   padding:6px 10px;
   border-radius:8px;
+  border:1px solid #d5e7d8;
 }
 
 .volver-btn:hover{
   background:#e2f0e6;
-} 
+  text-decoration:underline;
+}
+  
+.notice{
+  animation:
+    noticeBounce 0.9s ease-out,
+    noticeGlow 1.4s ease-out,
+    noticePulse 12s ease-in-out 10s infinite;
+}
+
+@keyframes noticeBounce{
+  0%{
+    transform: translateY(-25px);
+    opacity:0;
+  }
+  60%{
+    transform: translateY(6px);
+    opacity:1;
+  }
+  80%{
+    transform: translateY(-3px);
+  }
+  100%{
+    transform: translateY(0);
+  }
+}
+@keyframes noticeGlow{
+
+  0%{
+    box-shadow:0 0 0 rgba(0,122,51,0);
+  }
+
+  50%{
+    box-shadow:0 0 18px rgba(0,122,51,0.25);
+  }
+
+  100%{
+    box-shadow:var(--shadow-sm);
+  }
+
+}
+@keyframes noticePulse{
+  0%{
+    transform:scale(1);
+  }
+  3%{
+    transform:scale(1.02);
+  }
+  6%{
+    transform:scale(1);
+  }
+  100%{
+    transform:scale(1);
+  }
+}
+
+@media (max-width: 640px){
+  .card-tipo-header{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .card-tipo-body{
+    margin-left:8px;
+    padding-left:10px;
+  }
+}
+  
+.group-res{background:#e7f2f2;}
+.group-sol{background:#f2e7e7;}
+.group-rec{background:#f2ede7;}
+.group-oth{background:#f4f4f4;}
+
+.group-res .result-section-header{background:#cee5e4;}
+.group-sol .result-section-header{background:#e5cecf;}
+.group-rec .result-section-header{background:#e5dbce;}
+.group-oth .result-section-header{background:#e9e9e9;}
+  
 </style>
 </head>
 
@@ -542,59 +677,74 @@ footer{
   <section class="card notice">
     <p><strong>Recuerda:</strong> la herramienta ASIM-SAE parte del documento que trae la persona usuaria y <u>no todos</u> habilitan para la inscripción.</p>
   </section>
-  <section class="card card-ayuda-busqueda">
-    <h3>¿Qué hacer si no encuentras lo que buscas?</h3>
-    <a class="volver-btn" href="https://asistenciaorienta.github.io/ASIM-SAE/">Volver al buscador</a>
+
+  <section class="card card-ayuda-busqueda card-tipo card-tipo-busqueda">
+    <div class="card-tipo-header">
+      <h3>1. ¿QUÉ HACER si no encuentras lo que buscas?</h3>
+      <a class="volver-btn" href="https://asistenciaorienta.github.io/ASIM-SAE/">Volver al buscador</a>
+    </div>
   
-    <p class="section-text">
-      Identifica el documento que se pretende hacer valer y transcribe la situación administrativa que regula.
-    </p>
+    <div class="card-tipo-body">
+      <p class="section-text">
+        Identifica el documento que se pretende hacer valer y transcribe la situación administrativa que regula.
+      </p>
 
     <div class="gallery">
       <div class="thumb-card">
-        <button class="thumb-btn" type="button" data-full="images/TIE.png" data-caption="Ejemplo de Tarjeta TIE">
-          <img src="images/TIE.png" alt="Ejemplo de Tarjeta TIE">
+        <button class="thumb-btn" type="button" data-full="images/TIE.png" data-caption="Ejemplo de Tarjeta de Identidad de Extranjero (TIE)">
+          <img src="images/TIE.png" alt="Ejemplo de Tarjeta de Identidad de Extranjero (TIE)">
         </button>
-        <div class="thumb-caption">Tarjeta TIE</div>
+        <div class="thumb-caption">Ejemplo de Tarjeta de Identidad de Extranjero (TIE)</div>
       </div>
 
       <div class="thumb-card">
         <button class="thumb-btn" type="button" data-full="images/Resolucion.png" data-caption="Ejemplo de Resolución">
           <img src="images/Resolucion.png" alt="Ejemplo de Resolución">
         </button>
-        <div class="thumb-caption">Resolución</div>
+        <div class="thumb-caption">Ejemplo de Resolución</div>
       </div>
 
       <div class="thumb-card">
         <button class="thumb-btn" type="button" data-full="images/Solicitud.png" data-caption="Ejemplo de Solicitud">
           <img src="images/Solicitud.png" alt="Ejemplo de Solicitud">
         </button>
-        <div class="thumb-caption">Solicitud</div>
+        <div class="thumb-caption">Ejemplo de Solicitud</div>
       </div>
 
       <div class="thumb-card">
-        <button class="thumb-btn" type="button" data-full="images/Resguardo_Solicitud.png" data-caption="Ejemplo de Resguardo de Solicitud">
-          <img src="images/Resguardo_Solicitud.png" alt="Ejemplo de Resguardo de Solicitud">
+        <button class="thumb-btn" type="button" data-full="images/Resguardo_Solicitud.png" data-caption="Ejemplo de Resguardo de Solicitud de TIE">
+          <img src="images/Resguardo_Solicitud.png" alt="Ejemplo de Resguardo de Solicitud de TIE">
         </button>
-        <div class="thumb-caption">Resguardo de Solicitud</div>
+        <div class="thumb-caption">Ejemplo de Resguardo de Solicitud de TIE</div>
       </div>
     </div>
 
     <div class="tip-box">
       <strong>Consejo:</strong><br>
       - Busca las palabras clave del documento.<br>
-      - Si no estás seguro, no introduzcas conceptos desconocidos.
+      - Si no estás seguro, no introduzcas conceptos desconocidos.<br>
+      - Escribe los conceptos completos, evitando las abreviaturas.
     </div>
   </section>
 
-  <section class="card">
-    <h3>¿Qué hacer si mi búsqueda proporciona varias opciones?</h3>
+<section class="card card-tipo card-tipo-opciones">
+  <div class="card-tipo-header">    
+    <h3>2. ¿QUÉ HACER si mi búsqueda proporciona varias opciones?</h3>
+  </div>
 
+  <div class="card-tipo-body">
     <p class="section-text">
-      Existen circunstancias parecidas en materia de extranjería, si el documento no concreta alguna condición, limitación o derecho, descarta las opciones específicas y selecciona la más genérica.
+      Si el documento no concreta alguna condición, limitación o derecho, descarta las opciones específicas y selecciona la más genérica.
     </p>
-  </section>
+  </div>
+</section>
 
+<section class="card card-tipo card-tipo-saeclick">
+  <div class="card-tipo-header">
+    <h3>3. Si no te hemos podido ayudar contacta con <a href="https://ws148.juntadeandalucia.es/dwp/app/" target="_blank" color="#007A33;">SAEclick</a></h3>
+  </div>
+
+</section>  
 </div>
 
 <footer>
