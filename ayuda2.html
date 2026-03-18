@@ -110,6 +110,7 @@ header h2{
    BLOQUES
 ========================= */
 .card{
+  position:relative;
   background:var(--card-bg);
   border:1px solid var(--line);
   border-radius:24px;
@@ -122,6 +123,7 @@ header h2{
   margin:0 0 14px;
   color:var(--sae-green);
   font-size:1.25rem;
+  padding-right:180px;
 }
 
 .notice{
@@ -474,10 +476,28 @@ footer{
   line-height:1.4;
 }
 
+.card-ayuda-busqueda{
+  position:relative;
+}
+
+.card-ayuda-busqueda h3{
+  padding-right:180px;
+}    
+  
 @media (max-width:640px){
   .img-modal-box{
     padding:14px 14px 12px;
     width:98vw;
+  }
+@media (max-width: 640px){
+  .volver-btn{
+    position:static;
+    display:inline-block;
+    margin-bottom:12px;
+  }
+
+  .card-ayuda-busqueda h3{
+    padding-right:0;
   }
 
   .zoom-stage{
@@ -489,6 +509,22 @@ footer{
     max-height:60vh;
   }
 }  
+  .volver-btn{
+  position:absolute;
+  top:18px;
+  right:22px;
+  font-size:13px;
+  color:var(--sae-green);
+  font-weight:700;
+  text-decoration:none;
+  background:#eef6f0;
+  padding:6px 10px;
+  border-radius:8px;
+}
+
+.volver-btn:hover{
+  background:#e2f0e6;
+}   
 </style>
 </head>
 
@@ -508,9 +544,10 @@ footer{
     <p><strong>Recuerda:</strong> la herramienta ASIM-SAE parte del documento que trae la persona usuaria y <u>no todos</u> habilitan para la inscripción.</p>
   </section>
 
-  <section class="card">
+  <section class="card card-ayuda-busqueda">
     <h3>¿Qué hacer si no encuentras lo que buscas?</h3>
-
+    <a class="volver-btn" href="https://asistenciaorienta.github.io/ASIM-SAE/">Volver al buscador</a>
+  
     <p class="section-text">
       Identifica el documento que se pretende hacer valer y transcribe la situación administrativa que regula.
     </p>
@@ -559,11 +596,6 @@ footer{
       Existen circunstancias parecidas en materia de extranjería, sí el documento no concreta alguna condición, limitación o derecho, descarta las opciones específicas y selecciona la más genérica.
     </p>
   </section>
-
-  <div class="actions">
-    <a class="btn-back" href="https://asistenciaorienta.github.io/ASIM-SAE/">Volver al buscador</a>
-  </div>
-
 </div>
 
 <footer>
