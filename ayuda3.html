@@ -504,8 +504,8 @@ header h2{
 .img-toolbar{
   display:flex;
   justify-content:center;
-  gap:10px;
-  margin-top:4px;
+  gap:12px;
+  margin-top:10px;
 }
 
 .img-tool-btn{
@@ -513,10 +513,10 @@ header h2{
   border-radius:12px;
   background:#007A33;
   color:#fff;
-  padding:10px 14px;
+  padding:10px 16px;
   font-weight:700;
   cursor:pointer;
-  min-width:54px;
+  min-width:80px;
 }
 
 .img-tool-btn:hover{
@@ -586,9 +586,11 @@ header h2{
 
 .img-modal-caption{
   text-align:center;
-  color:#4f6155;
-  font-size:14px;
+  color:#2d3b33;
+  font-size:20px;
+  font-weight:700;
   line-height:1.4;
+  margin-bottom:8px;
 }
 
 /* =========================
@@ -912,19 +914,19 @@ footer{
   <div class="img-modal-box" role="dialog" aria-modal="true" aria-label="Vista ampliada de imagen">
     <button id="imageModalClose" class="img-modal-close" aria-label="Cerrar">×</button>
 
-    <div class="img-toolbar">
-      <button type="button" id="zoomOutBtn" class="img-tool-btn">−</button>
-      <button type="button" id="zoomResetBtn" class="img-tool-btn">Reset</button>
-      <button type="button" id="zoomInBtn" class="img-tool-btn">+</button>
-    </div>
-
+    <div id="imageModalCaption" class="img-modal-caption"></div>
+    
     <div id="zoomStage" class="zoom-stage">
       <button type="button" id="prevImgBtn" class="img-nav-btn img-nav-prev" aria-label="Imagen anterior">‹</button>
       <img id="imageModalImg" src="" alt="">
       <button type="button" id="nextImgBtn" class="img-nav-btn img-nav-next" aria-label="Imagen siguiente">›</button>
     </div>
-
-    <div id="imageModalCaption" class="img-modal-caption"></div>
+    
+    <div class="img-toolbar">
+      <button type="button" id="zoomOutBtn" class="img-tool-btn">−</button>
+      <button type="button" id="zoomResetBtn" class="img-tool-btn">Reiniciar</button>
+      <button type="button" id="zoomInBtn" class="img-tool-btn">+</button>
+    </div>
   </div>
 </div>
 
