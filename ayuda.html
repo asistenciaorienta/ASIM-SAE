@@ -463,7 +463,17 @@ header h2{
   z-index:9999;
   padding:20px;
 }
-
+.img-modal-title{
+  text-align:center;
+  font-size:22px;
+  font-weight:800;
+  color:#1f2a24;
+  padding:10px 20px;
+  background:#eef6f0;
+  border-radius:12px;
+  border:1px solid #d9e8dc;
+}
+  
 .img-modal.open{
   display:flex;
 }
@@ -504,8 +514,8 @@ header h2{
 .img-toolbar{
   display:flex;
   justify-content:center;
-  gap:10px;
-  margin-top:4px;
+  gap:14px;
+  margin-top:12px;
 }
 
 .img-tool-btn{
@@ -513,16 +523,23 @@ header h2{
   border-radius:12px;
   background:#007A33;
   color:#fff;
-  padding:10px 14px;
+  padding:10px 18px;
   font-weight:700;
+  font-size:14px;
   cursor:pointer;
-  min-width:54px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.12);
+  transition:all .15s ease;
+/*  min-width:80px;*/
 }
 
 .img-tool-btn:hover{
-  opacity:.92;
+  transform:translateY(-1px);
+  box-shadow:0 6px 14px rgba(0,0,0,0.18);
+  /*opacity:.92;*/
 }
-
+.reset-btn{
+  background:#5b6b61;
+}
 .img-nav-btn{
   position:absolute;
   top:50%;
@@ -586,9 +603,11 @@ header h2{
 
 .img-modal-caption{
   text-align:center;
-  color:#4f6155;
-  font-size:14px;
+  color:#2d3b33;
+  font-size:20px;
+  font-weight:700;
   line-height:1.4;
+  margin-bottom:8px;
 }
 
 /* =========================
@@ -834,10 +853,10 @@ footer{
             </div>
 
             <div class="thumb-card">
-              <button class="thumb-btn" type="button" data-full="images/Solicitud.png" data-caption="Ejemplo de Solicitud">
-                <img src="images/Solicitud.png" alt="Ejemplo de Solicitud">
+              <button class="thumb-btn" type="button" data-full="images/Solicitud.png" data-caption="Ejemplos de Solicitudes">
+                <img src="images/Solicitud.png" alt="Ejemplos de Solicitudes">
               </button>
-              <div class="thumb-caption">Ejemplo de Solicitud</div>
+              <div class="thumb-caption">Ejemplos de Solicitudes</div>
             </div>
 
             <div class="thumb-card">
@@ -910,21 +929,23 @@ footer{
 
 <div id="imageModal" class="img-modal" aria-hidden="true">
   <div class="img-modal-box" role="dialog" aria-modal="true" aria-label="Vista ampliada de imagen">
+  
     <button id="imageModalClose" class="img-modal-close" aria-label="Cerrar">×</button>
-
-    <div class="img-toolbar">
-      <button type="button" id="zoomOutBtn" class="img-tool-btn">−</button>
-      <button type="button" id="zoomResetBtn" class="img-tool-btn">Reset</button>
-      <button type="button" id="zoomInBtn" class="img-tool-btn">+</button>
-    </div>
-
+  
+    <div id="imageModalCaption" class="img-modal-title"></div>
+  
     <div id="zoomStage" class="zoom-stage">
       <button type="button" id="prevImgBtn" class="img-nav-btn img-nav-prev" aria-label="Imagen anterior">‹</button>
       <img id="imageModalImg" src="" alt="">
       <button type="button" id="nextImgBtn" class="img-nav-btn img-nav-next" aria-label="Imagen siguiente">›</button>
     </div>
-
-    <div id="imageModalCaption" class="img-modal-caption"></div>
+  
+    <div class="img-toolbar">
+      <button type="button" id="zoomOutBtn" class="img-tool-btn">🔍−</button>
+      <button type="button" id="zoomResetBtn" class="img-tool-btn reset-btn">Reiniciar</button>
+      <button type="button" id="zoomInBtn" class="img-tool-btn">🔍+</button>
+    </div>
+  
   </div>
 </div>
 
@@ -952,6 +973,7 @@ let startX = 0;
 let startY = 0;
 
 function applyTransform() {
+  modalImg.style.transition = dragging ? 'none' : 'transform .12s ease';
   modalImg.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
 }
 
@@ -1065,7 +1087,31 @@ window.addEventListener('mouseup', () => {
 
 zoomStage.addEventListener('dblclick', e => {
   if (e.target.closest('.img-nav-btn')) return;
-  resetZoom();
+
+  const rect = zoomStage.getBoundingClientRect();
+
+  /* posición del clic dentro del visor */
+  const clickX = e.clientX - rect.left;
+  const clickY = e.clientY - rect.top;
+
+  /* centro del visor */
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+
+  /* alterna entre ampliar y reiniciar */
+  if (scale === 1) {
+    scale = 2.2;
+
+    /* desplaza la imagen para que la zona clicada se acerque al centro */
+    x = (centerX - clickX) * scale;
+    y = (centerY - clickY) * scale;
+  } else {
+    scale = 1;
+    x = 0;
+    y = 0;
+  }
+
+  applyTransform();
 });
 </script>
 </body>
