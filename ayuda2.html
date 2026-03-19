@@ -11,24 +11,21 @@
   --sae-green-2:#0b8a3d;
   --sae-green-soft:#eaf6ee;
   --sae-green-border:#cfe5d5;
-
   --text:#1f2a24;
   --muted:#66756d;
-  --bg:#f4f7f5;
-  --card-bg:#ffffff;
   --line:#dde7df;
-
-  --shadow-sm:0 4px 14px rgba(16, 40, 24, 0.06);
-  --shadow-md:0 10px 28px rgba(16, 40, 24, 0.10);
-  --shadow-lg:0 24px 60px rgba(0,0,0,0.22);
-
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --card-bg:#ffffff;
+  --shadow-sm:0 4px 14px rgba(16,40,24,.06);
+  --shadow-md:0 10px 28px rgba(16,40,24,.10);
+  --shadow-lg:0 24px 60px rgba(0,0,0,.22);
+  font-family:Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
 }
 
 *{box-sizing:border-box}
 
 html,body{
   margin:0;
+  min-height:100%;
   background:linear-gradient(180deg, #f8fbf9 0%, #f2f6f3 100%);
   color:var(--text);
 }
@@ -48,19 +45,18 @@ a:hover{
 }
 
 .container{
-  width:min(1280px, calc(100% - 40px));
+  width:min(1280px, calc(100% - 32px));
   margin:0 auto;
-  padding:20px 0 30px;
+  padding:16px 0 20px;
 }
 
-/* HEADER */
 header{
   display:grid;
-  grid-template-columns:160px 1fr 100px;
+  grid-template-columns:140px 1fr 100px;
   align-items:center;
-  gap:16px;
-  padding:20px 22px;
-  margin-bottom:20px;
+  gap:14px;
+  padding:18px 20px;
+  margin-bottom:16px;
   background:linear-gradient(135deg, #ffffff 0%, #f4faf6 100%);
   border:1px solid var(--line);
   border-radius:24px;
@@ -76,45 +72,56 @@ header{
   justify-self:center;
 }
 
-.logo-izquierda{ max-height:72px; }
-.logo-derecha{ max-height:78px; }
+.logo-izquierda{ max-height:70px; }
+.logo-derecha{ max-height:76px; }
 
 .titulo-header{
   text-align:center;
 }
 
 header h1{
-  margin:0 0 6px;
+  margin:0 0 4px;
   color:var(--sae-green);
-  font-size:clamp(1.8rem, 2.4vw, 2.5rem);
+  font-size:clamp(1.8rem, 2.5vw, 2.35rem);
   line-height:1.1;
 }
 
 header h2{
   margin:0;
-  font-size:clamp(1rem, 1.3vw, 1.15rem);
+  font-size:clamp(.98rem, 1.4vw, 1.1rem);
   color:var(--muted);
   font-weight:600;
 }
 
-/* AVISO */
-.notice{
-  margin-bottom:20px;
-  padding:18px 20px;
-  background:linear-gradient(180deg, #ADCEB1, #fafdfb 100%);
-  border:1px solid var(--sae-green-border);
-  border-left:6px solid var(--sae-green);
-  border-radius:20px;
+/* LAYOUT DE ESCRITORIO */
+.main-layout{
+  display:grid;
+  grid-template-columns:minmax(0, 1.8fr) minmax(300px, .9fr);
+  gap:18px;
+  align-items:start;
+}
+
+.left-col,
+.right-col{
+  display:grid;
+  gap:18px;
+}
+
+.card{
+  background:var(--card-bg);
+  border:1px solid var(--line);
+  border-radius:24px;
   box-shadow:var(--shadow-sm);
-  animation:
-    noticeBounce 0.9s ease-out,
-    noticeGlow 1.4s ease-out,
-    noticePulse 12s ease-in-out 10s infinite;
+  padding:20px;
+}
+
+.notice{
+  background:linear-gradient(180deg, #ADCEB1, #fafdfb 100%);
+  border-left:6px solid var(--sae-green);
 }
 
 .notice p{
   margin:0;
-  font-size:1.03rem;
   line-height:1.6;
 }
 
@@ -122,63 +129,74 @@ header h2{
   color:var(--sae-green);
 }
 
-/* ESTRUCTURA NUEVA: PASOS */
-.steps{
-  display:grid;
-  gap:18px;
+/* BLOQUES */
+.card-tipo{
+  padding:12px;
+  border-radius:18px;
+  border:1px solid #e6efe7;
+  box-shadow:0 3px 10px rgba(0,0,0,.03);
 }
 
-.step-card{
-  display:grid;
-  grid-template-columns:96px minmax(0, 1fr);
-  gap:0;
-  background:var(--card-bg);
-  border:1px solid var(--line);
-  border-radius:24px;
-  box-shadow:var(--shadow-sm);
-  overflow:hidden;
-}
-
-.step-num{
+.card-tipo-header{
   display:flex;
-  align-items:flex-start;
-  justify-content:center;
-  padding:24px 12px;
-  font-size:2rem;
-  font-weight:900;
-  color:var(--sae-green);
-  background:linear-gradient(180deg, #eaf6ee 0%, #dff0e4 100%);
-  border-right:1px solid var(--line);
-}
-
-.step-content{
-  padding:20px 22px 22px;
-}
-
-.step-header{
-  display:flex;
-  align-items:flex-start;
+  align-items:center;
   justify-content:space-between;
-  gap:16px;
-  margin-bottom:14px;
+  gap:12px;
+  padding:12px 14px;
+  border-radius:14px;
+  margin-bottom:12px;
 }
 
-.step-header h3{
+.card-tipo-header h3{
   margin:0;
-  color:var(--sae-green);
-  font-size:1.28rem;
+  font-size:1.16rem;
   line-height:1.3;
+  font-weight:800;
+  color:#1b1b1b;
+}
+
+.card-tipo-body{
+  margin-left:18px;
+  padding-left:14px;
+  border-left:2px solid #dfe9e2;
+}
+
+.card-tipo-busqueda{
+  background:#e7f2f2;
+}
+.card-tipo-busqueda .card-tipo-header{
+  background:#cee5e4;
+}
+
+.card-tipo-opciones{
+  background:#f2ede7;
+}
+.card-tipo-opciones .card-tipo-header{
+  background:#e5dbce;
+}
+
+.card-tipo-saeclick{
+  background:var(--sae-green-soft);
+}
+.card-tipo-saeclick .card-tipo-header{
+  background:#AADBBA;
+}
+
+.section-text{
+  margin:0 0 16px;
+  line-height:1.7;
+  color:#324038;
 }
 
 .volver-btn{
   flex-shrink:0;
   font-size:13px;
   color:var(--sae-green);
-  font-weight:800;
+  font-weight:700;
   text-decoration:none;
   background:#eef6f0;
-  padding:8px 12px;
-  border-radius:10px;
+  padding:6px 10px;
+  border-radius:8px;
   border:1px solid #d5e7d8;
 }
 
@@ -186,19 +204,11 @@ header h2{
   background:#e2f0e6;
 }
 
-.section-text{
-  margin:0 0 16px;
-  line-height:1.75;
-  color:#324038;
-  font-size:1rem;
-}
-
 /* GALERÍA */
 .gallery{
   display:grid;
-  grid-template-columns:repeat(4, minmax(0, 1fr));
-  gap:16px;
-  margin-bottom:16px;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:14px;
 }
 
 .thumb-card{
@@ -206,13 +216,7 @@ header h2{
   border:1px solid #e3ebe5;
   border-radius:16px;
   padding:12px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.03);
-  transition:transform .15s ease, box-shadow .15s ease;
-}
-
-.thumb-card:hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 18px rgba(0,0,0,0.08);
+  box-shadow:0 2px 8px rgba(0,0,0,.03);
 }
 
 .thumb-btn{
@@ -227,7 +231,7 @@ header h2{
 .thumb-btn img{
   display:block;
   width:100%;
-  height:140px;
+  height:120px;
   object-fit:cover;
   border-radius:12px;
   border:1px solid #dfe8e1;
@@ -242,9 +246,9 @@ header h2{
   line-height:1.35;
 }
 
-/* CAJAS DE APOYO */
 .tip-box{
-  padding:16px 18px;
+  margin-top:16px;
+  padding:14px 16px;
   background:linear-gradient(180deg, #e7f2f2, #F6FAFA 100%);
   border:1px solid var(--sae-green-border);
   border-radius:16px;
@@ -255,15 +259,21 @@ header h2{
   color:var(--sae-green);
 }
 
+/* BLOQUE 3 VISIBLE EN ESCRITORIO */
+.sticky-help{
+  position:sticky;
+  top:16px;
+}
+
 .contact-box{
-  padding:20px;
-  background:linear-gradient(180deg, var(--sae-green-soft), #f8fcf9 100%);
+  padding:16px;
+  border-radius:16px;
+  background:linear-gradient(180deg, #f8fcf9 0%, #eef8f1 100%);
   border:1px solid var(--sae-green-border);
-  border-radius:18px;
 }
 
 .contact-box p{
-  margin:0 0 12px;
+  margin:0 0 14px;
   line-height:1.7;
 }
 
@@ -271,8 +281,8 @@ header h2{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  min-width:190px;
-  padding:12px 18px;
+  width:100%;
+  padding:13px 18px;
   border-radius:12px;
   background:linear-gradient(135deg, var(--sae-green) 0%, var(--sae-green-2) 100%);
   color:#fff;
@@ -282,8 +292,6 @@ header h2{
 }
 
 .contact-cta:hover{
-  transform:translateY(-1px);
-  box-shadow:0 10px 20px rgba(0,122,51,.24);
   color:#fff;
   text-decoration:none;
 }
@@ -299,10 +307,7 @@ header h2{
   z-index:9999;
   padding:20px;
 }
-
-.img-modal.open{
-  display:flex;
-}
+.img-modal.open{ display:flex; }
 
 .img-modal-box{
   position:relative;
@@ -331,10 +336,6 @@ header h2{
   line-height:1;
   cursor:pointer;
   font-weight:700;
-}
-
-.img-modal-close:hover{
-  background:#dfe9e2;
 }
 
 .img-toolbar{
@@ -391,10 +392,9 @@ header h2{
   line-height:1.4;
 }
 
-/* FOOTER */
 footer{
-  width:min(1280px, calc(100% - 40px));
-  margin:0 auto 20px;
+  width:min(1280px, calc(100% - 32px));
+  margin:18px auto 20px;
   padding:14px 20px;
   background:#eef3ef;
   border:1px solid #dbe6de;
@@ -404,48 +404,18 @@ footer{
   text-align:center;
 }
 
-/* ANIMACIONES */
-@keyframes noticeBounce{
-  0%{ transform:translateY(-25px); opacity:0; }
-  60%{ transform:translateY(6px); opacity:1; }
-  80%{ transform:translateY(-3px); }
-  100%{ transform:translateY(0); }
-}
-
-@keyframes noticeGlow{
-  0%{ box-shadow:0 0 0 rgba(0,122,51,0); }
-  50%{ box-shadow:0 0 18px rgba(0,122,51,0.25); }
-  100%{ box-shadow:var(--shadow-sm); }
-}
-
-@keyframes noticePulse{
-  0%{ transform:scale(1); }
-  3%{ transform:scale(1.02); }
-  6%{ transform:scale(1); }
-  100%{ transform:scale(1); }
-}
-
 /* RESPONSIVE */
-@media (max-width: 1100px){
+@media (max-width: 980px){
+  .main-layout{
+    grid-template-columns:1fr;
+  }
+
+  .sticky-help{
+    position:static;
+  }
+
   .gallery{
-    grid-template-columns:repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 900px){
-  header{
-    grid-template-columns:110px 1fr 80px;
-  }
-
-  .logo-izquierda{ max-height:60px; }
-  .logo-derecha{ max-height:62px; }
-
-  .step-card{
-    grid-template-columns:74px minmax(0, 1fr);
-  }
-
-  .step-num{
-    font-size:1.65rem;
+    grid-template-columns:repeat(2, minmax(0,1fr));
   }
 }
 
@@ -466,21 +436,19 @@ footer{
     display:none;
   }
 
-  .step-card{
-    grid-template-columns:1fr;
+  .card{
+    padding:16px;
+    border-radius:18px;
   }
 
-  .step-num{
-    justify-content:flex-start;
-    padding:14px 18px 0;
-    border-right:none;
-    border-bottom:1px solid var(--line);
-    background:#eef6f0;
-  }
-
-  .step-header{
+  .card-tipo-header{
     flex-direction:column;
     align-items:flex-start;
+  }
+
+  .card-tipo-body{
+    margin-left:8px;
+    padding-left:10px;
   }
 
   .gallery{
@@ -516,86 +484,85 @@ footer{
     <img class="logo-derecha" src="images/Logo_SILA_Migrantes2_corto.png" alt="Logo proyecto">
   </header>
 
-  <section class="notice">
-    <p><strong>Recuerda:</strong> la herramienta ASIM-SAE parte del documento que trae la persona usuaria y <u>no todos</u> habilitan para la inscripción.</p>
-  </section>
+  <div class="main-layout">
 
-  <main class="steps">
+    <div class="left-col">
+      <section class="card notice">
+        <p><strong>Recuerda:</strong> la herramienta ASIM-SAE parte del documento que trae la persona usuaria y <u>no todos</u> habilitan para la inscripción.</p>
+      </section>
 
-    <section class="step-card">
-      <div class="step-num">1</div>
-      <div class="step-content">
-        <div class="step-header">
-          <h3>¿QUÉ HACER si no encuentras lo que buscas?</h3>
+      <section class="card card-tipo card-tipo-busqueda">
+        <div class="card-tipo-header">
+          <h3>1. ¿QUÉ HACER si no encuentras lo que buscas?</h3>
           <a class="volver-btn" href="https://asistenciaorienta.github.io/ASIM-SAE/">Volver al buscador</a>
         </div>
 
-        <p class="section-text">
-          Identifica el documento que se pretende hacer valer y transcribe la situación administrativa que regula.
-        </p>
+        <div class="card-tipo-body">
+          <p class="section-text">
+            Identifica el documento que se pretende hacer valer y transcribe la situación administrativa que regula.
+          </p>
 
-        <div class="gallery">
-          <div class="thumb-card">
-            <button class="thumb-btn" type="button" data-full="images/TIE.png" data-caption="Ejemplo de Tarjeta de Identidad de Extranjero (TIE)">
-              <img src="images/TIE.png" alt="Ejemplo de Tarjeta de Identidad de Extranjero (TIE)">
-            </button>
-            <div class="thumb-caption">Ejemplo de Tarjeta de Identidad de Extranjero (TIE)</div>
+          <div class="gallery">
+            <div class="thumb-card">
+              <button class="thumb-btn" type="button" data-full="images/TIE.png" data-caption="Ejemplo de Tarjeta de Identidad de Extranjero (TIE)">
+                <img src="images/TIE.png" alt="Ejemplo de Tarjeta de Identidad de Extranjero (TIE)">
+              </button>
+              <div class="thumb-caption">Ejemplo de Tarjeta de Identidad de Extranjero (TIE)</div>
+            </div>
+
+            <div class="thumb-card">
+              <button class="thumb-btn" type="button" data-full="images/Resolucion.png" data-caption="Ejemplo de Resolución">
+                <img src="images/Resolucion.png" alt="Ejemplo de Resolución">
+              </button>
+              <div class="thumb-caption">Ejemplo de Resolución</div>
+            </div>
+
+            <div class="thumb-card">
+              <button class="thumb-btn" type="button" data-full="images/Solicitud.png" data-caption="Ejemplo de Solicitud">
+                <img src="images/Solicitud.png" alt="Ejemplo de Solicitud">
+              </button>
+              <div class="thumb-caption">Ejemplo de Solicitud</div>
+            </div>
+
+            <div class="thumb-card">
+              <button class="thumb-btn" type="button" data-full="images/Resguardo_Solicitud.png" data-caption="Ejemplo de Resguardo de Solicitud de TIE">
+                <img src="images/Resguardo_Solicitud.png" alt="Ejemplo de Resguardo de Solicitud de TIE">
+              </button>
+              <div class="thumb-caption">Ejemplo de Resguardo de Solicitud de TIE</div>
+            </div>
           </div>
 
-          <div class="thumb-card">
-            <button class="thumb-btn" type="button" data-full="images/Resolucion.png" data-caption="Ejemplo de Resolución">
-              <img src="images/Resolucion.png" alt="Ejemplo de Resolución">
-            </button>
-            <div class="thumb-caption">Ejemplo de Resolución</div>
-          </div>
-
-          <div class="thumb-card">
-            <button class="thumb-btn" type="button" data-full="images/Solicitud.png" data-caption="Ejemplo de Solicitud">
-              <img src="images/Solicitud.png" alt="Ejemplo de Solicitud">
-            </button>
-            <div class="thumb-caption">Ejemplo de Solicitud</div>
-          </div>
-
-          <div class="thumb-card">
-            <button class="thumb-btn" type="button" data-full="images/Resguardo_Solicitud.png" data-caption="Ejemplo de Resguardo de Solicitud de TIE">
-              <img src="images/Resguardo_Solicitud.png" alt="Ejemplo de Resguardo de Solicitud de TIE">
-            </button>
-            <div class="thumb-caption">Ejemplo de Resguardo de Solicitud de TIE</div>
+          <div class="tip-box">
+            <strong>Consejo:</strong><br>
+            - Busca las palabras clave del documento.<br>
+            - Si no estás seguro, no introduzcas conceptos desconocidos.<br>
+            - Escribe los conceptos completos, evitando las abreviaturas.
           </div>
         </div>
+      </section>
 
-        <div class="tip-box">
-          <strong>Consejo:</strong><br>
-          - Busca las palabras clave del documento.<br>
-          - Si no estás seguro, no introduzcas conceptos desconocidos.<br>
-          - Escribe los conceptos completos, evitando las abreviaturas.
-        </div>
-      </div>
-    </section>
-
-    <section class="step-card">
-      <div class="step-num">2</div>
-      <div class="step-content">
-        <div class="step-header">
-          <h3>¿QUÉ HACER si mi búsqueda proporciona varias opciones?</h3>
+      <section class="card card-tipo card-tipo-opciones">
+        <div class="card-tipo-header">
+          <h3>2. ¿QUÉ HACER si mi búsqueda proporciona varias opciones?</h3>
         </div>
 
-        <p class="section-text">
-          Si el documento no concreta alguna condición, limitación o derecho, descarta las opciones específicas y selecciona la más genérica.
-        </p>
-      </div>
-    </section>
+        <div class="card-tipo-body">
+          <p class="section-text">
+            Si el documento no concreta alguna condición, limitación o derecho, descarta las opciones específicas y selecciona la más genérica.
+          </p>
+        </div>
+      </section>
+    </div>
 
-    <section class="step-card">
-      <div class="step-num">3</div>
-      <div class="step-content">
-        <div class="step-header">
-          <h3>Si no te hemos podido ayudar</h3>
+    <aside class="right-col">
+      <section class="card card-tipo card-tipo-saeclick sticky-help">
+        <div class="card-tipo-header">
+          <h3>3. Si no te hemos podido ayudar</h3>
         </div>
 
         <div class="contact-box">
           <p>
-            Puedes contactar con <a href="https://ws148.juntadeandalucia.es/dwp/app/" target="_blank" rel="noopener"><strong>SAEclick</strong></a>
+            Contacta con <a href="https://ws148.juntadeandalucia.es/dwp/app/" target="_blank" rel="noopener"><strong>SAEclick</strong></a>
             para realizar tu consulta.
           </p>
 
@@ -603,10 +570,10 @@ footer{
             Ir a SAEclick
           </a>
         </div>
-      </div>
-    </section>
+      </section>
+    </aside>
 
-  </main>
+  </div>
 </div>
 
 <footer>
@@ -697,7 +664,6 @@ document.querySelectorAll('.thumb-btn').forEach(btn => {
 zoomInBtn.addEventListener('click', () => changeZoom(0.25));
 zoomOutBtn.addEventListener('click', () => changeZoom(-0.25));
 zoomResetBtn.addEventListener('click', resetZoom);
-
 modalClose.addEventListener('click', closeImageModal);
 
 modal.addEventListener('click', e => {
