@@ -208,23 +208,24 @@ header h2{
 ========================= */
 .step-tab-card{
   position:relative;
-  padding-left:34px; /* espacio para la pestaña */
+  padding-left:72px;
+  overflow:hidden;
 }
 
 .step-tab{
   position:absolute;
-  top:22px;
-  left:-2px;
-  width:58px;
-  height:64px;
+  top:0;
+  bottom:0;
+  left:0;
+  width:64px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:1.65rem;
+  font-size:1.9rem;
   font-weight:900;
   color:#fff;
-  border-radius:16px 18px 18px 16px;
-  box-shadow:0 10px 24px rgba(0,0,0,.12);
+  border-radius:18px 0 0 18px;
+  box-shadow:inset -1px 0 0 rgba(255,255,255,.18);
   z-index:2;
 }
 
@@ -232,11 +233,11 @@ header h2{
   content:"";
   position:absolute;
   top:0;
-  right:-12px;
-  width:18px;
+  right:-18px;
+  width:24px;
   height:100%;
   background:inherit;
-  clip-path:polygon(0 0, 100% 50%, 0 100%);
+  clip-path:polygon(0 0, 100% 8%, 100% 92%, 0 100%);
 }
 
 /* Colores de pestañas */
@@ -270,7 +271,7 @@ header h2{
   align-items:center;
   justify-content:space-between;
   gap:12px;
-  padding:12px 16px 12px 38px;
+  padding:12px 16px 12px 18px;
   border-radius:14px;
   margin-bottom:12px;
 }
@@ -284,8 +285,8 @@ header h2{
 }
 
 .card-tipo-body{
-  margin-left:44px;
-  padding-left:16px;
+  margin-left:18px;
+  padding-left:14px;
   border-left:2px solid #dfe9e2;
 }
 
