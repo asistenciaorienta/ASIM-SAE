@@ -821,34 +821,56 @@ mark.token-hit{
   border-radius:8px;
 }  
 
+/* AVISO MÁQUINA DE ESCRIBIR */
+
 .aviso-texto{
-  flex:1;
   text-align:center;
   color:#000;
   font-size:14px;
-  min-width:0;
+  margin-bottom:6px;
+  transition:all .35s ease;
 }
 
 .aviso-texto strong{
   display:inline-block;
-  max-width:100%;
   overflow:hidden;
   white-space:nowrap;
   border-right:2px solid #000;
   width:0;
+
   animation:
-    escribir 4.5s steps(140, end) forwards,
-    cursorParpadeo .75s step-end 6;
+    escribir 4.5s steps(140,end) forwards,
+    cursor 0.8s step-end 6,
+    pulso 8s ease-in-out 6s infinite;
 }
 
+/* efecto escritura */
 @keyframes escribir{
-  from { width:0; }
-  to { width:100%; }
+  from{width:0}
+  to{width:100%}
 }
 
-@keyframes cursorParpadeo{
-  0%, 100% { border-color: transparent; }
-  50% { border-color:#000; }
+/* cursor */
+@keyframes cursor{
+  0%,100%{border-color:transparent}
+  50%{border-color:#000}
+}
+
+/* pulso suave */
+@keyframes pulso{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.03)}
+}
+
+/* estado activo cuando usan el buscador */
+
+.aviso-activo{
+  color:var(--sae-green);
+  transform:scale(1.05);
+}
+
+.aviso-activo strong{
+  border-right:2px solid var(--sae-green);
 }
 </style>
 </head>
@@ -901,16 +923,18 @@ mark.token-hit{
         <button id="btnSearch" class="btn btn-nocomunitario">Buscar</button>
       </div>
       <div class="search-meta">
-<div class="small2 aviso-texto">
-  <strong>
-    Copia el texto que define el documento, exactamente como aparece en el mismo, sin abreviaturas, sin interpretar y sin modificar ninguna palabra.
-  </strong>
-</div>
-
-<div class="search-meta">
-  <span></span>
-  <span class="small">Resultados: <span id="countResults">0</span></span>
-</div>
+        <div class="search-meta">
+          <div class="small2 aviso-texto" id="avisoBusqueda">
+          <strong>
+          Copia el texto que define el documento, exactamente como aparece en el mismo, sin abreviaturas, sin interpretar y sin modificar ninguna palabra.
+          </strong>
+          </div>
+          
+          <div class="search-meta">
+          <span></span>
+          <span class="small">Resultados: <span id="countResults">0</span></span>
+          </div>
+        </div>
       </div>
       <div id="msgDisabled">Selecciona antes una opción de SILA para habilitar la búsqueda.</div>
 
@@ -963,6 +987,12 @@ mark.token-hit{
 </footer>
 
 <script>
+const aviso = document.getElementById("avisoBusqueda");
+const input = document.getElementById("searchInput");
+
+input.addEventListener("focus", () => {
+  aviso.classList.add("aviso-activo");
+});  
 // === LOG de búsquedas a Google Sheets (Apps Script Web App) ===
 const REPORT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyeY-1yE4zo6Yq55PLcsOsKMDgdQ9pqX115liHiTjzkjk6nGDKwDlIufzkvxuLwbIdT/exec';
 
