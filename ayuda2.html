@@ -54,7 +54,7 @@ body{
 }
 
 .container{
-  width:min(1180px, calc(100% - 32px));
+  width:min(1380px, calc(100% - 40px));
   margin:0 auto;
   padding:20px 0 28px;
 }
@@ -256,9 +256,9 @@ header h2{
 ========================= */
 .gallery{
   display:grid;
-  grid-template-columns:repeat(2, 150px);
-  justify-content:start;
-  gap:14px;
+  grid-template-columns:repeat(4, 160px);
+  justify-content:flex-start;
+  gap:16px;
 }
 
 .thumb-card{
@@ -534,7 +534,13 @@ footer{
 /* =========================
    RESPONSIVE
 ========================= */
-@media (max-width: 980px){
+@media (max-width:900px){
+  .gallery{
+    grid-template-columns:repeat(2, 1fr);
+  }
+}
+  
+  @media (max-width: 980px){
   .main-grid{
     grid-template-columns:1fr;
   }
@@ -697,7 +703,7 @@ footer{
 
       <section class="card card-tipo card-tipo-saeclick">
         <div class="card-tipo-header">
-          <h3>3. Si no te hemos podido ayudar contacta con <a href="https://ws148.juntadeandalucia.es/dwp/app/" target="_blank" rel="noopener"><strong>SAEclick</strong></a></h3>
+          <h3>3. Si no te hemos podido ayudar...</h3>
         </div>
 
         <div class="card-tipo-body">
