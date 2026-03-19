@@ -67,7 +67,7 @@
     "Opción a": "hoy > fecha1 + 180 dias",
     "Opción b": "hoy >= fecha1 + 30 dias y hoy <= fecha1 + 180 dias",
     "Opción c": "hoy < fecha1 + 30 dias",
-    "Mostrar": "Resguardo de presentación Solicitud de **protección internacional. (Art 18.1 a)** Ley 12/2009). (Tarjeta blanca).",
+    "Mostrar": "Resguardo de presentación Solicitud de **protección internacional. (Art 18.1 a)** Ley 12/2009. (Tarjeta blanca).",
     "Tipo de documento": "Solicitud",
     "¿Que pide SILA?": "* Fecha de caducidad\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
@@ -104,7 +104,7 @@
     "Opción a": "hoy > fecha1 + 180 dias",
     "Opción b": "hoy >= fecha1 + 30 dias y hoy <= fecha1 + 180 dias",
     "Opción c": "hoy < fecha1 + 30 dias",
-    "Mostrar": "Resguardo de presentación Solicitud de **protección internacional. (Art 18.1 a)** Ley 12/2009). (Tarjeta blanca).",
+    "Mostrar": "Resguardo de presentación Solicitud de **protección internacional. (Art 18.1 a)** Ley 12/2009. (Tarjeta blanca).",
     "Tipo de documento": "Solicitud",
     "¿Que pide SILA?": "* Fecha de caducidad\n\nFecha Solicitud renovación automática",
     "Fecha de la última actualización": "6/02/2026",
@@ -2923,7 +2923,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Autorización Residencia TEMPORAL . RESI Y TRABAJO RENOVADA AUT autoriza TRABAJAR CTA AJENA / PROP. CUENTA / PROPIA. EN EDAD LABORAL,  Y . RENOVACION supuesto general artículo 81.1 vigencia anterior 1  uno año 4 cuatro años duración Residencia TEMPORAL PRORROGADA Autoriza a Trabajar",
+    "ANVERSO": "Autorización Residencia TEMPORAL . RESI Y TRABAJO RENOVADA AUT autoriza TRABAJAR CTA AJENA / PROP. pro CUENTA / PROPIA. EN EDAD LABORAL,  Y . RENOVACION supuesto general artículo 81.1 vigencia anterior 1  uno año 4 cuatro años duración Residencia TEMPORAL PRORROGADA Autoriza a Trabajar",
     "REVERSO": "",
     "Palabras_Clave": "",
     "Condicionantes": "",
@@ -2960,7 +2960,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Autorización Residencia TEMPORAL . RESI Y TRABAJO RENOVADA AUT autoriza TRABAJAR CTA AJENA / PROP. CUENTA / PROPIA. EN EDAD LABORAL,  Y . RENOVACION supuesto general artículo 81.1 vigencia anterior 1  uno año 4 cuatro años duración Residencia TEMPORAL PRORROGADA Autoriza a Trabajar",
+    "ANVERSO": "Autorización Residencia TEMPORAL . RESI Y TRABAJO RENOVADA AUT autoriza TRABAJAR CTA AJENA / PROP.  pro CUENTA / PROPIA. EN EDAD LABORAL,  Y . RENOVACION supuesto general artículo 81.1 vigencia anterior 1  uno año 4 cuatro años duración Residencia TEMPORAL PRORROGADA Autoriza a Trabajar",
     "REVERSO": "",
     "Palabras_Clave": "",
     "Condicionantes": "",
@@ -2997,7 +2997,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Solicitud de Autorización de Residencia temporal y trabajo por cuenta propia\n(LO 4/2000 y RD 1155/2024)",
+    "ANVERSO": "Solicitud de Autorización de Residencia temporal y trabajo por cuenta propia,pro prop \n(LO 4/2000 y RD 1155/2024)",
     "REVERSO": "",
     "Palabras_Clave": "",
     "Condicionantes": "",
@@ -3034,7 +3034,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Autorización de Residencia Temporal y Trabajo cuenta propia inicial",
+    "ANVERSO": "Autorización de Residencia Temporal y Trabajo cuenta propia inicial prop pro",
     "REVERSO": "",
     "Palabras_Clave": "",
     "Condicionantes": "",
