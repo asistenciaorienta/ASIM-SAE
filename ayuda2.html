@@ -28,6 +28,7 @@
 
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
 }
+
 a{
   color:var(--sae-green);
   text-decoration:none;
@@ -38,6 +39,7 @@ a:hover{
   color:var(--sae-green-2);
   text-decoration:underline;
 }
+  
 *{box-sizing:border-box}
 
 html,body{
@@ -185,12 +187,16 @@ header h2{
 .card-tipo-opciones .card-tipo-header{
   background:#e5dbce;
 }  
-  .card-tipo-saeclick .card-tipo-header{
+
+.card-tipo-saeclick{
   background:var(--sae-green-soft);
+}    
+.card-tipo-saeclick .card-tipo-header{
+  background:#AADBBA;
 }  
   
 .notice{
-  background:var(--sae-green-soft);
+  background:linear-gradient(180deg, #ADCEB1, #fafdfb 100%);
   border-left:6px solid var(--sae-green);
 }
 
@@ -213,6 +219,7 @@ header h2{
   margin-top:16px;
   padding:14px 16px;
   /*background:#fff;*/
+  background:linear-gradient(180deg, #e7f2f2, #F6FAFA 100%);
   border:1px solid var(--sae-green-border);
   border-radius:16px;
   line-height:1.7;
@@ -750,7 +757,7 @@ footer{
 
 <section class="card card-tipo card-tipo-saeclick">
   <div class="card-tipo-header">
-    <h3>3. Si no te hemos podido ayudar contacta con <a href="https://ws148.juntadeandalucia.es/dwp/app/" target="_blank" color="#007A33;">SAEclick</a></h3>
+    <h3>3. Si no te hemos podido ayudar contacta con <a href="https://ws148.juntadeandalucia.es/dwp/app/" target="_blank"><strong>SAEclick</strong></a></h3>
   </div>
 
 </section>  
