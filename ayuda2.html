@@ -687,6 +687,27 @@ footer{
     width:98vw;
   }
 }
+  .notice-flex{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.notice-flex p{
+  margin:0;
+}
+
+@media (max-width:640px){
+  .notice-flex{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .notice-flex .volver-btn{
+    align-self:flex-end;
+  }
+}  
 </style>
 </head>
 
@@ -701,10 +722,15 @@ footer{
     </div>
     <img class="logo-derecha" src="images/Logo_SILA_Migrantes2_corto.png" alt="Logo proyecto">
   </header>
-
-  <section class="card notice">
-    <p><strong>Recuerda:</strong> la herramienta ASIM-SAE parte del documento que trae la persona usuaria y <u>no todos</u> habilitan para la inscripción.
-    <a class="volver-btn" href="https://asistenciaorienta.github.io/ASIM-SAE/">Volver al buscador</a></p>
+  
+  <section class="card notice notice-flex">
+    <p>
+      <strong>Recuerda:</strong> la herramienta ASIM-SAE parte del documento que trae la persona usuaria y <u>no todos</u> habilitan para la inscripción.
+    </p>
+  
+    <a class="volver-btn" href="https://asistenciaorienta.github.io/ASIM-SAE/">
+      Volver al buscador
+    </a>
   </section>
 
   <div class="main-grid">
