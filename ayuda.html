@@ -39,7 +39,7 @@ a:hover{
   color:var(--sae-green-2);
   text-decoration:underline;
 }
-  
+
 *{box-sizing:border-box}
 
 html,body{
@@ -54,7 +54,7 @@ body{
 }
 
 .container{
-  width:min(1180px, calc(100% - 32px));
+  width:min(1380px, calc(100% - 40px));
   margin:0 auto;
   padding:20px 0 28px;
 }
@@ -118,7 +118,7 @@ header h2{
 }
 
 /* =========================
-   BLOQUES
+   BLOQUES GENERALES
 ========================= */
 .card{
   position:relative;
@@ -134,7 +134,123 @@ header h2{
   margin:0 0 14px;
   color:var(--sae-green);
   font-size:1.25rem;
-  padding-right:180px;
+}
+
+/* =========================
+   LAYOUT PRINCIPAL
+========================= */
+.main-grid{
+  display:grid;
+  grid-template-columns:minmax(0, 1.45fr) minmax(320px, 0.95fr);
+  gap:22px;
+  align-items:start;
+}
+
+.main-left,
+.main-right{
+  min-width:0;
+}
+
+.main-right{
+  display:grid;
+  gap:22px;
+}
+
+/* =========================
+   BLOQUE AVISO
+========================= */
+.notice{
+  background:linear-gradient(180deg, #ADCEB1, #fafdfb 100%);
+  border-left:6px solid var(--sae-green);
+  animation:
+    noticeBounce 0.9s ease-out,
+    noticeGlow 1.4s ease-out,
+    noticePulse 12s ease-in-out 10s infinite;
+}
+
+.notice-flex{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.notice-flex p{
+  margin:0;
+  font-size:1.02rem;
+  line-height:1.6;
+}
+
+.notice strong{
+  color:var(--sae-green);
+}
+
+.volver-btn{
+  position:static;
+  flex-shrink:0;
+  font-size:13px;
+  color:var(--sae-green);
+  font-weight:700;
+  text-decoration:none;
+  background:#eef6f0;
+  padding:6px 10px;
+  border-radius:8px;
+  border:1px solid #d5e7d8;
+}
+
+.volver-btn:hover{
+  background:#e2f0e6;
+  text-decoration:underline;
+}
+
+/* =========================
+   TARJETAS CON PESTAÑA LATERAL
+========================= */
+.step-tab-card{
+  position:relative;
+  overflow:hidden;
+  padding-left:0;
+}
+
+.step-tab{
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  width:45px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.5rem;
+  font-weight:900;
+  color:#fff;
+  border-radius:18px 0 0 18px;
+  box-shadow:inset -1px 0 0 rgba(255,255,255,.18);
+  z-index:1;
+}
+
+.step-tab::after{
+  content:"";
+  position:absolute;
+  top:0;
+  right:-18px;
+  width:24px;
+  height:100%;
+  background:inherit;
+  clip-path:polygon(0 0, 100% 8%, 100% 92%, 0 100%);
+}
+
+/* Colores de pestañas */
+.step-tab-busqueda{
+  background:linear-gradient(180deg, #7bb7b4 0%, #5a9f9c 100%);
+}
+
+.step-tab-opciones{
+  background:linear-gradient(180deg, #c9b08c 0%, #b08f62 100%);
+}
+
+.step-tab-saeclick{
+  background:linear-gradient(180deg, #4aa365 0%, #2f8650 100%);
 }
 
 /* =========================
@@ -145,14 +261,19 @@ header h2{
   border-radius:18px;
   border:1px solid #e6efe7;
   box-shadow:0 3px 10px rgba(0,0,0,.03);
+  margin-bottom:0;
+  position:relative;
+  overflow:visible;
 }
 
 .card-tipo-header{
+  position:relative;
+  z-index:2;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:12px;
-  padding:10px 14px;
+  padding:12px 16px 12px 58px;
   border-radius:14px;
   margin-bottom:12px;
 }
@@ -162,15 +283,18 @@ header h2{
   font-size:1.18rem;
   font-weight:800;
   color:#1b1b1b;
+  line-height:1.3;
 }
 
 .card-tipo-body{
-  margin-left:22px;
+  position:relative;
+  z-index:2;
+  margin-left:58px;
   padding-left:14px;
   border-left:2px solid #dfe9e2;
 }
 
-/* Bloque 1: ayuda búsqueda */
+/* Bloque 1 */
 .card-tipo-busqueda{
   background:#e7f2f2;
 }
@@ -179,34 +303,22 @@ header h2{
   background:#cee5e4;
 }
 
-/* Bloque 2: varias opciones */
+/* Bloque 2 */
 .card-tipo-opciones{
   background:#f2ede7;
 }
 
 .card-tipo-opciones .card-tipo-header{
   background:#e5dbce;
-}  
+}
 
+/* Bloque 3 */
 .card-tipo-saeclick{
   background:var(--sae-green-soft);
-}    
-.card-tipo-saeclick .card-tipo-header{
-  background:#AADBBA;
-}  
-  
-.notice{
-  background:linear-gradient(180deg, #ADCEB1, #fafdfb 100%);
-  border-left:6px solid var(--sae-green);
 }
 
-.notice p{
-  margin:0;
-  font-size:1.02rem;
-  line-height:1.6;
-}
-.notice strong{
-  color:var(--sae-green);
+.card-tipo-saeclick .card-tipo-header{
+  background:#AADBBA;
 }
 
 .section-text{
@@ -218,7 +330,7 @@ header h2{
 .tip-box{
   margin-top:16px;
   padding:14px 16px;
-  /*background:#fff;*/
+  background:linear-gradient(180deg, #e7f2f2, #F6FAFA 100%);
   border:1px solid var(--sae-green-border);
   border-radius:16px;
   line-height:1.7;
@@ -233,18 +345,40 @@ header h2{
 ========================= */
 .gallery{
   display:grid;
-  grid-template-columns:repeat(auto-fit, 190px);
-  justify-content:center;
-  gap:20px;
+  grid-template-columns:repeat(4, 160px);
+  justify-content:flex-start;
+  gap:16px;
 }
 
 .thumb-card{
-  background:#fff;
+  position:relative;
+  background:#ffffff;
   border:1px solid #e3ebe5;
-  border-radius:16px;
-  padding:12px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.03);
-  transition:transform .15s ease, box-shadow .15s ease;
+  border-radius:14px;
+  padding:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.04);
+  transition:all .18s ease;
+}
+
+.thumb-card::after{
+  content:"Clic para ampliar";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%, -50%);
+  background:rgba(0,0,0,0.65);
+  color:#fff;
+  font-size:12px;
+  font-weight:700;
+  padding:6px 10px;
+  border-radius:8px;
+  opacity:0;
+  transition:opacity .18s ease;
+  pointer-events:none;
+}
+
+.thumb-card:hover::after{
+  opacity:1;
 }
 
 .thumb-card:hover{
@@ -263,37 +397,42 @@ header h2{
 
 .thumb-btn img{
   display:block;
-  width:160px;
-  height: 108px;
-  aspect-ratio:4/3;
+  width:100%;
+  height:100px;
   object-fit:cover;
-  border-radius:12px;
+  border-radius:10px;
   border:1px solid #dfe8e1;
+  background:#f6faf7;
 }
 
 .thumb-caption{
-  margin-top:10px;
+  margin-top:8px;
   text-align:center;
-  font-size:14px;
-  color:var(--muted);
+  font-size:13px;
+  color:#4b5c54;
   font-weight:600;
+  line-height:1.3;
 }
 
 /* =========================
-   BOTÓN VOLVER
+   BLOQUE SAECLICK
 ========================= */
-.actions{
-  display:flex;
-  justify-content:center;
-  margin-top:22px;
+.saeclick-box{
+  padding:8px 2px 2px;
 }
 
-.btn-back{
+.saeclick-box p{
+  margin:0 0 14px;
+  line-height:1.7;
+  color:#324038;
+}
+
+.saeclick-cta{
   display:inline-flex;
   align-items:center;
   justify-content:center;
   min-width:180px;
-  padding:13px 22px;
+  padding:12px 18px;
   border:none;
   border-radius:14px;
   background:linear-gradient(135deg, var(--sae-green) 0%, var(--sae-green-2) 100%);
@@ -304,144 +443,16 @@ header h2{
   transition:transform .15s ease, box-shadow .15s ease;
 }
 
-.btn-back:hover{
+.saeclick-cta:hover{
   transform:translateY(-1px);
   box-shadow:0 10px 20px rgba(0,122,51,.24);
+  color:#fff;
+  text-decoration:none;
 }
 
 /* =========================
    MODAL IMAGEN
 ========================= */
-.image-modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  background:rgba(20, 30, 25, 0.72);
-  justify-content:center;
-  align-items:center;
-  padding:20px;
-}
-
-.image-modal.open{
-  display:flex;
-}
-
-.image-modal-content{
-  position:relative;
-  max-width:min(1000px, 95vw);
-  max-height:90vh;
-  background:#fff;
-  border-radius:18px;
-  padding:14px 14px 10px;
-  box-shadow:var(--shadow-lg);
-}
-
-.image-modal-content img{
-  display:block;
-  max-width:100%;
-  max-height:76vh;
-  margin:0 auto;
-  border-radius:12px;
-}
-
-.image-modal-caption{
-  margin-top:10px;
-  text-align:center;
-  font-size:15px;
-  color:var(--muted);
-  font-weight:600;
-}
-
-.image-modal-close{
-  position:absolute;
-  top:10px;
-  right:10px;
-  width:36px;
-  height:36px;
-  border:none;
-  border-radius:999px;
-  background:#eef3ef;
-  color:#223028;
-  font-size:22px;
-  line-height:1;
-  cursor:pointer;
-}
-
-/* =========================
-   FOOTER
-========================= */
-footer{
-  width:min(1180px, calc(100% - 32px));
-  margin:0 auto 20px;
-  padding:14px 20px;
-  background:#eef3ef;
-  border:1px solid #dbe6de;
-  border-radius:18px;
-  color:var(--muted);
-  font-size:13px;
-  text-align:center;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 900px){
-  header{
-    grid-template-columns:110px minmax(0,1fr) 80px;
-  }
-
-  header .logo-izquierda{
-    width:125px;
-    max-height:60px;
-  }
-
-  header .logo-derecha{
-    width:68px;
-    max-height:62px;
-  }
-
-  .gallery{
-    grid-template-columns:repeat(2, minmax(0,1fr));
-  }
-}
-
-@media (max-width: 640px){
-  .container{
-    width:min(100% - 20px, 1180px);
-    padding-top:10px;
-  }
-
-  header{
-    grid-template-columns:1fr;
-    text-align:center;
-    gap:10px;
-  }
-
-  header .logo-izquierda,
-  header .logo-derecha{
-    display:none;
-  }
-
-  .card{
-    padding:16px;
-    border-radius:18px;
-  }
-
-  .gallery{
-    grid-template-columns:1fr;
-  }
-}
-.zoom-wrapper{
-  overflow:hidden;
-  cursor:grab;
-}
-
-.zoom-wrapper img{
-  transition:transform .15s ease;
-  transform-origin:center center;
-  user-select:none;
-}
 .img-modal{
   position:fixed;
   inset:0;
@@ -512,6 +523,38 @@ footer{
   opacity:.92;
 }
 
+.img-nav-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:2;
+  width:44px;
+  height:44px;
+  border:none;
+  border-radius:999px;
+  background:rgba(0,0,0,.58);
+  color:#fff;
+  font-size:30px;
+  line-height:1;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background .15s ease, transform .15s ease;
+}
+
+.img-nav-btn:hover{
+  background:rgba(0,0,0,.72);
+}
+
+.img-nav-prev{
+  left:14px;
+}
+
+.img-nav-next{
+  right:14px;
+}
+
 .zoom-stage{
   position:relative;
   overflow:hidden;
@@ -548,64 +591,9 @@ footer{
   line-height:1.4;
 }
 
-.card-ayuda-busqueda{
-  position:relative;
-}
-
-.card-ayuda-busqueda h3{
-  padding-right:180px;
-}  
-
-@media (max-width:640px){
-  .img-modal-box{
-    padding:14px 14px 12px;
-    width:98vw;
-  }
-@media (max-width: 640px){
-  .volver-btn{
-    position:static;
-    display:inline-block;
-    margin-bottom:12px;
-  }
-
-  .card-ayuda-busqueda h3{
-    padding-right:0;
-  }
-}
-  .zoom-stage{
-    min-height:240px;
-    max-height:60vh;
-  }
-
-  .zoom-stage img{
-    max-height:60vh;
-  }
-}  
-.volver-btn{
-  position:static;
-  flex-shrink:0;
-  font-size:13px;
-  color:var(--sae-green);
-  font-weight:700;
-  text-decoration:none;
-  background:#eef6f0;
-  padding:6px 10px;
-  border-radius:8px;
-  border:1px solid #d5e7d8;
-}
-
-.volver-btn:hover{
-  background:#e2f0e6;
-  text-decoration:underline;
-}
-  
-.notice{
-  animation:
-    noticeBounce 0.9s ease-out,
-    noticeGlow 1.4s ease-out,
-    noticePulse 12s ease-in-out 10s infinite;
-}
-
+/* =========================
+   ANIMACIONES
+========================= */
 @keyframes noticeBounce{
   0%{
     transform: translateY(-25px);
@@ -622,21 +610,19 @@ footer{
     transform: translateY(0);
   }
 }
-@keyframes noticeGlow{
 
+@keyframes noticeGlow{
   0%{
     box-shadow:0 0 0 rgba(0,122,51,0);
   }
-
   50%{
     box-shadow:0 0 18px rgba(0,122,51,0.25);
   }
-
   100%{
     box-shadow:var(--shadow-sm);
   }
-
 }
+
 @keyframes noticePulse{
   0%{
     transform:scale(1);
@@ -652,28 +638,146 @@ footer{
   }
 }
 
-@media (max-width: 640px){
+/* =========================
+   FOOTER
+========================= */
+footer{
+  width:min(1180px, calc(100% - 32px));
+  margin:0 auto 20px;
+  padding:14px 20px;
+  background:#eef3ef;
+  border:1px solid #dbe6de;
+  border-radius:18px;
+  color:var(--muted);
+  font-size:13px;
+  text-align:center;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width:900px){
+  .gallery{
+    grid-template-columns:repeat(2, 1fr);
+  }
+}
+
+@media (max-width:980px){
+  .main-grid{
+    grid-template-columns:1fr;
+  }
+
+  .main-right{
+    gap:22px;
+  }
+}
+
+@media (max-width:900px){
+  header{
+    grid-template-columns:110px minmax(0,1fr) 80px;
+  }
+
+  header .logo-izquierda{
+    width:125px;
+    max-height:60px;
+  }
+
+  header .logo-derecha{
+    width:68px;
+    max-height:62px;
+  }
+}
+
+@media (max-width:640px){
+  .container{
+    width:min(100% - 20px, 1180px);
+    padding-top:10px;
+  }
+
+  header{
+    grid-template-columns:1fr;
+    text-align:center;
+    gap:10px;
+  }
+
+  header .logo-izquierda,
+  header .logo-derecha{
+    display:none;
+  }
+
+  .card{
+    padding:16px;
+    border-radius:18px;
+  }
+
+  .notice-flex{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .notice-flex .volver-btn{
+    align-self:flex-end;
+  }
+
+.step-tab-card{
+    padding-left:0;
+  }
+
+  .step-tab{
+    position:static;
+    width:52px;
+    height:46px;
+    margin-bottom:10px;
+    border-radius:14px;
+  }
+
+  .step-tab::after{
+    display:none;
+  }
+
   .card-tipo-header{
     flex-direction:column;
     align-items:flex-start;
+    padding:12px 14px;
   }
 
   .card-tipo-body{
     margin-left:8px;
     padding-left:10px;
   }
-}
-  
-.group-res{background:#e7f2f2;}
-.group-sol{background:#f2e7e7;}
-.group-rec{background:#f2ede7;}
-.group-oth{background:#f4f4f4;}
 
-.group-res .result-section-header{background:#cee5e4;}
-.group-sol .result-section-header{background:#e5cecf;}
-.group-rec .result-section-header{background:#e5dbce;}
-.group-oth .result-section-header{background:#e9e9e9;}
-  
+  .gallery{
+    grid-template-columns:1fr;
+  }
+
+  .zoom-stage{
+    min-height:240px;
+    max-height:60vh;
+  }
+
+  .zoom-stage img{
+    max-height:60vh;
+  }
+
+  .img-modal-box{
+    padding:14px 14px 12px;
+    width:98vw;
+  }
+
+  .img-nav-btn{
+    width:38px;
+    height:38px;
+    font-size:26px;
+  }
+
+  .img-nav-prev{
+    left:8px;
+  }
+
+  .img-nav-next{
+    right:8px;
+  }
+}
 </style>
 </head>
 
@@ -688,78 +792,109 @@ footer{
     </div>
     <img class="logo-derecha" src="images/Logo_SILA_Migrantes2_corto.png" alt="Logo proyecto">
   </header>
-
-  <section class="card notice">
-    <p><strong>Recuerda:</strong> la herramienta ASIM-SAE parte del documento que trae la persona usuaria y <u>no todos</u> habilitan para la inscripción.</p>
-  </section>
-
-  <section class="card card-ayuda-busqueda card-tipo card-tipo-busqueda">
-    <div class="card-tipo-header">
-      <h3>1. ¿QUÉ HACER si no encuentras lo que buscas?</h3>
-      <a class="volver-btn" href="https://asistenciaorienta.github.io/ASIM-SAE/">Volver al buscador</a>
-    </div>
   
-    <div class="card-tipo-body">
-      <p class="section-text">
-        Identifica el documento que se pretende hacer valer y transcribe la situación administrativa que regula.
-      </p>
-
-    <div class="gallery">
-      <div class="thumb-card">
-        <button class="thumb-btn" type="button" data-full="images/TIE.png" data-caption="Ejemplo de Tarjeta de Identidad de Extranjero (TIE)">
-          <img src="images/TIE.png" alt="Ejemplo de Tarjeta de Identidad de Extranjero (TIE)">
-        </button>
-        <div class="thumb-caption">Ejemplo de Tarjeta de Identidad de Extranjero (TIE)</div>
-      </div>
-
-      <div class="thumb-card">
-        <button class="thumb-btn" type="button" data-full="images/Resolucion.png" data-caption="Ejemplo de Resolución">
-          <img src="images/Resolucion.png" alt="Ejemplo de Resolución">
-        </button>
-        <div class="thumb-caption">Ejemplo de Resolución</div>
-      </div>
-
-      <div class="thumb-card">
-        <button class="thumb-btn" type="button" data-full="images/Solicitud.png" data-caption="Ejemplo de Solicitud">
-          <img src="images/Solicitud.png" alt="Ejemplo de Solicitud">
-        </button>
-        <div class="thumb-caption">Ejemplo de Solicitud</div>
-      </div>
-
-      <div class="thumb-card">
-        <button class="thumb-btn" type="button" data-full="images/Resguardo_Solicitud.png" data-caption="Ejemplo de Resguardo de Solicitud de TIE">
-          <img src="images/Resguardo_Solicitud.png" alt="Ejemplo de Resguardo de Solicitud de TIE">
-        </button>
-        <div class="thumb-caption">Ejemplo de Resguardo de Solicitud de TIE</div>
-      </div>
-    </div>
-
-    <div class="tip-box">
-      <strong>Consejo:</strong><br>
-      - Busca las palabras clave del documento.<br>
-      - Si no estás seguro, no introduzcas conceptos desconocidos.<br>
-      - Escribe los conceptos completos, evitando las abreviaturas.
-    </div>
+  <section class="card notice notice-flex">
+    <p>
+      <strong>Recuerda:</strong> la herramienta ASIM-SAE parte del documento que trae la persona usuaria y <u>no todos</u> habilitan para la inscripción.
+    </p>
+  
+    <a class="volver-btn" href="https://asistenciaorienta.github.io/ASIM-SAE/">
+      Volver al buscador
+    </a>
   </section>
 
-<section class="card card-tipo card-tipo-opciones">
-  <div class="card-tipo-header">    
-    <h3>2. ¿QUÉ HACER si mi búsqueda proporciona varias opciones?</h3>
-  </div>
+  <div class="main-grid">
+    <div class="main-left">
 
-  <div class="card-tipo-body">
-    <p class="section-text">
-      Si el documento no concreta alguna condición, limitación o derecho, descarta las opciones específicas y selecciona la más genérica.
-    </p>
-  </div>
-</section>
+      <section class="card card-tipo card-tipo-busqueda step-tab-card">
+        <div class="step-tab step-tab-busqueda">1</div>
 
-<section class="card card-tipo card-tipo-saeclick">
-  <div class="card-tipo-header">
-    <h3>3. Si no te hemos podido ayudar contacta con <a href="https://ws148.juntadeandalucia.es/dwp/app/" target="_blank"><strong>SAEclick</strong></a></h3>
-  </div>
+        <div class="card-tipo-header">
+          <h3>¿QUÉ HACER si no encuentras lo que buscas?</h3>
+        </div>
 
-</section>  
+        <div class="card-tipo-body">
+          <p class="section-text">
+            Identifica el documento que se pretende hacer valer y transcribe la situación administrativa que regula.
+          </p>
+
+          <div class="gallery">
+            <div class="thumb-card">
+              <button class="thumb-btn" type="button" data-full="images/TIE.png" data-caption="Ejemplo de Tarjeta de Identidad de Extranjero (TIE)">
+                <img src="images/TIE.png" alt="Ejemplo de Tarjeta de Identidad de Extranjero (TIE)">
+              </button>
+              <div class="thumb-caption">Ejemplo de Tarjeta de Identidad de Extranjero (TIE)</div>
+            </div>
+
+            <div class="thumb-card">
+              <button class="thumb-btn" type="button" data-full="images/Resolucion.png" data-caption="Ejemplo de Resolución">
+                <img src="images/Resolucion.png" alt="Ejemplo de Resolución">
+              </button>
+              <div class="thumb-caption">Ejemplo de Resolución</div>
+            </div>
+
+            <div class="thumb-card">
+              <button class="thumb-btn" type="button" data-full="images/Solicitud.png" data-caption="Ejemplo de Solicitud">
+                <img src="images/Solicitud.png" alt="Ejemplo de Solicitud">
+              </button>
+              <div class="thumb-caption">Ejemplo de Solicitud</div>
+            </div>
+
+            <div class="thumb-card">
+              <button class="thumb-btn" type="button" data-full="images/Resguardo_Solicitud.png" data-caption="Ejemplo de Resguardo de Solicitud de TIE">
+                <img src="images/Resguardo_Solicitud.png" alt="Ejemplo de Resguardo de Solicitud de TIE">
+              </button>
+              <div class="thumb-caption">Ejemplo de Resguardo de Solicitud de TIE</div>
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <strong>Consejo:</strong><br>
+            - Busca las palabras clave del documento.<br>
+            - Si no estás seguro, no introduzcas conceptos desconocidos.<br>
+            - Escribe los conceptos completos, evitando las abreviaturas.
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="main-right">
+
+      <section class="card card-tipo card-tipo-opciones step-tab-card">
+        <div class="step-tab step-tab-opciones">2</div>
+
+        <div class="card-tipo-header">
+          <h3>¿QUÉ HACER si mi búsqueda proporciona varias opciones?</h3>
+        </div>
+
+        <div class="card-tipo-body">
+          <p class="section-text">
+            Si el documento no concreta alguna condición, limitación o derecho, descarta las opciones específicas y selecciona la más genérica.
+          </p>
+        </div>
+      </section>
+
+      <section class="card card-tipo card-tipo-saeclick step-tab-card">
+        <div class="step-tab step-tab-saeclick">3</div>
+
+        <div class="card-tipo-header">
+          <h3>Si no te hemos podido ayudar...</h3>
+        </div>
+
+        <div class="card-tipo-body">
+          <div class="saeclick-box">
+            <p>
+              Si tras revisar las opciones sigues teniendo dudas, puedes trasladar tu consulta a SAEclick.
+            </p>
+
+            <a class="saeclick-cta" href="https://ws148.juntadeandalucia.es/dwp/app/" target="_blank" rel="noopener">
+              Ir a SAEclick
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
 </div>
 
 <footer>
@@ -777,7 +912,9 @@ footer{
     </div>
 
     <div id="zoomStage" class="zoom-stage">
+      <button type="button" id="prevImgBtn" class="img-nav-btn img-nav-prev" aria-label="Imagen anterior">‹</button>
       <img id="imageModalImg" src="" alt="">
+      <button type="button" id="nextImgBtn" class="img-nav-btn img-nav-next" aria-label="Imagen siguiente">›</button>
     </div>
 
     <div id="imageModalCaption" class="img-modal-caption"></div>
@@ -794,7 +931,12 @@ const zoomStage = document.getElementById('zoomStage');
 const zoomInBtn = document.getElementById('zoomInBtn');
 const zoomOutBtn = document.getElementById('zoomOutBtn');
 const zoomResetBtn = document.getElementById('zoomResetBtn');
+const prevImgBtn = document.getElementById('prevImgBtn');
+const nextImgBtn = document.getElementById('nextImgBtn');
 
+const thumbs = Array.from(document.querySelectorAll('.thumb-btn'));
+
+let currentIndex = 0;
 let scale = 1;
 let x = 0;
 let y = 0;
@@ -813,10 +955,19 @@ function resetZoom() {
   applyTransform();
 }
 
-function openImageModal(src, caption = '') {
-  modalImg.src = src;
-  modalCaption.textContent = caption;
+function renderImage(index) {
+  const btn = thumbs[index];
+  if (!btn) return;
+
+  currentIndex = index;
+  modalImg.src = btn.dataset.full;
+  modalImg.alt = btn.querySelector('img')?.alt || '';
+  modalCaption.textContent = btn.dataset.caption || '';
   resetZoom();
+}
+
+function openImageModal(index) {
+  renderImage(index);
   modal.classList.add('open');
   modal.setAttribute('aria-hidden', 'false');
 }
@@ -827,6 +978,16 @@ function closeImageModal() {
   modalImg.src = '';
   modalCaption.textContent = '';
   resetZoom();
+}
+
+function showNextImage() {
+  const nextIndex = (currentIndex + 1) % thumbs.length;
+  renderImage(nextIndex);
+}
+
+function showPrevImage() {
+  const prevIndex = (currentIndex - 1 + thumbs.length) % thumbs.length;
+  renderImage(prevIndex);
 }
 
 function changeZoom(delta) {
@@ -841,15 +1002,18 @@ function changeZoom(delta) {
   applyTransform();
 }
 
-document.querySelectorAll('.thumb-btn').forEach(btn => {
+thumbs.forEach((btn, index) => {
   btn.addEventListener('click', () => {
-    openImageModal(btn.dataset.full, btn.dataset.caption || '');
+    openImageModal(index);
   });
 });
 
 zoomInBtn.addEventListener('click', () => changeZoom(0.25));
 zoomOutBtn.addEventListener('click', () => changeZoom(-0.25));
 zoomResetBtn.addEventListener('click', resetZoom);
+
+prevImgBtn.addEventListener('click', showPrevImage);
+nextImgBtn.addEventListener('click', showNextImage);
 
 modalClose.addEventListener('click', closeImageModal);
 
@@ -858,9 +1022,13 @@ modal.addEventListener('click', e => {
 });
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && modal.classList.contains('open')) {
-    closeImageModal();
-  }
+  if (!modal.classList.contains('open')) return;
+
+  if (e.key === 'Escape') closeImageModal();
+  if (e.key === 'ArrowRight') showNextImage();
+  if (e.key === 'ArrowLeft') showPrevImage();
+  if (e.key === '+') changeZoom(0.25);
+  if (e.key === '-') changeZoom(-0.25);
 });
 
 zoomStage.addEventListener('wheel', e => {
@@ -869,7 +1037,7 @@ zoomStage.addEventListener('wheel', e => {
 }, { passive:false });
 
 zoomStage.addEventListener('mousedown', e => {
-  if (scale <= 1) return;
+  if (scale <= 1 || e.target.closest('.img-nav-btn')) return;
   dragging = true;
   zoomStage.classList.add('dragging');
   startX = e.clientX - x;
@@ -888,7 +1056,10 @@ window.addEventListener('mouseup', () => {
   zoomStage.classList.remove('dragging');
 });
 
-zoomStage.addEventListener('dblclick', resetZoom);
+zoomStage.addEventListener('dblclick', e => {
+  if (e.target.closest('.img-nav-btn')) return;
+  resetZoom();
+});
 </script>
 </body>
 </html>
