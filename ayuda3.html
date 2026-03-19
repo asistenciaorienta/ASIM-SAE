@@ -208,8 +208,8 @@ header h2{
 ========================= */
 .step-tab-card{
   position:relative;
-  padding-left:72px;
   overflow:hidden;
+  padding-left:0;
 }
 
 .step-tab{
@@ -217,7 +217,7 @@ header h2{
   top:0;
   bottom:0;
   left:0;
-  width:64px;
+  width:72px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -226,7 +226,7 @@ header h2{
   color:#fff;
   border-radius:18px 0 0 18px;
   box-shadow:inset -1px 0 0 rgba(255,255,255,.18);
-  z-index:2;
+  z-index:1;
 }
 
 .step-tab::after{
@@ -267,11 +267,13 @@ header h2{
 }
 
 .card-tipo-header{
+  position:relative;
+  z-index:2;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:12px;
-  padding:12px 16px 12px 18px;
+  padding:12px 16px 12px 86px;
   border-radius:14px;
   margin-bottom:12px;
 }
@@ -285,7 +287,9 @@ header h2{
 }
 
 .card-tipo-body{
-  margin-left:18px;
+  position:relative;
+  z-index:2;
+  margin-left:86px;
   padding-left:14px;
   border-left:2px solid #dfe9e2;
 }
@@ -715,7 +719,7 @@ footer{
     align-self:flex-end;
   }
 
-  .step-tab-card{
+.step-tab-card{
     padding-left:0;
   }
 
