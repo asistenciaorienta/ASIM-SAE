@@ -821,17 +821,17 @@ mark.token-hit{
   border-radius:8px;
 }  
 
-  .aviso-texto{
+.aviso-texto{
   flex:1;
   text-align:center;
   color:#000;
   font-size:14px;
-  overflow:hidden;
-  white-space:nowrap;
+  min-width:0;
 }
 
 .aviso-texto strong{
   display:inline-block;
+  max-width:100%;
   overflow:hidden;
   white-space:nowrap;
   border-right:2px solid #000;
@@ -901,13 +901,16 @@ mark.token-hit{
         <button id="btnSearch" class="btn btn-nocomunitario">Buscar</button>
       </div>
       <div class="search-meta">
-        <div class="small2 aviso-texto">
-          <strong>
-          Copia el texto que define el documento, exactamente como aparece en el mismo, sin abreviaturas, sin interpretar y sin modificar ninguna palabra.
-          </strong>
-        </div>
-      
-        <span class="small">Resultados: <span id="countResults">0</span></span>
+<div class="small2 aviso-texto">
+  <strong>
+    Copia el texto que define el documento, exactamente como aparece en el mismo, sin abreviaturas, sin interpretar y sin modificar ninguna palabra.
+  </strong>
+</div>
+
+<div class="search-meta">
+  <span></span>
+  <span class="small">Resultados: <span id="countResults">0</span></span>
+</div>
       </div>
       <div id="msgDisabled">Selecciona antes una opción de SILA para habilitar la búsqueda.</div>
 
