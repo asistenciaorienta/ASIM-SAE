@@ -810,6 +810,22 @@ mark.token-hit{
   color:#000;
   font-size:14px;
 }  
+@keyframes reboteAviso {
+  0%   { transform: translateY(0); }
+  10%  { transform: translateY(-6px); }
+  20%  { transform: translateY(0); }
+  30%  { transform: translateY(-3px); }
+  40%  { transform: translateY(0); }
+  100% { transform: translateY(0); }
+}
+
+.aviso-texto{
+  flex:1;
+  text-align:center;
+  color:#000;
+  font-size:14px;
+  animation: reboteAviso 6s infinite;
+}  
 </style>
 </head>
 
