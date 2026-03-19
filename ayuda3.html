@@ -973,6 +973,7 @@ let startX = 0;
 let startY = 0;
 
 function applyTransform() {
+  modalImg.style.transition = dragging ? 'none' : 'transform .12s ease';
   modalImg.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
 }
 
@@ -1086,7 +1087,31 @@ window.addEventListener('mouseup', () => {
 
 zoomStage.addEventListener('dblclick', e => {
   if (e.target.closest('.img-nav-btn')) return;
-  resetZoom();
+
+  const rect = zoomStage.getBoundingClientRect();
+
+  /* posición del clic dentro del visor */
+  const clickX = e.clientX - rect.left;
+  const clickY = e.clientY - rect.top;
+
+  /* centro del visor */
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+
+  /* alterna entre ampliar y reiniciar */
+  if (scale === 1) {
+    scale = 2.2;
+
+    /* desplaza la imagen para que la zona clicada se acerque al centro */
+    x = (centerX - clickX) * scale;
+    y = (centerY - clickY) * scale;
+  } else {
+    scale = 1;
+    x = 0;
+    y = 0;
+  }
+
+  applyTransform();
 });
 </script>
 </body>
