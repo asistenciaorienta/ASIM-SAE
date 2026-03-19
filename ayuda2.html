@@ -262,14 +262,38 @@ header h2{
 }
 
 .thumb-card{
-  background:#fff;
+  position:relative;
+  background:#ffffff;
   border:1px solid #e3ebe5;
-  border-radius:16px;
-  padding:12px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.03);
-  transition:transform .15s ease, box-shadow .15s ease;
+  border-radius:14px;
+  padding:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.04);
+  transition:all .18s ease;
+}
+.thumb-card::after{
+  content:"Clic para ampliar";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%, -50%);
+  
+  background:rgba(0,0,0,0.65);
+  color:#fff;
+  font-size:12px;
+  font-weight:700;
+  
+  padding:6px 10px;
+  border-radius:8px;
+  
+  opacity:0;
+  transition:opacity .18s ease;
+  pointer-events:none;
 }
 
+.thumb-card:hover::after{
+  opacity:1;
+}  
+  
 .thumb-card:hover{
   transform:translateY(-2px);
   box-shadow:0 10px 18px rgba(0,0,0,0.08);
@@ -287,19 +311,20 @@ header h2{
 .thumb-btn img{
   display:block;
   width:100%;
-  height:95px;
+  height:100px;
   object-fit:cover;
-  border-radius:12px;
+  border-radius:10px;
   border:1px solid #dfe8e1;
+  background:#f6faf7;
 }
 
 .thumb-caption{
-  margin-top:10px;
+  margin-top:8px;
   text-align:center;
-  font-size:14px;
-  color:var(--muted);
+  font-size:13px;
+  color:#4b5c54;
   font-weight:600;
-  line-height:1.35;
+  line-height:1.3;
 }
 
 /* =========================
@@ -410,7 +435,53 @@ header h2{
 .img-tool-btn:hover{
   opacity:.92;
 }
+.img-nav-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:2;
+  width:44px;
+  height:44px;
+  border:none;
+  border-radius:999px;
+  background:rgba(0,0,0,.58);
+  color:#fff;
+  font-size:30px;
+  line-height:1;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background .15s ease, transform .15s ease;
+}
 
+.img-nav-btn:hover{
+  background:rgba(0,0,0,.72);
+}
+
+.img-nav-prev{
+  left:14px;
+}
+
+.img-nav-next{
+  right:14px;
+}
+
+@media (max-width:640px){
+  .img-nav-btn{
+    width:38px;
+    height:38px;
+    font-size:26px;
+  }
+
+  .img-nav-prev{
+    left:8px;
+  }
+
+  .img-nav-next{
+    right:8px;
+  }
+}
 .zoom-stage{
   position:relative;
   overflow:hidden;
@@ -633,6 +704,7 @@ footer{
 
   <section class="card notice">
     <p><strong>Recuerda:</strong> la herramienta ASIM-SAE parte del documento que trae la persona usuaria y <u>no todos</u> habilitan para la inscripción.</p>
+    <a class="volver-btn" href="https://asistenciaorienta.github.io/ASIM-SAE/">Volver al buscador</a>
   </section>
 
   <div class="main-grid">
@@ -640,7 +712,6 @@ footer{
       <section class="card card-ayuda-busqueda card-tipo card-tipo-busqueda">
         <div class="card-tipo-header">
           <h3>1. ¿QUÉ HACER si no encuentras lo que buscas?</h3>
-          <a class="volver-btn" href="https://asistenciaorienta.github.io/ASIM-SAE/">Volver al buscador</a>
         </div>
 
         <div class="card-tipo-body">
@@ -737,7 +808,9 @@ footer{
     </div>
 
     <div id="zoomStage" class="zoom-stage">
+      <button type="button" id="prevImgBtn" class="img-nav-btn img-nav-prev" aria-label="Imagen anterior">‹</button>
       <img id="imageModalImg" src="" alt="">
+      <button type="button" id="nextImgBtn" class="img-nav-btn img-nav-next" aria-label="Imagen siguiente">›</button>
     </div>
 
     <div id="imageModalCaption" class="img-modal-caption"></div>
@@ -754,7 +827,12 @@ const zoomStage = document.getElementById('zoomStage');
 const zoomInBtn = document.getElementById('zoomInBtn');
 const zoomOutBtn = document.getElementById('zoomOutBtn');
 const zoomResetBtn = document.getElementById('zoomResetBtn');
+const prevImgBtn = document.getElementById('prevImgBtn');
+const nextImgBtn = document.getElementById('nextImgBtn');
 
+const thumbs = Array.from(document.querySelectorAll('.thumb-btn'));
+
+let currentIndex = 0;
 let scale = 1;
 let x = 0;
 let y = 0;
@@ -773,10 +851,19 @@ function resetZoom() {
   applyTransform();
 }
 
-function openImageModal(src, caption = '') {
-  modalImg.src = src;
-  modalCaption.textContent = caption;
+function renderImage(index) {
+  const btn = thumbs[index];
+  if (!btn) return;
+
+  currentIndex = index;
+  modalImg.src = btn.dataset.full;
+  modalImg.alt = btn.querySelector('img')?.alt || '';
+  modalCaption.textContent = btn.dataset.caption || '';
   resetZoom();
+}
+
+function openImageModal(index) {
+  renderImage(index);
   modal.classList.add('open');
   modal.setAttribute('aria-hidden', 'false');
 }
@@ -787,6 +874,16 @@ function closeImageModal() {
   modalImg.src = '';
   modalCaption.textContent = '';
   resetZoom();
+}
+
+function showNextImage() {
+  const nextIndex = (currentIndex + 1) % thumbs.length;
+  renderImage(nextIndex);
+}
+
+function showPrevImage() {
+  const prevIndex = (currentIndex - 1 + thumbs.length) % thumbs.length;
+  renderImage(prevIndex);
 }
 
 function changeZoom(delta) {
@@ -801,15 +898,18 @@ function changeZoom(delta) {
   applyTransform();
 }
 
-document.querySelectorAll('.thumb-btn').forEach(btn => {
+thumbs.forEach((btn, index) => {
   btn.addEventListener('click', () => {
-    openImageModal(btn.dataset.full, btn.dataset.caption || '');
+    openImageModal(index);
   });
 });
 
 zoomInBtn.addEventListener('click', () => changeZoom(0.25));
 zoomOutBtn.addEventListener('click', () => changeZoom(-0.25));
 zoomResetBtn.addEventListener('click', resetZoom);
+
+prevImgBtn.addEventListener('click', showPrevImage);
+nextImgBtn.addEventListener('click', showNextImage);
 
 modalClose.addEventListener('click', closeImageModal);
 
@@ -818,9 +918,13 @@ modal.addEventListener('click', e => {
 });
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && modal.classList.contains('open')) {
-    closeImageModal();
-  }
+  if (!modal.classList.contains('open')) return;
+
+  if (e.key === 'Escape') closeImageModal();
+  if (e.key === 'ArrowRight') showNextImage();
+  if (e.key === 'ArrowLeft') showPrevImage();
+  if (e.key === '+') changeZoom(0.25);
+  if (e.key === '-') changeZoom(-0.25);
 });
 
 zoomStage.addEventListener('wheel', e => {
@@ -829,7 +933,7 @@ zoomStage.addEventListener('wheel', e => {
 }, { passive:false });
 
 zoomStage.addEventListener('mousedown', e => {
-  if (scale <= 1) return;
+  if (scale <= 1 || e.target.closest('.img-nav-btn')) return;
   dragging = true;
   zoomStage.classList.add('dragging');
   startX = e.clientX - x;
@@ -848,7 +952,10 @@ window.addEventListener('mouseup', () => {
   zoomStage.classList.remove('dragging');
 });
 
-zoomStage.addEventListener('dblclick', resetZoom);
+zoomStage.addEventListener('dblclick', e => {
+  if (e.target.closest('.img-nav-btn')) return;
+  resetZoom();
+});
 </script>
 </body>
 </html>
