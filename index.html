@@ -28,6 +28,16 @@
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
 }
 
+a{
+  color:var(--sae-green);
+  text-decoration:none;
+  font-weight:600;
+}
+
+a:hover{
+  color:var(--sae-green-2);
+  text-decoration:underline;
+}
 /* =========================
    BASE
 ========================= */
@@ -134,7 +144,7 @@ header h2{
 }
 
 .search-container{
-  background:linear-gradient(180deg, #ffffff 0%, #fafdfb 100%);
+  background:linear-gradient(180deg, #ADCEB1, #fafdfb 100%);
 }
 
 .search-container2{
@@ -334,6 +344,11 @@ header h2{
   box-shadow:none;
 }
 
+.search-top button:disabled{
+  background:#90ba97;
+  color:#f3faf5;
+  opacity:.9;
+}  
 .search-meta{
   display:flex;
   justify-content:space-between;
@@ -820,6 +835,41 @@ mark.token-hit{
   padding:6px 10px;
   border-radius:8px;
 }  
+
+/* AVISO MÁQUINA DE ESCRIBIR */
+
+.aviso-texto{
+  text-align:center;
+  color:#000;
+  font-size:14px;
+  margin-bottom:6px;
+}
+
+.aviso-texto strong{
+  display:inline-block;
+  overflow:hidden;
+  white-space:nowrap;
+  border-right:2px solid #000;
+  width:0;
+
+  animation:
+    escribir 4.5s steps(140,end) forwards,
+    cursor 0.8s step-end 6,
+    pulso 8s ease-in-out 6s infinite;
+}
+
+/* efecto escritura */
+@keyframes escribir{
+  from{width:0}
+  to{width:100%}
+}
+
+/* cursor */
+@keyframes cursor{
+  0%,100%{border-color:transparent}
+  50%{border-color:#000}
+}
+
 </style>
 </head>
 
@@ -858,9 +908,7 @@ mark.token-hit{
     <div id="searchArea" class="search-area" aria-live="polite">
       <div class="search-top">
         <div class="search-input-wrapper">
-          <input id="searchInput" type="text"
-            placeholder="Marca una opción e introduce la denominación de la autorización o solicitud a buscar en su totalidad, evitando abreviaturas."
-            aria-label="Introduce el texto a buscar" disabled>
+          <input id="searchInput" type="text" placeholder="Marca una opción e introduce la denominación de la autorización o solicitud a buscar…" aria-label="Introduce el texto a buscar" disabled>
           <span class="clear-btn-wrapper" id="clearSearchInline">
             <svg class="clear-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <line x1="18" y1="6" x2="6" y2="18" />
@@ -871,14 +919,19 @@ mark.token-hit{
         <button id="btnSearch" class="btn btn-nocomunitario">Buscar</button>
       </div>
       <div class="search-meta">
-        <span class="small">Resultados: <span id="countResults">0</span></span>
+          <div class="small2 aviso-texto">
+            <strong>
+             - Copia el texto que define el documento, exactamente como aparece en el mismo, sin abreviaturas, sin interpretar y sin modificar ninguna palabra.
+            </strong>
+          </div>
+          <span class="small">Resultados: <span id="countResults">0</span></span>
       </div>
       <div id="msgDisabled">Selecciona antes una opción de SILA para habilitar la búsqueda.</div>
 
       <div class="results" id="results" aria-live="polite"></div>
       <div class="results" aria-live="polite" style="color:var(--muted);font-size:13px;text-align:center;">
         La información ofrecida con esta herramienta es meramente orientativa y pretende ser un apoyo a la inscripción de las personas migrantes en SILA.<br>
-        <u>En ningún caso puede sustituir al sistema de resolución de incidencias establecido vía SAEclick.</u>
+        <u>En ningún caso puede sustituir al sistema de resolución de incidencias establecido vía <a href="https://ws148.juntadeandalucia.es/dwp/app/" target="_blank" color="#007A33;">SAEclick</a>.</u>
       </div>
     </div>
 
@@ -916,10 +969,8 @@ mark.token-hit{
 
 <footer>
   <div class="footer-logo">
-    <div class="logo-text"><b>Versión pruebas 16-03-2026 — Dirección Provincial de Granada</b></div>
+    <div class="logo-text"><b>Versión pruebas 19-03-2026 — Dirección Provincial de Granada</b></div>  
   </div>
-
-
 </footer>
 
 <script>
@@ -1175,7 +1226,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="result-item help-item" style="cursor:pointer">
         <div style="flex:1">
           <h4>¿No encuentras lo que buscas?
-            <a href="ayuda.html" rel="noopener noreferrer">Pulsa aquí y te ayudo a buscar</a>
+            <a href="ayuda.html" target="_blank" rel="noopener noreferrer">Pulsa aquí y te ayudo a buscar</a>
           </h4>
           <div class="small">Si lo necesitas, te guío para encontrar el documento correcto.</div>
         </div>
@@ -1374,7 +1425,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Carga JSON ---
   async function loadJSON(){
     try{
-      const res = await fetch('./SituacionesAdministrativas.json', {cache:'no-store'});
+      const res = await fetch('./SituacionesAdministrativasPruebas.json', {cache:'no-store'});
       if(!res.ok) throw new Error('No se pudo cargar SituacionesAdministrativas.json');
       db = await res.json();
       console.log('Registros cargados:', db.length);
