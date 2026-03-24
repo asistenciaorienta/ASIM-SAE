@@ -924,8 +924,12 @@ footer{
 </div>
 
 <footer>
-  Dirección Provincial de Granada · Página de ayuda ASIM-SAE
+  <div class="footer-logo">
+    <span id="version"></span>
+  </div
 </footer>
+<script src="version.js"></script>  
+<script> document.getElementById("version").textContent = APP_CONFIG.version;  </script>
 
 <div id="imageModal" class="img-modal" aria-hidden="true">
   <div class="img-modal-box" role="dialog" aria-modal="true" aria-label="Vista ampliada de imagen">
