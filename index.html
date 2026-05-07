@@ -1104,15 +1104,20 @@ document.addEventListener('DOMContentLoaded', () => {
     s = s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     s = s.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     s = s.replace(
-      /\[([^\]]+)\]\(\s*((?:https?:\/\/|www\.)[^\s)]+)\s*\)/g,
+      /\[([^\]]+)\]\(\s*((?:https?:\/\/|www\.|\/|\.\/|images\/)[^\s)]+)\s*\)/g,
       (m, label, url) => {
-        const href = url.startsWith('http') ? url : `https://${url}`;
-        const isImage = /\.(png|jpg|jpeg|webp|gif)$/i.test(href);
-        
-        if (isImage) {
-          return `<a href="${href}" class="js-image-link">${label}</a>`;
+        let href = url.trim();
+    
+        if (href.startsWith('www.')) {
+          href = `https://${href}`;
         }
-        
+    
+        const isImage = /\.(png|jpg|jpeg|webp|gif)$/i.test(href);
+    
+        if (isImage) {
+          return `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+        }
+    
         return `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
       }
     );
@@ -1237,18 +1242,7 @@ document.addEventListener('DOMContentLoaded', () => {
     openModalPreguntas(rec, tipo);
   }
 
-document.addEventListener('click', e => {
 
-  const link = e.target.closest('.inline-image-link');
-  if (!link) return;
-
-  e.preventDefault();
-
-  const src = link.dataset.image;
-  const caption = link.dataset.caption || '';
-
-  openImageModal(src, caption);
-});
   
   // ======= AYUDA como resultado extra =======
   function appendHelpResult(){
