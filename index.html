@@ -1,2302 +1,1247 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ASIM-SAE — Aplicación de soporte para la inscripción de migrantes en SILA</title>
-<style>
-:root{
-  --sae-green:#007A33;
-  --sae-green-2:#0b8a3d;
-  --sae-green-soft:#eaf6ee;
-  --sae-green-border:#cfe5d5;
-
-  --text:#1f2a24;
-  --muted:#66756d;
-  --bg:#f4f7f5;
-  --card-bg:#ffffff;
-  --line:#dde7df;
-
-  --shadow-sm:0 4px 14px rgba(16, 40, 24, 0.06);
-  --shadow-md:0 10px 28px rgba(16, 40, 24, 0.10);
-  --shadow-lg:0 24px 60px rgba(0,0,0,0.22);
-
-  --radius-sm:10px;
-  --radius-md:16px;
-  --radius-lg:22px;
-
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-}
-
-a{
-  color:var(--sae-green);
-  text-decoration:none;
-  font-weight:600;
-}
-
-a:hover{
-  color:var(--sae-green-2);
-  text-decoration:underline;
-}
-/* =========================
-   BASE
-========================= */
-*{box-sizing:border-box}
-
-html,body{
-  height:100%;
-  margin:0;
-  background:linear-gradient(180deg, #f8fbf9 0%, #f2f6f3 100%);
-  color:var(--text);
-  display:flex;
-  flex-direction:column;
-}
-
-body{
-  min-width:320px;
-}
-
-.container{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  width:min(1180px, calc(100% - 32px));
-  margin:0 auto;
-  padding:20px 0 28px;
-}
-
-/* =========================
-   HEADER
-========================= */
-header{
-  position:relative;
-  display:grid;
-  grid-template-columns:180px minmax(0,1fr) 180px;
-  align-items:center;
-  gap:16px;
-  padding:18px 20px;
-  margin-bottom:18px;
-  background:linear-gradient(135deg, #ffffff 0%, #f4faf6 100%);
-  border:1px solid var(--line);
-  border-radius:24px;
-  box-shadow:var(--shadow-md);
-  overflow:hidden;
-}
-
-header .logo-izquierda,
-header .logo-derecha{
-  display:block;
-  width:auto;
-  max-width:100%;
-  object-fit:contain;
-  justify-self:center;
-  align-self:center;
-}
-
-/* ajuste fino individual */
-header .logo-izquierda{
-  height:88px;
-}
-
-header .logo-derecha{
-  height:72px;
-}
-
-header .titulo-header{
-  position:static;
-  transform:none;
-  left:auto;
-  text-align:center;
-  white-space:normal;
-}
-
-header h1{
-  margin:0 0 4px;
-  color:var(--sae-green);
-  font-size:clamp(1.8rem, 2.6vw, 2.35rem);
-  line-height:1.1;
-  letter-spacing:-0.02em;
-}
-
-header h2{
-  margin:0;
-  font-size:clamp(0.98rem, 1.5vw, 1.15rem);
-  color:var(--muted);
-  font-weight:600;
-  line-height:1.3;
-}
-
-/* =========================
-   TARJETAS PRINCIPALES
-========================= */
-.search-container,
-.search-container2{
-  display:flex;
-  flex-direction:column;
-  align-items:stretch;
-  width:100%;
-  background:var(--card-bg);
-  padding:20px 22px;
-  border-radius:24px;
-  border:1px solid var(--line);
-  box-shadow:var(--shadow-sm);
-  margin:0 0 18px;
-}
-
-.search-container{
-  background:linear-gradient(180deg, #ADCEB1, #fafdfb 100%);
-}
-
-.search-container2{
-  background:linear-gradient(180deg, #ffffff 0%, #f8fbf9 100%);
-}
-
-/* =========================
-   BLOQUE DOCUMENTACIÓN
-========================= */
-#doc{
-  position:relative;
-  overflow:hidden;
-}
-
-#doc::before{
-  content:"";
-  position:absolute;
-  inset:0 auto 0 0;
-  width:6px;
-  background:linear-gradient(180deg, var(--sae-green), #39a45d);
-}
-
-#doc p{
-  margin:0 0 10px;
-  padding-left:10px;
-  font-size:1rem;
-}
-
-#doc ul{
-  margin:4px 0 0 28px;
-  padding:0;
-  list-style-type:disc;
-}
-
-#doc li{
-  margin-bottom:8px;
-  font-size:15px;
-  color:#34423a;
-  line-height:1.5;
-}
-
-/* =========================
-   INTRO / FILTROS
-========================= */
-.search-intro{
-  text-align:center;
-  width:100%;
-  margin-bottom:14px;
-  font-size:18px;
-  color:var(--text);
-}
-
-.search-intro p{
-  margin:0;
-}
-
-.filters{
-  display:flex;
-  gap:12px;
-  width:100%;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin-bottom:18px;
-}
-
-.filters label{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:0.96rem;
-  color:var(--text);
-  background:#f5f8f6;
-  border:1px solid var(--line);
-  border-radius:999px;
-  padding:10px 14px;
-  cursor:pointer;
-  transition:.18s ease;
-  box-shadow:0 1px 2px rgba(0,0,0,.02);
-}
-
-.filters label:hover{
-  background:#eef6f0;
-  border-color:#c8dccd;
-  transform:translateY(-1px);
-}
-
-.filters input[type="checkbox"]{
-  width:16px;
-  height:16px;
-  accent-color:var(--sae-green);
-}
-
-/* =========================
-   ÁREA DE BÚSQUEDA
-========================= */
-#searchArea{
-  width:100%;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  background:linear-gradient(180deg, #f9fcfa 0%, #f4f9f6 100%);
-  border:1px solid #e3ece5;
-  border-radius:20px;
-  padding:18px;
-}
-
-.search-top{
-  display:flex;
-  gap:12px;
-  align-items:center;
-}
-
-.search-input-wrapper{
-  position:relative;
-  width:100%;
-}
-
-#searchInput{
-  width:100%;
-  height:48px;
-  padding:0 44px 0 16px;
-  border-radius:14px;
-  border:1px solid #d8e6db;
-  font-size:15px;
-  box-sizing:border-box;
-  background-color:#90ba97;
-  transition:border-color .2s ease, background-color .25s ease, box-shadow .2s ease;
-  color:#fff;
-}
-
-#searchInput.enabled{
-  background-color:#fff;
-  color:var(--text);
-  border-color:#cfe1d3;
-  box-shadow:0 0 0 4px rgba(0,122,51,.06);
-}
-
-#searchInput:disabled::placeholder{
-  color:#eef6ef;
-}
-
-#searchInput.enabled::placeholder{
-  color:#9aa8a0;
-}
-
-.clear-btn-wrapper{
-  position:absolute;
-  right:12px;
-  top:50%;
-  transform:translateY(-50%);
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width:24px;
-  height:24px;
-  border-radius:50%;
-  transition:background .15s ease;
-}
-
-.clear-btn-wrapper:hover{
-  background:#edf2ee;
-}
-
-.clear-icon{
-  width:16px;
-  height:16px;
-  stroke:#2c3932;
-  stroke-width:2;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-  background:none;
-  pointer-events:none;
-}
-
-.search-top button{
-  height:48px;
-  padding:0 20px;
-  border-radius:14px;
-  border:none;
-  background:linear-gradient(135deg, var(--sae-green) 0%, var(--sae-green-2) 100%);
-  color:#fff;
-  font-weight:800;
-  cursor:pointer;
-  box-shadow:0 8px 18px rgba(0,122,51,.18);
-  transition:transform .15s ease, box-shadow .15s ease, opacity .15s ease;
-}
-
-.search-top button:hover{
-  transform:translateY(-1px);
-  box-shadow:0 10px 20px rgba(0,122,51,.24);
-}
-
-.search-top button[disabled]{
-  opacity:.55;
-  cursor:not-allowed;
-  box-shadow:none;
-}
-
-.search-top button:disabled{
-  background:#90ba97;
-  color:#f3faf5;
-  opacity:.9;
-}  
-.search-meta{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  color:var(--muted);
-  font-size:13px;
-  padding:0 2px;
-}
-
-#countResults{
-  font-weight:800;
-  color:var(--sae-green);
-}
-
-#msgDisabled{
-  display:none;
-  margin-top:2px;
-  font-size:13px;
-  color:#b71c1c;
-  background:#fff1f1;
-  border:1px solid #f0d1d1;
-  padding:10px 12px;
-  border-radius:12px;
-}
-#msgDisabled.show{display:block;}
-
-@keyframes inputFlash{
-  0%{background-color:#d8f5d2;}
-  100%{background-color:#fff;}
-}
-input.enabled.flash{
-  animation:inputFlash .4s ease-out;
-}
-
-/* =========================
-   RESULTADOS
-========================= */
-.results{
-  margin-top:6px;
-}
-
-.results .small{
-  color:#1b5e20;
-  font-size:15px;
-  margin-bottom:8px;
-}
-
-.result-item{
-  display:flex;
-  gap:12px;
-  padding:12px 14px;
-  border-radius:14px;
-  border:1px solid #e2ece4;
-  background:#fff;
-  margin-bottom:10px;
-  cursor:pointer;
-  box-shadow:0 2px 6px rgba(0,0,0,.03);
-  transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-}
-
-.result-item:hover{
-  transform:translateY(-1px);
-  box-shadow:0 8px 18px rgba(0,0,0,.06);
-  border-color:#cfe0d3;
-}
-
-.result-item h4{
-  margin:0;
-  font-weight:600;
-  line-height:1.45;
-}
-
-.results .result-item p{
-  white-space:pre-wrap;
-}
-
-/* =========================
-   MODALES
-========================= */
-.modal-backdrop{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(20, 30, 25, 0.42);
-  backdrop-filter:blur(2px);
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-  padding:18px;
-}
-
-.modal{
-  background:linear-gradient(180deg, #ffffff 0%, #fbfcfb 100%);
-  border-radius:18px;
-  padding:0;
-  width:100%;
-  max-width:760px;
-  max-height:85vh;
-  overflow:auto;
-  box-shadow:0 24px 60px rgba(0,0,0,0.22), 0 6px 16px rgba(0,0,0,0.10);
-  border:1px solid #dfe8e1;
-}
-
-.modal-header-sae{
-  background:linear-gradient(135deg, #007A33 0%, #0a8f42 100%);
-  color:#fff;
-  padding:18px 22px 16px;
-  border-top-left-radius:18px;
-  border-top-right-radius:18px;
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  box-shadow:inset 0 -1px 0 rgba(255,255,255,0.12);
-}
-
-.modal-header-label{
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  opacity:.9;
-}
-
-.modal-header-sae h3,
-.modal-header-sae h4{
-  margin:0;
-  line-height:1.35;
-}
-
-#modalDetalleTitulo,
-#modalPreguntasTitulo{
-  font-size:22px;
-  font-weight:800;
-  color:#fff;
-}
-
-.modal-header-help{
-  font-size:13px;
-  opacity:.92;
-}
-
-.modal-body-sae{
-  padding:20px 22px;
-  line-height:1.65;
-  background:#f7faf8;
-}
-
-.modal-body-sae .field{
-  background:#fff;
-  border:1px solid #e3ebe5;
-  border-radius:14px;
-  padding:14px 16px;
-  margin-bottom:12px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.03);
-}
-
-.modal-body-sae .field > strong:first-child,
-.modal-body-sae .field > span:first-child{
-  display:block;
-  margin-bottom:6px;
-  color:#0f5132;
-  font-size:13px;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:.03em;
-}
-
-.modal-body-sae .field a{
-  color:#006c2e;
-  font-weight:700;
-  text-decoration:underline;
-}
-
-.modal-body-sae .small{
-  color:var(--muted);
-  font-size:14px;
-}
-
-#modalPreguntasContent .field{
-  background:#fff;
-  border:1px solid #e3ebe5;
-  border-radius:14px;
-  padding:14px 16px;
-  margin-bottom:12px;
-}
-
-#modalPreguntasContent input[type="date"]{
-  margin-top:8px;
-  width:100%;
-  max-width:220px;
-  padding:10px 12px;
-  border:1px solid #cfdcd2;
-  border-radius:10px;
-  font-size:14px;
-  background:#fff;
-  box-sizing:border-box;
-}
-
-#modalPreguntasContent label{
-  color:#1f2d24;
-}
-
-#modalPreguntasContent input[type="radio"]{
-  transform:scale(1.08);
-}
-
-.modal-header-sae hr{
-  border:none;
-  border-top:1px solid rgba(255,255,255,0.25);
-  margin:4px 0 2px;
-}
-
-.actions{
-  display:flex;
-  gap:12px;
-  justify-content:flex-end;
-  padding:16px 22px 20px;
-  background:#ffffff;
-  border-top:1px solid #e5ece6;
-  position:sticky;
-  bottom:0;
-}
-
-.actions button{
-  min-width:120px;
-  padding:11px 18px;
-  border-radius:12px;
-  border:none;
-  font-weight:700;
-  cursor:pointer;
-  transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease;
-  box-shadow:0 4px 12px rgba(0,0,0,0.08);
-}
-
-.actions button:hover{
-  transform:translateY(-1px);
-}
-
-#btnVolverDetalle,
-#btnContinuarPreguntas{
-  background:var(--sae-green);
-  color:#fff;
-}
-
-#btnCancelarPreguntas{
-  background:#e9efea;
-  color:#1f2d24;
-}
-
-.modal::-webkit-scrollbar{width:10px;}
-.modal::-webkit-scrollbar-thumb{
-  background:#c8d8cb;
-  border-radius:999px;
-}
-.modal::-webkit-scrollbar-track{background:transparent;}
-
-/* =========================
-   GRUPOS DE RESULTADOS
-========================= */
-.result-section{
-  border-radius:16px;
-  padding:12px;
-  margin-bottom:14px;
-  border:1px solid #e6efe7;
-  box-shadow:0 3px 10px rgba(0,0,0,.03);
-}
-
-.result-section-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  padding:8px 10px;
-  border-radius:12px;
-}
-
-.result-section-title{
-  font-weight:800;
-  color:#1b1b1b;
-}
-
-.result-section-count{
-  font-size:12px;
-  color:var(--muted);
-  background:#ffffffb0;
-  border:1px solid #ffffff80;
-  padding:3px 9px;
-  border-radius:999px;
-}
-
-.result-section-body{
-  margin-left:22px;
-  padding-left:12px;
-  border-left:2px solid #dfe9e2;
-  margin-top:10px;
-}
-
-.group-res{background:#e7f2f2;}
-.group-sol{background:#f2e7e7;}
-.group-rec{background:#f2ede7;}
-.group-oth{background:#f4f4f4;}
-
-.group-res .result-section-header{background:#cee5e4;}
-.group-sol .result-section-header{background:#e5cecf;}
-.group-rec .result-section-header{background:#e5dbce;}
-.group-oth .result-section-header{background:#e9e9e9;}
-
-/* =========================
-   AYUDA
-========================= */
-.result-item.help-item{
-  border:1px dashed #cfd8dc;
-  background:#fff;
-}
-
-.result-item.help-item h4{
-  margin:0;
-  font-weight:700;
-}
-
-.result-item.help-item .small{
-  margin-top:4px;
-  color:var(--muted);
-  font-size:13px;
-}
-
-.result-item.help-item a{
-  color:var(--sae-green);
-  text-decoration:underline;
-  font-weight:800;
-}
-
-/* =========================
-   FOOTER
-========================= */
-footer{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  padding:14px 20px;
-  background:#eef3ef;
-  border-top:1px solid #dbe6de;
-  flex-wrap:wrap;
-}
-
-.footer-logo,.footer-datos{
-  font-size:13px;
-  color:var(--muted);
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 900px){
-  header{
-    grid-template-columns:120px minmax(0,1fr) 120px;
-    padding:16px;
-    gap:12px;
-  }
-
-  header .logo-izquierda{
-    height:64px;
-    width:auto;
-  }
-
-  header .logo-derecha{
-    height:58px;
-    width:auto;
-  }
-}
-
-@media (max-width: 640px){
-  .container{
-    width:min(100% - 20px, 1180px);
-    padding-top:10px;
-  }
-
-  header{
-    grid-template-columns:1fr;
-    text-align:center;
-    gap:10px;
-  }
-
-  header .logo-izquierda,
-  header .logo-derecha{
-    display:none;
-  }
-
-  .search-container,
-  .search-container2{
-    padding:16px;
-    border-radius:18px;
-  }
-
-  .filters{
-    flex-direction:column;
-    align-items:stretch;
-  }
-
-  .filters label{
-    justify-content:flex-start;
-    border-radius:14px;
-  }
-
-  .search-top{
-    flex-direction:column;
-    align-items:stretch;
-  }
-
-  .search-top button{
-    width:100%;
-  }
-
-  .modal{
-    max-height:90vh;
-    border-radius:16px;
-  }
-
-  .modal-header-sae{
-    padding:16px 16px 14px;
-    border-top-left-radius:16px;
-    border-top-right-radius:16px;
-  }
-
-  .modal-body-sae{
-    padding:16px;
-  }
-
-  .actions{
-    padding:14px 16px 16px;
-    justify-content:stretch;
-    flex-direction:column-reverse;
-  }
-
-  .actions button{
-    width:100%;
-  }
-
-  #modalDetalleTitulo,
-  #modalPreguntasTitulo{
-    font-size:19px;
-  }
-
-  .result-section-body{
-    margin-left:10px;
-    padding-left:10px;
-  }
-}
-
-mark.token-hit{
-  background:#fff3a3;
-  color:#1f2a24;
-  padding:0 3px;
-  border-radius:4px;
-  font-weight:700;
-}  
-.header-help{
-  position:absolute;
-  top:12px;
-  right:16px;
-  font-size:13px;
-  color:var(--sae-green);
-  font-weight:700;
-  text-decoration:none;
-  background:#eef6f0;
-  padding:6px 10px;
-  border-radius:8px;
-}
-
-.header-help:hover{
-  background:#e2f0e6;
-} 
-
-.header-help-footer{
-  position:absolute;
-  bottom:12px;
-  right:16px;
-  font-size:13px;
-  color:var(--sae-green);
-  font-weight:700;
-  text-decoration:none;
-  background:#eef6f0;
-  padding:6px 10px;
-  border-radius:8px;
-}  
-
-/* AVISO MÁQUINA DE ESCRIBIR */
-
-.aviso-texto{
-  text-align:center;
-  color:#000;
-  font-size:14px;
-  margin-bottom:6px;
-}
-
-.aviso-texto strong{
-  display:inline-block;
-  overflow:hidden;
-  white-space:nowrap;
-  border-right:2px solid #000;
-  width:0;
-
-  animation:
-    escribir 4.5s steps(140,end) forwards,
-    cursor 0.8s step-end 6,
-    pulso 8s ease-in-out 6s infinite;
-}
-
-/* efecto escritura */
-@keyframes escribir{
-  from{width:0}
-  to{width:100%}
-}
-
-/* cursor */
-@keyframes cursor{
-  0%,100%{border-color:transparent}
-  50%{border-color:#000}
-}
-
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ruta DAFO: conócete y avanza</title>
+  <link rel="icon" type="image/png" href="logo_DAFO.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    :root {
+      --bg-1: #0797a2;
+      --bg-2: #036d78;
+      --bg-3: #02505a;
+      --white: #ffffff;
+      --ink: #14383d;
+      --soft-white: rgba(255,255,255,.88);
+      --glass: rgba(255,255,255,.14);
+      --glass-strong: rgba(255,255,255,.22);
+      --dark-glass: rgba(0,0,0,.22);
+      --lime: #b7d83d;
+      --grey: #6f747c;
+      --danger: #ffded7;
+      --shadow: 0 24px 70px rgba(0,0,0,.24);
+      --radius-xl: 32px;
+      --radius-lg: 22px;
+      --footer-space: 110px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 14% 16%, rgba(255,255,255,.24), transparent 24%),
+        radial-gradient(circle at 88% 18%, rgba(183,216,61,.18), transparent 22%),
+        linear-gradient(145deg, var(--bg-1), var(--bg-2) 48%, var(--bg-3));
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.08), rgba(255,255,255,.08)),
+        linear-gradient(rgba(255,255,255,.06), rgba(255,255,255,.06)),
+        linear-gradient(rgba(255,255,255,.04), rgba(255,255,255,.04));
+      background-size: 58px 58px, 120px 120px, 240px 240px;
+      opacity: .42;
+      mask-image: radial-gradient(circle at 50% 44%, #000 0 62%, transparent 88%);
+    }
+
+    .shape {
+      position: fixed;
+      border: 2px solid rgba(255,255,255,.12);
+      border-radius: 20px;
+      pointer-events: none;
+      transform: rotate(8deg);
+    }
+
+    .shape:nth-child(1) { width: 72px; height: 72px; left: 6%; top: 22%; }
+    .shape:nth-child(2) { width: 118px; height: 118px; right: 11%; top: 16%; }
+    .shape:nth-child(3) { width: 52px; height: 52px; right: 18%; bottom: 20%; }
+    .shape:nth-child(4) { width: 96px; height: 96px; left: 42%; bottom: 12%; }
+    .shape:nth-child(5) { width: 42px; height: 42px; left: 25%; top: 10%; }
+
+    .hidden { display: none !important; }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 1240px;
+      min-height: 100dvh;
+      margin: 0 auto;
+      padding: clamp(22px, 4vw, 42px);
+      padding-bottom: var(--footer-space);
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 840px;
+      font-size: clamp(3.2rem, 8vw, 7.2rem);
+      line-height: .94;
+      letter-spacing: -.03em;
+      font-weight: 950;
+      text-wrap: balance;
+      text-shadow: 0 12px 36px rgba(0,0,0,.16);
+    }
+
+    h2 {
+      font-size: clamp(2.4rem, 5vw, 5.2rem);
+      line-height: .98;
+      font-weight: 950;
+      letter-spacing: -.03em;
+      text-wrap: balance;
+    }
+
+    h3 {
+      font-size: clamp(1.35rem, 2.2vw, 2rem);
+      line-height: 1.25;
+      font-weight: 850;
+      text-wrap: balance;
+    }
+
+    .lead {
+      max-width: 680px;
+      color: var(--soft-white);
+      font-size: clamp(1.15rem, 2vw, 1.45rem);
+      line-height: 1.45;
+    }
+
+    .page {
+      min-height: calc(100dvh - var(--footer-space));
+      display: grid;
+      align-items: center;
+    }
+
+    .brand-footer {
+      position: fixed;
+      z-index: 10;
+      left: clamp(18px, 4vw, 42px);
+      bottom: 22px;
+      width: min(50vw, 610px);
+      min-width: 250px;
+      pointer-events: none;
+    }
+
+    .brand-logo {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 10px 22px rgba(0,0,0,.20));
+    }
+
+    .top-logo {
+      position: absolute;
+      left: clamp(18px, 4vw, 42px);
+      top: clamp(18px, 4vw, 42px);
+      width: min(190px, 38vw);
+      opacity: .9;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,.16));
+    }
+
+    .qr-card {
+      position: fixed;
+      right: clamp(18px, 3vw, 32px);
+      top: clamp(18px, 3vw, 32px);
+      z-index: 12;
+      width: 76px;
+      aspect-ratio: 1;
+      border: 0;
+      border-radius: 16px;
+      padding: 7px;
+      background: #fff;
+      box-shadow: 0 12px 34px rgba(0,0,0,.24);
+      cursor: pointer;
+    }
+
+    .exit-button {
+      position: fixed;
+      right: clamp(18px, 3vw, 32px);
+      bottom: 92px;
+      z-index: 12;
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.20);
+      color: rgba(255,255,255,.88);
+      box-shadow: none;
+      font-size: .9rem;
+      font-weight: 800;
+      letter-spacing: 0;
+      backdrop-filter: blur(4px);
+    }
+
+    .exit-button:hover {
+      background: rgba(0,0,0,.30);
+    }
+
+    .qr-card::after {
+      content: "QR";
+      position: absolute;
+      left: 50%;
+      bottom: -24px;
+      transform: translateX(-50%);
+      color: white;
+      font-size: .72rem;
+      font-weight: 900;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.28);
+    }
+
+    .qr-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      background: rgba(0,0,0,.62);
+      backdrop-filter: blur(6px);
+    }
+
+    .modal-card {
+      position: relative;
+      width: min(560px, 94vw);
+      border-radius: var(--radius-xl);
+      padding: 30px;
+      background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.10));
+      border: 1px solid rgba(255,255,255,.24);
+      box-shadow: var(--shadow);
+      color: white;
+    }
+
+    .modal-card.white {
+      background: white;
+      padding: 28px;
+    }
+
+    .close-button {
+      position: absolute;
+      top: -16px;
+      right: -16px;
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      background: var(--grey);
+      color: white;
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .name-input {
+      width: 100%;
+      margin-top: 18px;
+      padding: 17px 18px;
+      border: 2px solid rgba(255,255,255,.34);
+      border-radius: 18px;
+      font: inherit;
+      font-size: 1.2rem;
+      color: var(--ink);
+      background: rgba(255,255,255,.94);
+      outline: none;
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 230px;
+      gap: clamp(24px, 5vw, 70px);
+      align-items: center;
+      padding-top: 64px;
+    }
+
+    .intro-panel {
+      max-width: 860px;
+    }
+
+    .intro-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--dark-glass);
+      color: var(--soft-white);
+      font-weight: 850;
+      letter-spacing: .01em;
+    }
+
+    .intro-subtitle {
+      max-width: 780px;
+      margin-top: 26px;
+      padding: 18px 22px;
+      border-radius: 20px;
+      background: rgba(0,0,0,.34);
+      color: white;
+      font-size: clamp(1.15rem, 2vw, 1.9rem);
+      font-weight: 820;
+      line-height: 1.28;
+      box-shadow: var(--shadow);
+    }
+
+    .intro-dafo-logo {
+      justify-self: end;
+      align-self: start;
+      width: min(210px, 44vw);
+      opacity: .92;
+      filter: drop-shadow(0 12px 24px rgba(0,0,0,.18));
+    }
+
+    button {
+      border: 0;
+      border-radius: 16px;
+      padding: 16px 26px;
+      font: inherit;
+      font-size: 1.12rem;
+      font-weight: 900;
+      cursor: pointer;
+      color: white;
+      background: var(--grey);
+      box-shadow: 0 12px 30px rgba(0,0,0,.20);
+      transition: transform .18s ease, filter .18s ease, opacity .18s ease;
+    }
+
+    button:hover { transform: translateY(-2px); filter: brightness(1.06); }
+    button:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+    button.secondary { background: rgba(255,255,255,.18); box-shadow: none; }
+    button.primary { background: var(--grey); }
+
+    .start-button {
+      position: fixed;
+      right: clamp(18px, 4vw, 42px);
+      bottom: 30px;
+      z-index: 13;
+      text-transform: uppercase;
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+    }
+
+    .activity-grid {
+      display: grid;
+      grid-template-columns: minmax(270px, 360px) minmax(0, 1fr);
+      gap: clamp(28px, 5vw, 64px);
+      align-items: center;
+      min-height: calc(100dvh - var(--footer-space) - 40px);
+    }
+
+    .video-panel {
+      position: relative;
+      justify-self: center;
+      width: min(360px, 100%);
+      aspect-ratio: 9 / 16;
+      max-height: calc(100dvh - var(--footer-space) - 90px);
+      overflow: hidden;
+      background: #000;
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+    }
+
+    .video-panel video,
+    .video-panel iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      object-fit: cover;
+      object-position: center center;
+      background: #000;
+    }
+
+    .video-start-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: linear-gradient(rgba(0,0,0,.10), rgba(0,0,0,.38));
+    }
+
+    .video-start-button {
+      border-radius: 999px;
+      padding-inline: 30px;
+      background: rgba(111,116,124,.96);
+    }
+
+    .video-start-button::before {
+      content: "▶";
+      margin-right: 10px;
+      font-size: 1rem;
+    }
+
+    .question-card {
+      position: relative;
+      padding: clamp(22px, 4vw, 34px);
+      border: 1px solid rgba(255,255,255,.20);
+      border-radius: var(--radius-xl);
+      background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.08));
+      box-shadow: var(--shadow);
+    }
+
+    .question-card.waiting-video {
+      opacity: .45;
+      pointer-events: none;
+      filter: saturate(.8);
+    }
+
+    .corner-logo {
+      position: absolute;
+      right: 24px;
+      top: 24px;
+      width: 108px;
+      opacity: .88;
+    }
+
+    .progress-wrap {
+      width: min(620px, calc(100% - 130px));
+      margin-bottom: 24px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 8px;
+      color: var(--soft-white);
+      font-weight: 800;
+      font-size: .95rem;
+    }
+
+    .progress {
+      height: 12px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255,255,255,.20);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: var(--lime);
+      transition: width .25s ease;
+    }
+
+    .section-pill {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 14px;
+      padding: 8px 13px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.22);
+      color: white;
+      font-weight: 900;
+    }
+
+    .help-text {
+      margin-bottom: 20px;
+      color: var(--soft-white);
+      font-size: 1.08rem;
+      line-height: 1.45;
+    }
+
+    .options-list {
+      display: grid;
+      gap: 13px;
+      margin-top: 20px;
+    }
+
+    .option-button {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      align-items: center;
+      text-align: left;
+      padding: 16px 18px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.94);
+      color: var(--ink);
+      box-shadow: 0 8px 24px rgba(0,0,0,.14);
+      line-height: 1.28;
+      font-weight: 800;
+    }
+
+    .option-button.selected {
+      outline: 4px solid var(--lime);
+      background: #fff;
+    }
+
+    .option-number {
+      width: 34px;
+      height: 34px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--bg-3);
+      color: white;
+      font-weight: 950;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .result-card {
+      position: relative;
+      width: min(1040px, 100%);
+      margin: 0 auto;
+      padding: clamp(24px, 4vw, 38px);
+      border-radius: var(--radius-xl);
+      background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.08));
+      border: 1px solid rgba(255,255,255,.20);
+      box-shadow: var(--shadow);
+    }
+
+    .result-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .result-sae-logo {
+      width: min(170px, 38vw);
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,.18));
+    }
+
+    .result-video-wrap {
+      display: grid;
+      place-items: center;
+      margin: 26px 0;
+    }
+
+    .result-video-wrap .video-panel {
+      width: min(330px, 100%);
+      max-height: 68vh;
+    }
+
+    .answer-list {
+      display: grid;
+      gap: 12px;
+      max-height: 320px;
+      overflow: auto;
+      padding-right: 6px;
+    }
+
+    .answer-item {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.16);
+    }
+
+    .answer-item p { margin-bottom: 0; }
+
+    @media (max-width: 900px) {
+      :root { --footer-space: 96px; }
+      main { padding: 20px 16px var(--footer-space); }
+      .intro-grid, .activity-grid { grid-template-columns: 1fr; }
+      .intro-grid { padding-top: 86px; }
+      .intro-dafo-logo { justify-self: start; width: min(150px, 38vw); }
+      .qr-card { width: 64px; }
+      .exit-button { right: 18px; bottom: 86px; }
+      .brand-footer { width: 52vw; min-width: 230px; bottom: 18px; }
+      .start-button { right: 18px; bottom: 22px; }
+      .video-panel { width: min(330px, 100%); max-height: 58vh; }
+      .question-card { padding-top: 22px; }
+      .corner-logo { position: static; width: 110px; margin-bottom: 12px; }
+      .progress-wrap { width: 100%; }
+      .result-header { grid-template-columns: 1fr; }
+      .result-sae-logo { justify-self: start; }
+    }
+
+    @media (max-width: 520px) {
+      h1 { font-size: clamp(2.7rem, 14vw, 4.4rem); }
+      h2 { font-size: 2.35rem; }
+      button { width: 100%; font-size: 1rem; }
+      .qr-card { width: 58px; }
+      .exit-button { bottom: 82px; font-size: .82rem; padding: 8px 11px; }
+      .start-button { width: auto; }
+      .brand-footer { width: 70vw; min-width: 210px; }
+      .video-panel { width: min(300px, 100%); max-height: 56vh; border-radius: 22px; }
+      .option-button { grid-template-columns: 32px 1fr; padding: 14px; font-size: .98rem; }
+      .option-number { width: 30px; height: 30px; }
+    }
+  </style>
 </head>
 
 <body>
+  <span class="shape"></span><span class="shape"></span><span class="shape"></span><span class="shape"></span><span class="shape"></span>
 
+  <button id="qrSmallBtn" class="qr-card" type="button" aria-label="Ampliar código QR">
+    <img class="qr-image" src="QR.png" alt="Código QR de acceso a la aplicación Ruta DAFO">
+  </button>
+  <button id="exitBtn" class="exit-button hidden" type="button">Salir</button>
 
-  <!-- Diseño e idea original de la Dirección Provincial de Granada, en concreto de:
-  Jefe de Servicio: Francisco Escabias García.
-  Diseñador: Valentín Jiménez Extremera.
-  Contenido: Elisabeth Huertas García y José Manuel Robles Chaves.
-  Testeo y verificación: Isabel Peláez Carmona, Silvia Gómez Martín, Inmaculada Ortega Avilés, Beatriz Girela Muñoz.
-  Aporte de información: Todas las oficinas SAE de la provincia de Granada y sus direcciones de ATE.
-  JSON actualizado a 19/03/2026 9:33 horas -->  
-  
-  
-<div class="container">
-  <header>
-    <img class="logo-izquierda" src="images/SAE_Junta_de_Andalucia_Documentacion.png" alt="Logo Junta de Andalucía">
-    <div class="titulo-header">
-      <h1>ASIM-SAE</h1>
-      <h2>Aplicación de soporte para la inscripción de migrantes en SILA</h2>
-    </div>
-    <img class="logo-derecha" src="images/Logo_SILA_Migrantes2_corto.png" alt="Logo proyecto">
-  </header>
-
-  <div id="doc" class="search-container">
-    <p><strong>Documentación necesaria para la inscripción de una persona extranjera:</strong></p>
-    <a class="header-help" href="ayuda.html">Ayuda</a>
-    <ul>
-      <li>Identificación de la persona usuaria: documentación expedida por España con foto (Tarjeta de Identidad de Extranjero (TIE), Resolución con Foto, Pasaporte).</li>
-      <li>Tarjeta de Identidad de Extranjero (TIE) o Resolución en Vigor</li> <!--  o hasta 90 días posteriores a su fecha de caducidad.-->  
-      <li>Solicitud (sólo en los casos habilitados).</li>
-    </ul>
+  <div class="brand-footer">
+    <img class="brand-logo" src="logo_junta_blanco_transparente.png" alt="Junta de Andalucía">
   </div>
 
-  <div class="search-container2" role="region" aria-labelledby="intro">
-    <div id="intro" class="search-intro">
-      <p><strong>Consulta SILA y marca lo que corresponda:</strong></p>
-    </div>
-
-    <div class="filters" aria-label="Opciones SILA">
-      <label><input type="checkbox" id="chkInscrito"> Consta una inscripción previa en SILA</label>
-      <label><input type="checkbox" id="chkPrestacion"> Cobra prestación o subsidio</label>
-      <label><input type="checkbox" id="chkNada"> Ninguna de las anteriores</label>
-    </div>
-
-    <div id="searchArea" class="search-area" aria-live="polite">
-      <div class="search-top">
-        <div class="search-input-wrapper">
-          <input id="searchInput" type="text" placeholder="Marca una opción e introduce la denominación de la autorización o solicitud a buscar…" aria-label="Introduce el texto a buscar" disabled>
-          <span class="clear-btn-wrapper" id="clearSearchInline">
-            <svg class="clear-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </span>
+  <main>
+    <section id="intro" class="page">
+      <div class="intro-grid">
+        <div class="intro-panel">
+          <span class="intro-kicker">Herramienta de reflexión profesional</span>
+          <h1>Ruta DAFO:<br>conócete y avanza</h1>
+          <p class="lead">Piensa en tu meta profesional, mira qué te ayuda y qué te puede frenar, y recibe un informe para seguir avanzando.</p>
+          <p id="introSubtitle" class="intro-subtitle hidden"></p>
         </div>
-        <button id="btnSearch" class="btn btn-nocomunitario">Buscar</button>
+        <img class="intro-dafo-logo" src="logo_DAFO.png" alt="DAFO: Debilidades, Amenazas, Fortalezas y Oportunidades">
       </div>
-      <div class="search-meta">
-          <div class="small2 aviso-texto">
-            <strong>
-             - Copia el texto que define el documento, exactamente como aparece en el mismo, sin abreviaturas, sin interpretar y sin modificar ninguna palabra.
-            </strong>
+      <button id="startBtn" class="start-button" type="button">Comenzar ›</button>
+    </section>
+
+    <section id="app" class="page hidden">
+      <div class="activity-grid">
+        <div id="videoContainer" class="video-panel"></div>
+
+        <article id="questionCard" class="question-card waiting-video">
+          <img class="corner-logo" src="logo_DAFO.png" alt="Logotipo DAFO">
+
+          <div class="progress-wrap">
+            <div class="progress-label">
+              <span id="progressText">Pregunta 1</span>
+              <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
           </div>
-          <span class="small">Resultados: <span id="countResults">0</span></span>
-      </div>
-      <div id="msgDisabled">Selecciona antes una opción de SILA para habilitar la búsqueda.</div>
 
-      <div class="results" id="results" aria-live="polite"></div>
-      <div class="results" aria-live="polite" style="color:var(--muted);font-size:13px;text-align:center;">
-        La información ofrecida con esta herramienta es meramente orientativa y pretende ser un apoyo a la inscripción de las personas migrantes en SILA.<br>
-        <u>En ningún caso puede sustituir al sistema de resolución de incidencias establecido vía <a href="https://ws148.juntadeandalucia.es/dwp/app/" target="_blank" color="#007A33;">SAEclick</a>.</u>
-      </div>
-    </div>
+          <span id="sectionPill" class="section-pill"></span>
+          <h2 id="sectionTitle"></h2>
+          <p class="help-text">Elige la opción que mejor encaje contigo. No hay que escribir: solo pensar, elegir y continuar.</p>
 
-    <div id="modalDetalle" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
-      <div class="modal" role="document">
-        <div class="modal-header-sae">
-          <div class="modal-header-label">Datos para la inscripción</div>
-          <h4 id="modalDetalleTitulo"></h4>
-        </div>
-        <div class="modal-body-sae" id="modalDetalleContent"></div>
-        <div class="actions">
-          <button id="btnVolverDetalle" class="btn">Volver</button>
-        </div>
+          <form id="questionForm">
+            <h3 id="questionText"></h3>
+            <div id="optionsList" class="options-list" role="group" aria-label="Opciones de respuesta"></div>
+            <input id="answerInput" type="hidden" required>
+            <div class="actions">
+              <button id="continueBtn" class="primary" type="button" disabled>Continuar</button>
+            </div>
+          </form>
+        </article>
       </div>
-    </div>
-    
-    <div id="modalPreguntas" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
-      <div class="modal" role="document">
-        <div class="modal-header-sae">
-          <div class="modal-header-label">Formulario previo</div>
-          <h3 id="modalPreguntasTitulo"></h3>
-          <hr>
-          <div class="modal-header-help">Indica la información que se solicita para determinar la opción correcta</div>
+    </section>
+
+    <section id="result" class="page hidden">
+      <article class="result-card">
+        <div class="result-header">
+          <div>
+            <h2>Tu resumen final</h2>
+            <p id="resultUserName" class="lead"></p>
+            <p id="resultText" class="lead"></p>
+          </div>
+          <img class="result-sae-logo" src="logo_Vertical_SAE_blanco_transparente.png" alt="Servicio Andaluz de Empleo">
         </div>
-        <div class="modal-body-sae" id="modalPreguntasContent"></div>
+
+        <div class="result-video-wrap">
+          <div id="summaryVideoContainer" class="video-panel"></div>
+        </div>
+
+        <h3>Respuestas recogidas</h3>
+        <p class="help-text">El feedback detallado aparecerá en el PDF. Puedes guardarlo o compartirlo.</p>
+        <div id="answersList" class="answer-list"></div>
+
         <div class="actions">
-          <button id="btnCancelarPreguntas" class="btn">Cancelar</button>
-          <button id="btnContinuarPreguntas" class="btn">Continuar</button>
+          <button id="downloadPdfBtn" type="button">Guardar PDF</button>
+          <button id="sharePdfBtn" class="secondary" type="button">Compartir / enviar PDF</button>
+          <button id="restartBtn" class="secondary" type="button">Reiniciar</button>
         </div>
-      </div>
+      </article>
+    </section>
+  </main>
+
+  <div id="qrModal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Código QR ampliado">
+    <div class="modal-card white">
+      <button id="qrCloseBtn" class="close-button" type="button" aria-label="Cerrar código QR">×</button>
+      <img class="qr-image" src="QR.png" alt="Código QR de acceso a la aplicación Ruta DAFO">
     </div>
-    
   </div>
-</div>
 
-<footer>
-  <div class="footer-logo">
-    <span id="version"></span>
-  </div
-</footer>
-<script src="version.js"></script>  
-<script> document.getElementById("version").textContent = APP_CONFIG.version;  </script>
-<script>
-// === LOG de búsquedas a Google Sheets (Apps Script Web App) ===
-const REPORT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyeY-1yE4zo6Yq55PLcsOsKMDgdQ9pqX115liHiTjzkjk6nGDKwDlIufzkvxuLwbIdT/exec';
-
-function logBusquedaToSheets(busqueda, numResultados, cobraPrestacion, inscritoAnteriormente){
-  const payload = {
-    busqueda: busqueda,
-    num_resultados: Number.isFinite(numResultados) ? numResultados : null,
-    cobra_prestacion: cobraPrestacion,
-    inscrito_anteriormente: inscritoAnteriormente,
-    fecha_hora: new Date().toISOString()
-  };
-  fetch(REPORT_ENDPOINT, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-    keepalive: true
-  }).catch(() => {});
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-
-  const chkInscrito = document.getElementById('chkInscrito');
-  const chkPrestacion = document.getElementById('chkPrestacion');
-  const chkNada = document.getElementById('chkNada');
-
-  function getContextoChecksSiNo(){
-    if (chkNada.checked) return { cobra:'no', inscrito:'no' };
-    const cobra = chkPrestacion.checked ? 'si' : 'no';
-    const inscrito = chkInscrito.checked ? 'si' : 'no';
-    return { cobra, inscrito };
-  }
-
-  const searchInput = document.getElementById('searchInput');
-  const btnSearch = document.getElementById('btnSearch');
-  const resultsEl = document.getElementById('results');
-  const countResults = document.getElementById('countResults');
-  const msgDisabled = document.getElementById('msgDisabled');
-
-  const modalDetalle = document.getElementById('modalDetalle');
-  const modalDetalleTitulo = document.getElementById('modalDetalleTitulo');
-  const modalDetalleContent = document.getElementById('modalDetalleContent');
-  const btnVolverDetalle = document.getElementById('btnVolverDetalle');
-
-  const modalPreguntas = document.getElementById('modalPreguntas');
-  const modalPreguntasTitulo = document.getElementById('modalPreguntasTitulo');
-  const modalPreguntasContent = document.getElementById('modalPreguntasContent');
-  const btnCancelarPreguntas = document.getElementById('btnCancelarPreguntas');
-  const btnContinuarPreguntas = document.getElementById('btnContinuarPreguntas');
-
-  const clearSearchInline = document.getElementById('clearSearchInline');
-  if (clearSearchInline) {
-    clearSearchInline.addEventListener('click', () => {
-      searchInput.value = '';
-      resultsEl.innerHTML = '';
-      countResults.textContent = '0';
-      searchInput.focus();
-    });
-  }
-
-  let db = [];
-
-  function getField(obj, possibleNames){
-    if (!obj) return undefined;
-    const keys = Object.keys(obj);
-    for(const n of possibleNames){
-      const normN = n.trim().toLowerCase();
-      for(const key of keys){
-        if(key.trim().toLowerCase() === normN) return obj[key];
-      }
-    }
-    return undefined;
-  }
-
-  function normalizeYesNo(v){
-    if (v === undefined || v === null) return '';
-    const s = String(v).trim().toLowerCase()
-      .normalize('NFD').replace(/\p{Diacritic}/gu,'');
-    if (!s) return '';
-    if (s === 'si' || s === 'sí' || s === 's') return 'si';
-    if (s === 'no' || s === 'n') return 'no';
-    return '';
-  }
-
-  function recordPassesSilaFilters(rec){
-    const cobra = normalizeYesNo(getField(rec, ['¿Cobra prestación?', 'Cobra prestación', '¿Cobra prestacion?']));
-    const inscr = normalizeYesNo(getField(rec, ['¿Inscrito anteriormente?', '¿Inscrito anteriormente', 'Inscrito anteriormente?']));
-
-    if (chkNada.checked) {
-      return (cobra === '' || cobra === 'no') &&
-             (inscr === '' || inscr === 'no');
-    }
-    
-    if (chkPrestacion.checked && chkInscrito.checked) {
-      return (cobra === 'si' || cobra === '') &&
-             (inscr === 'si' || inscr === '');
-    }
-    
-    if (chkPrestacion.checked) {
-      return (cobra === 'si' || cobra === '') &&
-             (inscr === 'no' || inscr === '');
-    }
-    
-    if (chkInscrito.checked) {
-      return (cobra === 'no' || cobra === '') &&
-             (inscr === 'si' || inscr === '');
-    }
-    
-    return (cobra === '' || cobra === 'no') &&
-           (inscr === '' || inscr === 'no');
-  }
-  // ✅ convierte **texto** a <strong>texto</strong> + linkifica
-  function renderBoldMarkdown(text){
-    if (text === undefined || text === null) return '';
-    let s = String(text);
-    s = s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    s = s.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-    s = s.replace(
-      /\[([^\]]+)\]\(\s*((?:https?:\/\/|www\.|\/|\.\/|images\/)[^\s)]+)\s*\)/g,
-      (m, label, url) => {
-        let href = url.trim();
-    
-        if (href.startsWith('www.')) {
-          href = `https://${href}`;
-        }
-    
-        const isImage = /\.(png|jpg|jpeg|webp|gif)$/i.test(href);
-    
-        if (isImage) {
-          return `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
-        }
-    
-        return `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
-      }
-    );
-    const parts = s.split(/(<[^>]+>)/g);
-    for (let i = 0; i < parts.length; i++) {
-      if (parts[i].startsWith('<')) continue;
-      parts[i] = parts[i].replace(
-        /((?:https?:\/\/|www\.)[^\s<]+[^\s<\.)])/g,
-        (m) => {
-          const href = m.startsWith('http') ? m : `https://${m}`;
-          return `<a href="${href}" target="_blank" rel="noopener noreferrer">${m}</a>`;
-        }
-      );
-    }
-    s = parts.join('');
-    s = s.replace(/(\r\n|\r|\n|\\n|\/n|\|\|)/g, '<br>');
-    return s;
-  }
-
-  // --- MODAL DETALLE (con sufijo) ---
-  function openModalDetalle(rec, suffix = ''){
-    modalDetalleContent.innerHTML = '';
-    modalDetalleTitulo.innerHTML = '';
-
-    const tituloMostrar = getField(rec, ['Mostrar', 'mostrar']) || '';
-    modalDetalleTitulo.innerHTML = renderBoldMarkdown(tituloMostrar);
-
-    function valueOf(names){
-      const v = getField(rec, names);
-      return (v === undefined || v === null) ? '' : String(v).trim();
-    }
-    function col(base){ return suffix ? `${base} ${suffix}` : base; }
-
-    const fields = [
-      { label: 'Código de inscripción en SILA', names: [ col('Código de inscripción en SILA') ] },
-      { label: 'Modalidad de inscripción',     names: [ col('Modalidad de inscripción') ] },
-      { label: 'Alcance de la Autorización',   names: [ col('Alcance de la Autorización') ] },
-      { label: 'Observaciones',                names: [ col('Observaciones') ], boldTitle: true }
-    ];
-
-    let anyField = false;
-    fields.forEach(f => {
-      const val = valueOf(f.names);
-      if(val){
-        anyField = true;
-        const row = document.createElement('div');
-        row.className = 'field';
-
-        const strongTitle = document.createElement(f.boldTitle ? 'strong' : 'span');
-        strongTitle.textContent = f.label + ': ';
-        row.appendChild(strongTitle);
-
-        const valueElement = document.createElement(f.boldTitle ? 'span' : 'strong');
-        valueElement.innerHTML = renderBoldMarkdown(val);
-
-        row.appendChild(valueElement);
-        modalDetalleContent.appendChild(row);
-      }
-    });
-
-    const docKey = col('Documentación');
-    const docVal = valueOf([docKey, docKey.replace('ó','o')]);
-
-    if(docVal){
-      anyField = true;
-      const row = document.createElement('div');
-      row.className = 'field';
-
-      const title = document.createElement('span');
-      title.textContent = 'Documentación/enlace: ';
-      row.appendChild(title);
-
-      const valStrong = document.createElement('strong');
-      if(/^https?:\/\//i.test(docVal) || docVal.includes('/') || /\.(pdf|docx?|xlsx?)$/i.test(docVal)) {
-        const a = document.createElement('a');
-        a.href = docVal;
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-        a.textContent = 'Acceder al documento / enlace';
-        valStrong.appendChild(a);
-      } else {
-        valStrong.innerHTML = renderBoldMarkdown(docVal);
-      }
-
-      row.appendChild(valStrong);
-      modalDetalleContent.appendChild(row);
-    }
-
-    if(!anyField){
-      const none = document.createElement('div');
-      none.className = 'small';
-      none.textContent = 'No hay datos para mostrar en este registro.';
-      modalDetalleContent.appendChild(none);
-    }
-
-    modalDetalle.style.display = 'flex';
-    modalDetalle.setAttribute('aria-hidden','false');
-  }
-
-  function closeModalDetalle(){
-    modalDetalle.style.display='none';
-    modalDetalle.setAttribute('aria-hidden','true');
-  }
-  btnVolverDetalle.addEventListener('click', closeModalDetalle);
-
-  function closeModalPreguntas(){
-    modalPreguntas.style.display = 'none';
-    modalPreguntas.setAttribute('aria-hidden','true');
-    modalPreguntasContent.innerHTML = '';
-  }
-  btnCancelarPreguntas.addEventListener('click', closeModalPreguntas);
-
-  // En este HTML, si hay preguntas, tu lógica completa está más abajo.
-  // Para no romper, mantenemos el comportamiento:
-  function openRecord(rec){
-    const tipo = (getField(rec, ['Opciones_Pregunta','opciones_pregunta']) || '').trim().toLowerCase();
-    const p1 = (getField(rec, ['Pregunta1','pregunta1']) || '').trim();
-    if(!tipo || !p1){
-      openModalDetalle(rec, '');
-      return;
-    }
-    openModalPreguntas(rec, tipo);
-  }
-
-
-  
-  // ======= AYUDA como resultado extra =======
-  function appendHelpResult(){
-    const tmp = document.createElement('div');
-    tmp.innerHTML = `
-      <div class="result-item help-item" style="cursor:pointer">
-        <div style="flex:1">
-          <h4>¿No encuentras lo que buscas?
-            <a href="ayuda.html" target="_blank" rel="noopener noreferrer">Pulsa aquí y te ayudo a buscar</a>
-          </h4>
-          <div class="small">Si lo necesitas, te guío para encontrar el documento correcto.</div>
-        </div>
+  <div id="nameModal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Introduce tu nombre">
+    <form id="nameForm" class="modal-card">
+      <h3>Antes de empezar</h3>
+      <p class="lead">Escribe tu nombre para que las preguntas y el informe sean más cercanos.</p>
+      <input id="userNameInput" class="name-input" type="text" autocomplete="given-name" maxlength="40" placeholder="Tu nombre" required>
+      <div class="actions">
+        <button type="submit">Empezar actividad</button>
       </div>
-    `;
-    const item = tmp.firstElementChild;
-    item.addEventListener('click', (e) => {
-      if (e.target.tagName.toLowerCase() === 'a') return;
-      window.open('ayuda.html', '_blank', 'noopener,noreferrer');
-    });
-    resultsEl.appendChild(item);
-  }
+    </form>
+  </div>
 
-  // ======= NUEVO: clasificación por grupos =======
-  function normTxt(s){
-    return String(s || '')
-      .toLowerCase()
-      .normalize('NFD').replace(/\p{Diacritic}/gu,'')
-      .replace(/\s+/g,' ')
-      .trim();
-  }
-
-  // Si tienes un campo real (p.ej. "Tipo_Documento"), aquí sería ideal:
-  // const tipo = normTxt(getField(rec, ['Tipo_Documento','Tipo documento','Tipo']) || '');
-  function getDocGroup(rec){
-    const tipoDoc = normTxt(
-      getField(rec, [
-        'Tipo de documento',
-        'tipo de documento',
-        'Tipo_documento',
-        'tipo_documento'
-      ]) || ''
-    );
-  
-    if (tipoDoc === 'resolucion o tie') return 'res';
-    if (tipoDoc === 'solicitud') return 'sol';
-    if (tipoDoc === 'recurso') return 'rec';
-    if (tipoDoc === 'otros') return 'oth';
-  
-    return 'oth';
-  }
-
-  function createGroupSection({title, cssClass, count}){
-    const section = document.createElement('div');
-    section.className = `result-section ${cssClass}`;
-    section.innerHTML = `
-      <div class="result-section-header">
-        <div class="result-section-title">${title}</div>
-        <div class="result-section-count">${count}</div>
+  <div id="exitModal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Salir de la actividad">
+    <div class="modal-card">
+      <h3>Te esperamos cuando quieras volver</h3>
+      <p class="lead">Puedes dejar la actividad ahora. Cuando te apetezca seguir reflexionando sobre tu camino profesional, estaremos aquí.</p>
+      <div class="actions">
+        <button id="exitToStartBtn" type="button">Volver a la portada</button>
+        <button id="exitCancelBtn" class="secondary" type="button">Seguir en la actividad</button>
       </div>
-      <div class="result-section-body"></div>
-    `;
-    return section;
-  }
-  
-  function normalizeForCompare(s){
-    return String(s || '')
-      .normalize('NFD')
-      .replace(/\p{Diacritic}/gu,'')
-      .toLowerCase();
-  }
-  
-  function highlightTokensInHtml(html, tokens){
-    if (!html || !tokens || tokens.length < 1) return html;
-  
-    const cleanTokens = Array.from(new Set(
-      tokens
-        .map(t => String(t || '').trim())
-        .filter(Boolean)
-        .filter(t => t.length >= 2)
-    ));
-  
-    if (cleanTokens.length === 0) return html;
-  
-    const parts = String(html).split(/(<[^>]+>)/g);
-  
-    for (let i = 0; i < parts.length; i++) {
-      const chunk = parts[i];
-      if (!chunk || chunk.startsWith('<')) continue;
-  
-      parts[i] = chunk.replace(/\b[\p{L}\p{N}]+\b/gu, (word) => {
-        const wordNorm = normalizeForCompare(word);
-  
-        for (const tok of cleanTokens) {
-          const tokNorm = normalizeForCompare(tok);
-  
-          if (
-            wordNorm === tokNorm ||
-            areSimplePluralVariants(wordNorm, tokNorm)
-          ) {
-            return `<mark class="token-hit">${word}</mark>`;
-          }
+    </div>
+  </div>
+
+  <script>
+    const SECTION_ORDER = ["Debilidad", "Amenaza", "Fortaleza", "Oportunidad"];
+
+    const SECTION_VIDEOS = {
+      Debilidad: "videos/debilidades.mp4",
+      Amenaza: "videos/amenazas.mp4",
+      Fortaleza: "videos/fortalezas.mp4",
+      Oportunidad: "videos/oportunidades.mp4"
+    };
+
+    const SUMMARY_VIDEOS = {
+      feedback_1: "videos/feedback-1.mp4",
+      feedback_2: "videos/feedback-2.mp4",
+      feedback_3: "videos/feedback-3.mp4",
+      feedback_4: "videos/feedback-4.mp4",
+      feedback_5: "videos/feedback-5.mp4",
+      feedback_6: "videos/feedback-6.mp4",
+      feedback_7: "videos/feedback-7.mp4",
+      feedback_8: "videos/feedback-8.mp4",
+      feedback_9: "videos/feedback-9.mp4",
+      feedback_10: "videos/feedback-10.mp4",
+      feedback_11: "videos/feedback-11.mp4",
+      feedback_12: "videos/feedback-12.mp4",
+      feedback_13: "videos/feedback-13.mp4",
+      feedback_14: "videos/feedback-14.mp4",
+      feedback_15: "videos/feedback-15.mp4",
+      feedback_16: "videos/feedback-16.mp4"
+    };
+
+    let questions = [];
+    let groupedQuestions = {};
+    let sectionIndex = 0;
+    let questionIndex = 0;
+    let answers = [];
+    let currentQuestion = null;
+    let selectedOptionIndex = null;
+    let userName = "";
+    let currentVideoType = null;
+    let watchedVideoTypes = new Set();
+    let introAudio = null;
+    let introAudioStarted = false;
+    let introCues = [];
+    let introSubtitleTimer = null;
+
+    const intro = document.querySelector("#intro");
+    const app = document.querySelector("#app");
+    const result = document.querySelector("#result");
+    const startBtn = document.querySelector("#startBtn");
+    const qrSmallBtn = document.querySelector("#qrSmallBtn");
+    const qrModal = document.querySelector("#qrModal");
+    const qrCloseBtn = document.querySelector("#qrCloseBtn");
+    const exitBtn = document.querySelector("#exitBtn");
+    const exitModal = document.querySelector("#exitModal");
+    const exitToStartBtn = document.querySelector("#exitToStartBtn");
+    const exitCancelBtn = document.querySelector("#exitCancelBtn");
+    const nameModal = document.querySelector("#nameModal");
+    const nameForm = document.querySelector("#nameForm");
+    const userNameInput = document.querySelector("#userNameInput");
+    const questionForm = document.querySelector("#questionForm");
+    const continueBtn = document.querySelector("#continueBtn");
+    const restartBtn = document.querySelector("#restartBtn");
+    const downloadPdfBtn = document.querySelector("#downloadPdfBtn");
+    const sharePdfBtn = document.querySelector("#sharePdfBtn");
+
+    startBtn.addEventListener("click", handleStartButton);
+    qrSmallBtn.addEventListener("click", () => qrModal.classList.remove("hidden"));
+    qrCloseBtn.addEventListener("click", () => qrModal.classList.add("hidden"));
+    qrModal.addEventListener("click", event => { if (event.target === qrModal) qrModal.classList.add("hidden"); });
+    nameForm.addEventListener("submit", handleNameSubmit);
+    questionForm.addEventListener("submit", event => { event.preventDefault(); commitAnswerAndGoNext(); });
+    continueBtn.addEventListener("click", commitAnswerAndGoNext);
+    restartBtn.addEventListener("click", () => location.reload());
+    exitBtn.addEventListener("click", () => exitModal.classList.remove("hidden"));
+    exitCancelBtn.addEventListener("click", () => exitModal.classList.add("hidden"));
+    exitModal.addEventListener("click", event => { if (event.target === exitModal) exitModal.classList.add("hidden"); });
+    exitToStartBtn.addEventListener("click", () => location.reload());
+    downloadPdfBtn.addEventListener("click", savePdf);
+    sharePdfBtn.addEventListener("click", sharePdf);
+
+    async function handleStartButton() {
+      if (!introAudioStarted) {
+        introAudioStarted = true;
+        introAudio = new Audio("inicio.mp3");
+        introAudio.preload = "auto";
+        startBtn.textContent = "Entrar ›";
+
+        await loadIntroSubtitles();
+
+        try {
+          await introAudio.play();
+          startIntroSubtitles();
+        } catch (error) {
+          console.warn("No se pudo reproducir inicio.mp3.", error);
         }
-  
-        return word;
-      });
-    }
-  
-    return parts.join('');
-  }
-  
-  function renderBoldMarkdownWithHighlights(text, tokens){
-    const html = renderBoldMarkdown(text);
-    return highlightTokensInHtml(html, tokens);
-  }
-  
-  function buildResultItem(m, tokens = []){
-    const rec = m.rec;
-  
-    const wrapper = document.createElement('div');
-    wrapper.className = 'result-item';
-    wrapper.style.cursor = 'pointer';
-    wrapper.style.display = 'flex';
-    wrapper.style.alignItems = 'center';
-  
-    const chkWrap = document.createElement('div');
-    chkWrap.className = 'check';
-    chkWrap.style.display = 'flex';
-    chkWrap.style.alignItems = 'center';
-  
-    const chk = document.createElement('input');
-    chk.type = 'checkbox';
-    chk.name = 'selectRec';
-    chk.dataset.index = m.idx;
-    chkWrap.appendChild(chk);
-  
-    const content = document.createElement('div');
-    content.style.flex = '1';
-    content.style.display = 'flex';
-    content.style.alignItems = 'center';
-    content.style.gap = '4px';
-  
-    const title = document.createElement('h4');
-    title.style.margin = '0';
-  
-    const mostrarTxt = getField(rec, ['Mostrar','mostrar']) || 'Registro sin campo Mostrar';
-    title.innerHTML = renderBoldMarkdownWithHighlights(mostrarTxt, tokens);
-  
-    content.appendChild(title);
-  
-    wrapper.appendChild(chkWrap);
-    wrapper.appendChild(content);
-  
-    wrapper.addEventListener('click', e => {
-      if (e.target.tagName.toLowerCase() === 'input') return;
-      const all = Array.from(document.querySelectorAll('input[name="selectRec"]'));
-      all.forEach(inp => inp.checked = false);
-      chk.checked = true;
-      openRecord(rec);
-    });
-  
-    chk.addEventListener('change', e => {
-      const all = Array.from(document.querySelectorAll('input[name="selectRec"]'));
-      all.forEach(inp => { if (inp !== e.target) inp.checked = false; });
-      if (e.target.checked) openRecord(rec);
-    });
-  
-    return wrapper;
-  }
-
-  function renderGroupedResults(matches, tokens = []){
-    resultsEl.innerHTML = '';
-  
-    const buckets = { res:[], sol:[], rec:[], oth:[] };
-    for (const m of matches){
-      const g = getDocGroup(m.rec);
-      (buckets[g] || buckets.oth).push(m);
-    }
-  
-    const order = [
-      { key:'res', title:'Resoluciones / TIE', cssClass:'group-res' },
-      { key:'sol', title:'Solicitudes',       cssClass:'group-sol' },
-      { key:'rec', title:'Recursos',          cssClass:'group-rec' },
-      { key:'oth', title:'Otros',             cssClass:'group-oth' },
-    ];
-  
-    order.forEach(g => {
-      const list = buckets[g.key];
-      if (!list || list.length === 0) return;
-  
-      const section = createGroupSection({
-        title: g.title,
-        cssClass: g.cssClass,
-        count: list.length
-      });
-  
-      const body = section.querySelector('.result-section-body');
-      list.forEach(m => body.appendChild(buildResultItem(m, tokens)));
-  
-      resultsEl.appendChild(section);
-    });
-  
-    appendHelpResult();
-  }
-
-  // --- Carga JSON ---
-  async function loadJSON(){
-    try{
-      const res = await fetch('./SituacionesAdministrativas.json', {cache:'no-store'});
-      if(!res.ok) throw new Error('No se pudo cargar SituacionesAdministrativas.json');
-      db = await res.json();
-      console.log('Registros cargados:', db.length);
-    }catch(err){
-      resultsEl.innerHTML = `<div class="small" style="color:#c62828">Error al cargar JSON: ${err.message}</div>`;
-    }
-  }
-  loadJSON();
-
-  // --- Filtros SILA ---
-  function syncNadaLogic(changed){
-    if(changed==='nada' && chkNada.checked){
-      chkInscrito.checked=false;
-      chkPrestacion.checked=false;
-    }
-    if((changed==='inscrito'||changed==='prestacion') &&
-      (chkInscrito.checked||chkPrestacion.checked)){
-      chkNada.checked=false;
-    }
-  }
-
-  function actualizarChecks(){
-    const anyChecked = (chkInscrito.checked || chkPrestacion.checked || chkNada.checked);
-
-    if (anyChecked){
-      searchInput.disabled = false;
-      btnSearch.disabled = false;
-      searchInput.value = '';
-      searchInput.classList.add("enabled");
-      searchInput.classList.add("flash");
-      setTimeout(() => searchInput.classList.remove("flash"), 400);
-      searchInput.focus();
-    } else {
-      searchInput.disabled = true;
-      btnSearch.disabled = true;
-      searchInput.value = '';
-      resultsEl.innerHTML = '';
-      countResults.textContent = '0';
-      searchInput.classList.remove("enabled");
-      searchInput.classList.remove("flash");
-    }
-  }
-
-  chkInscrito.addEventListener('change', ()=>{ syncNadaLogic('inscrito'); actualizarChecks(); });
-  chkPrestacion.addEventListener('change', ()=>{ syncNadaLogic('prestacion'); actualizarChecks(); });
-  chkNada.addEventListener('change', ()=>{ syncNadaLogic('nada'); actualizarChecks(); });
-  actualizarChecks();
-
-  // Bloqueo click cuando está deshabilitado
-  const searchWrapper = document.querySelector('.search-input-wrapper');
-  searchWrapper.addEventListener('click', () => {
-    if (searchInput.disabled) {
-      msgDisabled.classList.add('show');
-      setTimeout(() => msgDisabled.classList.remove('show'), 3000);
-      searchInput.blur();
-    }
-  });
-
-  function getBestTokenMatchResults(records, tokens, tolerant=false){
-    if (!tokens || tokens.length === 0) return [];
-  
-    const scored = records.map(x => {
-      const anversoRaw = getField(x.rec, ['ANVERSO','Anverso','anverso']) || '';
-      const reversoRaw = getField(x.rec, ['REVERSO','Reverso','reverso']) || '';
-      const text = normalizeText(`${anversoRaw} ${reversoRaw}`);
-  
-      let hits = 0;
-  
-      for (const tok of tokens){
-        const ok = tolerant
-          ? containsTokenTolerant(text, tok)
-          : containsTokenExact(text, tok);
-  
-        if (ok) hits++;
+        return;
       }
-  
-      return {
-        ...x,
-        hits,
-        total: tokens.length,
-        score: hits / tokens.length
-      };
-    });
-  
-    const maxScore = Math.max(...scored.map(x => x.score), 0);
-  
-    if (maxScore <= 0) return [];
-  
-    return scored.filter(x => x.score === maxScore);
-  }
-  
-  function areSimplePluralVariants(a, b){
-    a = String(a || '')
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/\p{Diacritic}/gu,'');
-  
-    b = String(b || '')
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/\p{Diacritic}/gu,'');
-  
-    if (!a || !b) return false;
-    if (a === b) return true;
-  
-    // evitar palabras demasiado cortas
-    if (a.length < 5 || b.length < 5) return false;
-  
-    // tarjeta / tarjetas
-    if (a + 's' === b || b + 's' === a) return true;
-  
-    // opcion simple para -es
-    if (a + 'es' === b || b + 'es' === a) return true;
-  
-    return false;
-  }
-  
-  /*========================================================DOSEARCH========================================================================*/
-   function doSearch() {   
-    resultsEl.innerHTML = '';
-  
-    const rawQuery = searchInput.value.trim();
-    if (!rawQuery) {
-      resultsEl.innerHTML = '<div class="small">Escribe una o varias palabras para buscar.</div>';
-      countResults.textContent = '0';
-      appendHelpResult();
-      return;
-    }
-  
-    function normalize(s) {
-      if (!s) return '';
-      return String(s)
-        .normalize('NFD')
-        .replace(/\p{Diacritic}/gu, '')
-        .replace(/[^\p{L}\p{N}]+/gu, ' ')
-        .toLowerCase()
-        .trim();
-    }
-  
-    const STOPWORDS = new Set([
-      'a','la','el','los','las','de','del','y','o','en','por',
-      'para','con','sin','que','un','una','al','se','su','sus'
-    ]);
-  
-    function tokenizeQuery(q) {
-      const norm = normalize(q);
-      if (!norm) return [];
-  
-      const toks = Array.from(new Set(norm.split(/\s+/).filter(Boolean)));
-      const filtered = toks.filter(t => !STOPWORDS.has(t));
-  
-      const merged = [];
-      for (let i = 0; i < filtered.length; i++) {
-        if (filtered[i] === 'no' && filtered[i + 1] === 'autoriza') {
-          merged.push('no autoriza');
-          i++;
-        } else {
-          merged.push(filtered[i]);
-        }
+
+      stopIntroSubtitles();
+      if (introAudio) {
+        introAudio.pause();
+        introAudio.currentTime = 0;
       }
-  
-      return merged.length > 0 ? merged : filtered;
+
+      nameModal.classList.remove("hidden");
+      setTimeout(() => userNameInput.focus(), 50);
     }
-  
-    function levenshtein(a, b) {
-      const matrix = Array.from({ length: a.length + 1 }, (_, i) =>
-        Array.from({ length: b.length + 1 }, (__, j) => i === 0 ? j : j === 0 ? i : 0)
-      );
-  
-      for (let i = 1; i <= a.length; i++) {
-        for (let j = 1; j <= b.length; j++) {
-          const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-          matrix[i][j] = Math.min(
-            matrix[i - 1][j] + 1,
-            matrix[i][j - 1] + 1,
-            matrix[i - 1][j - 1] + cost
-          );
-        }
+
+    function handleNameSubmit(event) {
+      event.preventDefault();
+      userName = userNameInput.value.trim();
+      if (!userName) {
+        alert("Escribe tu nombre para continuar.");
+        return;
       }
-  
-      return matrix[a.length][b.length];
+      nameModal.classList.add("hidden");
+      startApp();
     }
-  
-    function containsTokenExact(text, token) {
-      const words = text.split(/\s+/).map(w => w.toLowerCase());
-      token = token.toLowerCase();
-  
-      if (token === 'autoriza') {
-        for (let i = 0; i < words.length; i++) {
-          if (words[i] === 'autoriza' && (i === 0 || words[i - 1] !== 'no')) return true;
-        }
-        return false;
+
+    async function loadIntroSubtitles() {
+      try {
+        const response = await fetch("inicio.vtt");
+        if (!response.ok) throw new Error("No se pudo cargar inicio.vtt");
+        const vttText = await response.text();
+        introCues = parseVtt(vttText);
+      } catch (error) {
+        console.warn("No se pudieron cargar los subtítulos de inicio.", error);
+        introCues = [];
       }
-  
-      if (token === 'no autoriza') {
-        for (let i = 0; i < words.length - 1; i++) {
-          if (words[i] === 'no' && words[i + 1] === 'autoriza') return true;
-        }
-        return false;
-      }
-  
-      return words.includes(token);
     }
-  
-    function normalizePluralSingular(word) {
-      let w = String(word || '').toLowerCase();
-  
-      if (w.endsWith('es') && w.length > 4) return w.slice(0, -2);
-      if (w.endsWith('s') && w.length > 3) return w.slice(0, -1);
-  
-      return w;
-    }
-  
-    function containsTokenTolerant(text, token) {
-      const words = text.split(/\s+/);
-      token = token.toLowerCase();
-    
-      for (const w of words) {
-        const word = w.toLowerCase();
-    
-        // 1. Exacta
-        if (word === token) return true;
-    
-        // 2. Singular/plural simple
-        if (areSimplePluralVariants(word, token)) return true;
-    
-        // 3. Prefijo
-        if (word.startsWith(token) && token.length >= 3) return true;
-    
-        // 4. Levenshtein
-        if (token.length >= 4 && word.length >= 4) {
-          const maxLen = Math.max(word.length, token.length);
-          const threshold = Math.max(1, Math.ceil(maxLen * 0.2));
-          if (levenshtein(word, token) <= threshold) return true;
-        }
-      }
-    
-      return false;
-    }
-  
-    function normalizeText(s) {
-      if (!s) return '';
-      return String(s)
-        .normalize('NFD')
-        .replace(/\p{Diacritic}/gu, '')
-        .replace(/[^\p{L}\p{N}]+/gu, ' ')
-        .toLowerCase()
-        .trim();
-    }
-  
-    function getKeywordsRaw(rec) {
-      return (getField(rec, [
-        'Palabras_Clave',
-        'palabras_clave',
-        'PALABRAS_CLAVE'
-      ]) || '').toString();
-    }
-  
-    function splitKeywordsToList(raw) {
-      return String(raw || '')
-        .replace(/(\r\n|\r|\n|\\n|\/n|\|\|)/g, ';')
-        .split(/[;,|]+/g)
-        .map(x => normalizeText(x))
+
+    function parseVtt(vttText) {
+      const cr = String.fromCharCode(13);
+      const lf = String.fromCharCode(10);
+      const text = String(vttText).split(cr).join("");
+      const blocks = text.split(lf + lf);
+
+      return blocks
+        .map(block => block.trim())
+        .filter(block => block && !block.startsWith("WEBVTT"))
+        .map(block => {
+          const lines = block.split(lf);
+          const timeLine = lines.find(line => line.includes("-->"));
+          if (!timeLine) return null;
+          const times = timeLine.split("-->").map(time => time.trim());
+          return {
+            start: vttTimeToSeconds(times[0]),
+            end: vttTimeToSeconds(times[1]),
+            text: lines.slice(lines.indexOf(timeLine) + 1).join(" ")
+          };
+        })
         .filter(Boolean);
     }
-  
-    function keywordIsFullyContainedInQuery(rec, queryNorm) {
-      const keywords = splitKeywordsToList(getKeywordsRaw(rec));
-      if (!keywords.length) return false;
-  
-      for (const kw of keywords) {
-        const kwTokens = kw.split(/\s+/).filter(Boolean);
-        if (kwTokens.length === 0) continue;
-  
-        const allInside = kwTokens.every(tok => containsTokenExact(queryNorm, tok));
-        if (allInside) return true;
-      }
-  
-      return false;
+
+    function vttTimeToSeconds(time) {
+      const clean = String(time).split(" ")[0];
+      const parts = clean.split(":");
+      const secondParts = parts.pop().split(".");
+      const seconds = Number(secondParts[0] || 0);
+      const milliseconds = Number(secondParts[1] || 0);
+      const minutes = Number(parts.pop() || 0);
+      const hours = Number(parts.pop() || 0);
+      return hours * 3600 + minutes * 60 + seconds + milliseconds / 1000;
     }
-  
-    function getBestTokenMatchResults(records, tokens, tolerant = false) {
-      if (!tokens || tokens.length === 0) return [];
-  
-      const scored = records.map(x => {
-        const anversoRaw = getField(x.rec, ['ANVERSO', 'Anverso', 'anverso']) || '';
-        const reversoRaw = getField(x.rec, ['REVERSO', 'Reverso', 'reverso']) || '';
-        const text = normalizeText(`${anversoRaw} ${reversoRaw}`);
-  
-        let hits = 0;
-        for (const tok of tokens) {
-          const ok = tolerant
-            ? containsTokenTolerant(text, tok)
-            : containsTokenExact(text, tok);
-  
-          if (ok) hits++;
-        }
-  
-        return {
-          ...x,
-          hits,
-          total: tokens.length,
-          score: hits / tokens.length
-        };
+
+    function startIntroSubtitles() {
+      const box = document.querySelector("#introSubtitle");
+      if (!box || !introAudio) return;
+
+      box.classList.remove("hidden");
+      introSubtitleTimer = setInterval(() => {
+        const currentTime = introAudio.currentTime;
+        const cue = introCues.find(item => currentTime >= item.start && currentTime <= item.end);
+        box.textContent = cue ? cue.text : "";
+        box.classList.toggle("hidden", !cue);
+      }, 150);
+
+      introAudio.addEventListener("ended", () => {
+        stopIntroSubtitles();
+        startBtn.textContent = "Entrar ›";
+      }, { once: true });
+    }
+
+    function stopIntroSubtitles() {
+      const box = document.querySelector("#introSubtitle");
+      if (introSubtitleTimer) {
+        clearInterval(introSubtitleTimer);
+        introSubtitleTimer = null;
+      }
+      if (box) {
+        box.textContent = "";
+        box.classList.add("hidden");
+      }
+    }
+
+    async function startApp() {
+      try {
+        const response = await fetch("preguntas.json");
+        if (!response.ok) throw new Error("No se pudo cargar preguntas.json");
+        questions = await response.json();
+        groupedQuestions = groupByType(questions);
+        shuffleQuestionsByType(groupedQuestions);
+        intro.classList.add("hidden");
+        app.classList.remove("hidden");
+        exitBtn.classList.remove("hidden");
+        renderCurrentStep();
+      } catch (error) {
+        alert("Error cargando preguntas.json. Revisa que esté en la misma carpeta que index.html.");
+        console.error(error);
+      }
+    }
+
+    function groupByType(items) {
+      return items.reduce((acc, item) => {
+        const type = item.tipo;
+        if (!acc[type]) acc[type] = [];
+        acc[type].push(item);
+        return acc;
+      }, {});
+    }
+
+    function shuffleQuestionsByType(groupedItems) {
+      Object.keys(groupedItems).forEach(type => {
+        groupedItems[type] = shuffleArray(groupedItems[type]);
       });
-  
-      const maxScore = Math.max(...scored.map(x => x.score), 0);
-      if (maxScore <= 0) return [];
-  
-      return scored.filter(x => x.score === maxScore);
     }
-  
-    const tokens = tokenizeQuery(rawQuery);
-    if (tokens.length === 0) {
-      resultsEl.innerHTML = '<div class="small">Escribe una o varias palabras para buscar.</div>';
-      countResults.textContent = '0';
-      appendHelpResult();
-      return;
-    }
-  
-    const queryNorm = normalize(rawQuery);
-  
-    const dbFiltrada = db
-      .map((rec, idx) => ({ rec, idx }))
-      .filter(x => recordPassesSilaFilters(x.rec));
-  
-    // 1) coincidencia fuerte en Palabras_Clave
-    let matches = dbFiltrada.filter(x => keywordIsFullyContainedInQuery(x.rec, queryNorm));
-  
-    // 2) si no hay, mejor porcentaje exacto en ANVERSO/REVERSO
-    if (matches.length === 0) {
-      matches = getBestTokenMatchResults(dbFiltrada, tokens, false);
-    }
-  
-    // 3) si tampoco hay, mejor porcentaje tolerante en ANVERSO/REVERSO
-    if (matches.length === 0) {
-      matches = getBestTokenMatchResults(dbFiltrada, tokens, true);
-    }
-  
-    const ctx = getContextoChecksSiNo();
-  
-    if (matches.length === 0) {
-      resultsEl.innerHTML = '<div class="small">No se han encontrado registros con el filtro aplicado.</div>';
-      countResults.textContent = '0';
-      appendHelpResult();
-      logBusquedaToSheets(rawQuery, 0, ctx.cobra, ctx.inscrito);
-      return;
-    }
-  
-    if (matches.length === 1) {
-      countResults.textContent = '1';
-      openRecord(matches[0].rec);
-      resultsEl.innerHTML = '';
-      logBusquedaToSheets(rawQuery, 1, ctx.cobra, ctx.inscrito);
-      return;
-    }
-  
-    countResults.textContent = String(matches.length);
-    logBusquedaToSheets(rawQuery, matches.length, ctx.cobra, ctx.inscrito);
-  
-    renderGroupedResults(matches, tokens);
-  }
-  /*========================================================FIN DO SEARCH========================================================================*/
-  btnSearch.addEventListener('click', doSearch);
 
-  searchInput.addEventListener('keydown', e => {
-    if (searchInput.disabled) {
-      e.preventDefault();
-      msgDisabled.classList.add('show');
-      setTimeout(() => msgDisabled.classList.remove('show'), 3000);
-    } else if (e.key === 'Enter') {
-      doSearch();
-    }
-  });
-  function parseDateInputToDate(value){
-    if(!value) return null;
-    const d = new Date(value + 'T00:00:00');
-    return isNaN(d.getTime()) ? null : d;
-  }
-
-  function addYears(date, years){
-    const d = new Date(date);
-    d.setFullYear(d.getFullYear() + years);
-    return d;
-  }
-
-  function addDays(date, days){
-    const d = new Date(date);
-    d.setDate(d.getDate() + days);
-    return d;
-  }
-
-  let _pregState = { rec:null, tipo:'', selectedBranch:null, phase:'initial', fecha1:null, fecha2:null };
-
-  function normRule(s){
-    return String(s || '')
-      .toLowerCase()
-      .normalize('NFD').replace(/\p{Diacritic}/gu,'')
-      .replace(/\s+/g,' ')
-      .trim();
-  }
-
-  function parseExpr(expr, d1, d2){
-    let s = normRule(expr);
-
-    let base;
-    if (/^fecha\s*1\b|^fecha1\b/.test(s)) base = new Date(d1);
-    else if (/^fecha\s*2\b|^fecha2\b/.test(s)) base = new Date(d2);
-    else if (/^hoy\b|^now\b/.test(s)) base = new Date();
-    else return null;
-
-    /*const m = s.match(/(fecha\s*1|fecha1|fecha\s*2|fecha2|hoy|now)\s*([+-])\s*(\d+)\s*(dias|dia|anos|años|año|ano|years|year|days|day)\b/);*/
-    const m = s.match(/(fecha\s*[12]|hoy|now)\s*([+-])\s*(\d+)\s*(dias?|años?|anos?|days?|years?)\b/i);
-    if (m){
-      const sign = m[2] === '-' ? -1 : 1;
-      const n = parseInt(m[3], 10) * sign;
-      const unit = m[4];
-
-      if (unit.startsWith('dia') || unit.startsWith('day')) {
-        base.setDate(base.getDate() + n);
-      } else {
-        base.setFullYear(base.getFullYear() + n);
+    function shuffleArray(array) {
+      const shuffled = array.slice();
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = shuffled[i];
+        shuffled[i] = shuffled[j];
+        shuffled[j] = temp;
       }
+      return shuffled;
     }
 
-    return base;
-  }
+    function renderCurrentStep() {
+      const type = SECTION_ORDER[sectionIndex];
+      const sectionQuestions = groupedQuestions[type] || [];
+      currentQuestion = sectionQuestions[questionIndex];
 
-  function evalSimpleComparison(ruleText, d1, d2){
-    const s0 = normRule(ruleText);
-
-    let s = s0
-      .replace(/\banterior a\b|\bantes de\b/g, '<')
-      .replace(/\bposterior a\b|\bdespues de\b/g, '>')
-      .replace(/\bigual a\b|\bigual\b/g, '=');
-
-    const m = s.match(/(.+?)(<=|>=|<|>|=)(.+)/);
-    if(!m) return null;
-
-    const left = parseExpr(m[1], d1, d2);
-    const op = m[2];
-    const right = parseExpr(m[3], d1, d2);
-
-    if(!left || !right) return null;
-
-    const L = left.getTime();
-    const R = right.getTime();
-
-    if (op === '<') return L < R;
-    if (op === '>') return L > R;
-    if (op === '<=') return L <= R;
-    if (op === '>=') return L >= R;
-    if (op === '=') return L === R;
-    return null;
-  }
-
-  function evalRule(ruleText, d1, d2){
-    const s = normRule(ruleText);
-    if(!s) return null;
-
-    const parts = s.split(/\s+y\s+|\s+and\s+/).map(p => p.trim()).filter(Boolean);
-    if(parts.length === 0) return null;
-
-    for(const p of parts){
-      const r = evalSimpleComparison(p, d1, d2);
-      if(r === null) return null;
-      if(r === false) return false;
-    }
-    return true;
-  }
-
-  function addQuestion(text){
-    if(!text) return;
-    const q = document.createElement('div');
-    q.className = 'field';
-    q.innerHTML = `<strong>${renderBoldMarkdown(text)}</strong>`;
-    modalPreguntasContent.appendChild(q);
-  }
-
-  function addABCRadios({ onlyAB = false } = {}){
-    const recLocal = _pregState?.rec;
-
-    if (!recLocal) {
-      console.error('addABCRadios: _pregState.rec no está definido');
-      return;
-    }
-
-    const oa = (getField(recLocal, ['Opción a','Opcion a']) || 'Opción A').trim();
-    const ob = (getField(recLocal, ['Opción b','Opcion b']) || 'Opción B').trim();
-    const oc = (getField(recLocal, ['Opción c','Opcion c']) || '').trim();
-
-    const box = document.createElement('div');
-    box.className = 'field';
-    box.innerHTML = `
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <label style="display:flex;gap:8px;align-items:center">
-          <input type="radio" name="branchABC" value="a"> <strong>A</strong>: ${renderBoldMarkdown(oa)}
-        </label>
-        <label style="display:flex;gap:8px;align-items:center">
-          <input type="radio" name="branchABC" value="b"> <strong>B</strong>: ${renderBoldMarkdown(ob)}
-        </label>
-        ${(!onlyAB && oc) ? `
-        <label style="display:flex;gap:8px;align-items:center">
-          <input type="radio" name="branchABC" value="c"> <strong>C</strong>: ${renderBoldMarkdown(oc)}
-        </label>` : ``}
-      </div>
-      <div class="small" style="margin-top:8px">Selecciona una opción para continuar.</div>
-    `;
-    modalPreguntasContent.appendChild(box);
-  }
-
-  function addTextInput(id, labelText, placeholder = ''){
-    const wrap = document.createElement('div');
-    wrap.className = 'field';
-    wrap.innerHTML = `
-      <div style="display:flex;flex-direction:column;gap:8px">
-        <label for="${id}"><strong>${labelText}</strong></label>
-        <input
-          id="${id}"
-          type="text"
-          placeholder="${placeholder}"
-          style="
-            width:100%;
-            padding:10px 12px;
-            border:1px solid #cfdcd2;
-            border-radius:10px;
-            font-size:14px;
-            background:#fff;
-            box-sizing:border-box;
-          "
-        >
-      </div>
-    `;
-    modalPreguntasContent.appendChild(wrap);
-  }
-  
-  function addYesNoRadios(idName, labelText){
-    const wrap = document.createElement('div');
-    wrap.className = 'field';
-    wrap.innerHTML = `
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <strong>${labelText}</strong>
-        <div style="display:flex;gap:18px;flex-wrap:wrap">
-          <label style="display:flex;align-items:center;gap:8px;">
-            <input type="radio" name="${idName}" value="si"> Sí
-          </label>
-          <label style="display:flex;align-items:center;gap:8px;">
-            <input type="radio" name="${idName}" value="no"> No
-          </label>
-        </div>
-      </div>
-    `;
-    modalPreguntasContent.appendChild(wrap);
-  }
-  function openModalPreguntas(rec, tipo){
-    _pregState = { rec, tipo, selectedBranch: null, phase: 'initial', fecha1: null, fecha2: null };
-
-    modalPreguntasContent.innerHTML = '';
-    modalPreguntasTitulo.innerHTML = renderBoldMarkdown((getField(rec, ['Mostrar','mostrar']) || '').trim());
-
-    const p1 = (getField(rec, ['Pregunta1']) || '').trim();
-    const p2 = (getField(rec, ['Pregunta2']) || '').trim();
-    const p3 = (getField(rec, ['Pregunta3']) || '').trim();
-
-    function addDateInput(id, labelText){
-      const wrap = document.createElement('div');
-      wrap.className = 'field';
-      wrap.innerHTML = `
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <label><strong>${labelText}</strong> <input id="${id}" type="date"></label>
-        </div>
-      `;
-      modalPreguntasContent.appendChild(wrap);
-    }
-
-    if(tipo === 'fecha'){
-      addQuestion(p1 || 'Introduce la fecha:');
-      addDateInput('pregFecha1', 'Fecha:');
-    }
-    else if (tipo === 'fecha+ab') {
-      addQuestion(p1 || 'Introduce la fecha:');
-      addDateInput('pregFecha1', 'Fecha:');
-
-      const rule = (getField(rec, ['PreguntaABC','preguntaabc']) || '').trim();
-      if(rule){
-        const hint = document.createElement('div');
-        hint.className = 'small';
-        hint.style.marginTop = '6px';
-        modalPreguntasContent.appendChild(hint);
-      }
-
-      _pregState.phase = 'date';
-      _pregState.fecha1 = null;
-    }
-    else if (tipo === 'dosfechas+ab') {
-      addQuestion(p1 || 'Introduce la fecha 1:');
-      addDateInput('pregFecha1', 'Fecha 1:');
-
-      addQuestion(p2 || 'Introduce la fecha 2:');
-      addDateInput('pregFecha2', 'Fecha 2:');
-
-      const rule = (getField(rec, ['PreguntaABC','preguntaabc']) || '').trim();
-      if(rule){
-        const hint = document.createElement('div');
-        hint.className = 'small';
-        hint.style.marginTop = '6px';
-        modalPreguntasContent.appendChild(hint);
-      }
-
-      _pregState.phase = 'dates';
-    }
-    else if(tipo === 'dosfechas'){
-      addQuestion(p1 || 'Introduce la fecha 1:');
-      addDateInput('pregFecha1', 'Fecha 1:');
-
-      addQuestion(p2 || 'Introduce la fecha 2:');
-      addDateInput('pregFecha2', 'Fecha 2:');
-    }
-    else if(tipo === 'abc'){
-      if(p1) addQuestion(p1);
-      if(p2) addQuestion(p2);
-      addABCRadios();
-    }
-    else if (tipo === 'mas_datos') {
-      if (p1) addTextInput('pregTexto1', p1, 'Introduce aquí el texto...');
-      if (p2) addTextInput('pregTexto2', p2, 'Introduce aquí el texto...');
-      if (p3) addTextInput('pregTexto3', p3, 'Introduce aquí el texto...');
-    
-      const pABC = (getField(rec, ['PreguntaABC','preguntaabc']) || '').trim();
-      if (pABC) {
-        addYesNoRadios('pregMasDatosABC', pABC);
-      }
-      _pregState.phase = 'mas_datos';
-    }      
-    else {
-      const box = document.createElement('div');
-      box.className = 'field';
-      box.innerHTML = `<div class="small">Tipo de pregunta no soportado: <strong>${tipo}</strong></div>`;
-      modalPreguntasContent.appendChild(box);
-    }
-
-    modalPreguntas.style.display = 'flex';
-    modalPreguntas.setAttribute('aria-hidden','false');
-  }
-
-  btnContinuarPreguntas.addEventListener('click', () => {
-    const rec = _pregState.rec;
-    const tipo = _pregState.tipo;
-    if(!rec) return;
-
-    let branch = null;
-
-    if(tipo === 'abc'){
-      const checked = document.querySelector('input[name="branchABC"]:checked');
-      if(!checked){
-        alert('Selecciona una opción (A/B/C).');
-        return;
-      }
-      branch = checked.value;
-    }
-
-    else if (tipo === 'fecha+ab') {
-      if (_pregState.phase === 'date') {
-        const v = document.getElementById('pregFecha1')?.value || '';
-        const fecha = parseDateInputToDate(v);
-        if(!fecha){
-          alert('Introduce una fecha válida.');
-          return;
-        }
-
-        const cond = (getField(rec, ['PreguntaABC','preguntaabc']) || '').trim();
-        if(!cond){
-          alert('Falta la condición en PreguntaABC.');
-          return;
-        }
-
-        const ok = evalRule(cond, fecha, fecha);
-        if (ok !== true){
-          branch = 'c';
-        } else {
-          modalPreguntasContent.innerHTML = '';
-          addQuestion((getField(rec, ['Pregunta2']) || '').trim() || 'Selecciona una opción:');
-          addABCRadios({ onlyAB: true });
-
-          _pregState.phase = 'ab';
-          _pregState.fecha1 = fecha;
-          return;
-        }
-      }
-
-      if (_pregState.phase === 'ab') {
-        const checked = document.querySelector('input[name="branchABC"]:checked');
-        if(!checked){
-          alert('Selecciona una opción (A/B).');
-          return;
-        }
-        branch = checked.value;
-      }
-    }
-
-    else if (tipo === 'dosfechas+ab') {
-      if (_pregState.phase === 'dates') {
-        const v1 = document.getElementById('pregFecha1')?.value || '';
-        const v2 = document.getElementById('pregFecha2')?.value || '';
-
-        const d1 = parseDateInputToDate(v1);
-        const d2 = parseDateInputToDate(v2);
-
-        if(!d1 || !d2){
-          alert('Introduce ambas fechas.');
-          return;
-        }
-
-        const cond = (getField(rec, ['PreguntaABC','preguntaabc']) || '').trim();
-        if(!cond){
-          alert('Falta la condición en PreguntaABC.');
-          return;
-        }
-
-        const ok = evalRule(cond, d1, d2);
-
-        if (ok !== true){
-          branch = 'c';
-        } else {
-          modalPreguntasContent.innerHTML = '';
-          const p3 = (getField(rec, ['Pregunta3','pregunta3']) || '').trim();
-          addQuestion(p3 || 'Selecciona una opción:');
-          addABCRadios({ onlyAB: true });
-
-          _pregState.phase = 'ab';
-          _pregState.fecha1 = d1;
-          _pregState.fecha2 = d2;
-          return;
-        }
-      }
-
-      if (_pregState.phase === 'ab') {
-        const checked = document.querySelector('input[name="branchABC"]:checked');
-        if(!checked){
-          alert('Selecciona una opción (A/B).');
-          return;
-        }
-        branch = checked.value;
-      }
-    }
-    else if (tipo === 'mas_datos') {
-      const t1 = (document.getElementById('pregTexto1')?.value || '').trim();
-      const t2 = (document.getElementById('pregTexto2')?.value || '').trim();
-      const t3 = (document.getElementById('pregTexto3')?.value || '').trim();
-    
-      const pABC = (getField(rec, ['PreguntaABC','preguntaabc']) || '').trim();
-      const abcChecked = document.querySelector('input[name="pregMasDatosABC"]:checked');
-    
-      // ✅ Si existe PreguntaABC, contestarla es obligatorio
-      if (pABC && !abcChecked) {
-        alert('Debes indicar si es renovación o no antes de continuar.');
-        return;
-      }
-    
-      const abcValue = abcChecked ? abcChecked.value : '';
-      const partesBusqueda = [];
-    
-      if (t1) partesBusqueda.push(t1);
-      if (t2) partesBusqueda.push(t2);
-      if (t3) partesBusqueda.push(t3);
-    
-      if (abcValue === 'si') {
-        partesBusqueda.push('renovación');
-      }
-    
-      const busquedaFinal = partesBusqueda.join(' ').trim();
-    
-      if (!busquedaFinal) {
-        alert('Introduce al menos un dato para realizar la búsqueda.');
-        return;
-      }
-    
-      closeModalPreguntas();
-      searchInput.value = busquedaFinal;
-      doSearch();
-      return;
-    }
-    else if(tipo === 'fecha'){
-      const v = document.getElementById('pregFecha1')?.value || '';
-      const fecha = parseDateInputToDate(v);
-      if(!fecha){
-        alert('Introduce una fecha válida.');
-        return;
-      }
-    
-      const ruleA = (getField(rec, ['Opción a','Opcion a']) || '').trim();
-      const ruleB = (getField(rec, ['Opción b','Opcion b']) || '').trim();
-      const ruleC = (getField(rec, ['Opción c','Opcion c']) || '').trim();
-    
-      const okA = ruleA ? evalRule(ruleA, fecha, fecha) : false;
-      const okB = ruleB ? evalRule(ruleB, fecha, fecha) : false;
-      const okC = ruleC ? evalRule(ruleC, fecha, fecha) : false;
-    
-      if(okA === true) branch = 'a';
-      else if(okB === true) branch = 'b';
-      else if(okC === true) branch = 'c';
-      else {
-        alert('No se ha podido determinar A/B/C con las reglas.');
-        return;
-      }
-    }
-
-    else if(tipo === 'dosfechas'){
-      const v1 = document.getElementById('pregFecha1')?.value || '';
-      const v2 = document.getElementById('pregFecha2')?.value || '';
-
-      const d1 = parseDateInputToDate(v1);
-      const d2 = parseDateInputToDate(v2);
-
-      if(!d1 || !d2){
-        alert('Introduce ambas fechas.');
+      if (!currentQuestion) {
+        goNext();
         return;
       }
 
-      const ruleA = (getField(rec, ['Opción a','Opcion a']) || '').trim();
-      const ruleB = (getField(rec, ['Opción b','Opcion b']) || '').trim();
-      const ruleC = (getField(rec, ['Opción c','Opcion c']) || '').trim();
+      selectedOptionIndex = null;
+      document.querySelector("#sectionPill").textContent = `Bloque ${sectionIndex + 1} de 4`;
+      document.querySelector("#sectionTitle").textContent = pluralTitle(type);
+      document.querySelector("#questionText").textContent = personalizeText(currentQuestion.pregunta);
+      document.querySelector("#answerInput").value = "";
+      continueBtn.disabled = true;
+      renderOptions(currentQuestion.opciones || []);
 
-      const okA = evalRule(ruleA, d1, d2);
-      const okB = evalRule(ruleB, d1, d2);
-      const okC = ruleC ? evalRule(ruleC, d1, d2) : false;
-
-      if(okA === true) branch = 'a';
-      else if(okB === true) branch = 'b';
-      else if(okC === true) branch = 'c';
-      else {
-        alert('No se ha podido determinar A/B/C con las reglas de Opción a/b/c. Revisa el formato de las reglas.');
-        return;
+      if (currentVideoType !== type) {
+        currentVideoType = type;
+        renderVideo("#videoContainer", SECTION_VIDEOS[type], "Ver vídeo", type);
       }
-    } else {
-      alert('Tipo de pregunta no soportado: ' + tipo);
-      return;
+
+      const card = document.querySelector("#questionCard");
+      if (watchedVideoTypes.has(type)) card.classList.remove("waiting-video");
+      else card.classList.add("waiting-video");
+
+      updateProgress();
     }
 
-    const suffix = (branch === 'a') ? '' : (branch === 'b') ? 'OPCIONAL' : 'OPCIONAL2';
+    function pluralTitle(type) {
+      return {
+        Debilidad: "Debilidades",
+        Amenaza: "Amenazas",
+        Fortaleza: "Fortalezas",
+        Oportunidad: "Oportunidades"
+      }[type] || type;
+    }
 
-    closeModalPreguntas();
-    openModalDetalle(rec, suffix);
-  });
-});
-</script>
-  
+    function renderVideo(selector, source, buttonText, type) {
+      const container = document.querySelector(selector);
+      if (!source) {
+        container.innerHTML = "";
+        return;
+      }
+
+      if (source.includes("youtube.com") || source.includes("youtu.be") || source.includes("vimeo.com")) {
+        container.innerHTML = `
+          <iframe src="${source}" allowfullscreen title="Vídeo"></iframe>
+          <div class="video-start-layer"><button class="video-start-button" type="button">${buttonText}</button></div>`;
+        const layer = container.querySelector(".video-start-layer");
+        layer.addEventListener("click", () => {
+          layer.remove();
+          if (type) watchedVideoTypes.add(type);
+          document.querySelector("#questionCard")?.classList.remove("waiting-video");
+        });
+        return;
+      }
+
+      container.innerHTML = `
+        <video playsinline preload="metadata" src="${source}"></video>
+        <div class="video-start-layer"><button class="video-start-button" type="button">${buttonText}</button></div>`;
+
+      const video = container.querySelector("video");
+      const layer = container.querySelector(".video-start-layer");
+
+      layer.addEventListener("click", async () => {
+        layer.remove();
+        video.setAttribute("controls", "controls");
+        try { await video.play(); } catch (error) { console.warn("El navegador no permitió reproducir el vídeo.", error); }
+      });
+
+      video.addEventListener("ended", () => {
+        if (type) watchedVideoTypes.add(type);
+        const card = document.querySelector("#questionCard");
+        if (card) card.classList.remove("waiting-video");
+      });
+
+      video.addEventListener("play", () => {
+        const card = document.querySelector("#questionCard");
+        if (!card) return;
+        if (type && !watchedVideoTypes.has(type)) card.classList.add("waiting-video");
+        else card.classList.remove("waiting-video");
+      });
+    }
+
+    function renderOptions(options) {
+      const optionsList = document.querySelector("#optionsList");
+      optionsList.innerHTML = "";
+
+      if (!Array.isArray(options) || options.length === 0) {
+        optionsList.innerHTML = `<p class="help-text">No hay opciones definidas para esta pregunta.</p>`;
+        return;
+      }
+
+      options.forEach((optionText, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "option-button";
+        button.innerHTML = `<span class="option-number">${index + 1}</span><span>${escapeHtml(personalizeText(optionText))}</span>`;
+        button.addEventListener("click", () => selectOption(index));
+        optionsList.appendChild(button);
+      });
+    }
+
+    function selectOption(index) {
+      selectedOptionIndex = index;
+      document.querySelector("#answerInput").value = String(index);
+      continueBtn.disabled = false;
+      document.querySelectorAll(".option-button").forEach((button, buttonIndex) => {
+        button.classList.toggle("selected", buttonIndex === index);
+      });
+    }
+
+    function commitAnswerAndGoNext() {
+      if (selectedOptionIndex === null) {
+        alert("Elige una opción para continuar.");
+        return;
+      }
+      answers.push(buildAnswerFromCurrentSelection());
+      goNext();
+    }
+
+    function buildAnswerFromCurrentSelection() {
+      const options = Array.isArray(currentQuestion.opciones) ? currentQuestion.opciones : [];
+      const adequate = Number(selectedOptionIndex) === Number(currentQuestion.respuesta_adecuada);
+      return {
+        tipo: currentQuestion.tipo,
+        pregunta: personalizeText(currentQuestion.pregunta),
+        respuestaUsuario: personalizeText(options[selectedOptionIndex] || ""),
+        respuestaUsuarioIndice: selectedOptionIndex,
+        respuestaAdecuada: personalizeText(options[Number(currentQuestion.respuesta_adecuada)] || ""),
+        respuestaAdecuadaIndice: Number(currentQuestion.respuesta_adecuada),
+        correcta: adequate,
+        feedback: adequate ? "Respuesta adecuada." : personalizeText(currentQuestion.feedback || "Revisa este apartado con más profundidad.")
+      };
+    }
+
+    function goNext() {
+      questionIndex++;
+      const type = SECTION_ORDER[sectionIndex];
+      const sectionQuestions = groupedQuestions[type] || [];
+
+      if (questionIndex >= sectionQuestions.length) {
+        sectionIndex++;
+        questionIndex = 0;
+      }
+
+      if (sectionIndex >= SECTION_ORDER.length) showResult();
+      else renderCurrentStep();
+    }
+
+    function updateProgress() {
+      const totalQuestions = SECTION_ORDER.reduce((sum, type) => sum + (groupedQuestions[type] || []).length, 0);
+      const completed = answers.length;
+      const percent = totalQuestions ? Math.round((completed / totalQuestions) * 100) : 0;
+      document.querySelector("#progressBar").style.width = `${percent}%`;
+      document.querySelector("#progressPercent").textContent = `${percent}%`;
+      document.querySelector("#progressText").textContent = `Pregunta ${Math.min(completed + 1, totalQuestions)} de ${totalQuestions}`;
+    }
+
+    function isBlockPassed(type) {
+      const blockAnswers = answers.filter(answer => answer.tipo === type);
+      if (blockAnswers.length === 0) return true;
+      return blockAnswers.every(answer => answer.correcta);
+    }
+
+    function chooseSummaryVideoKey() {
+      let feedbackNumber = 1;
+      if (!isBlockPassed("Fortaleza")) feedbackNumber += 8;
+      if (!isBlockPassed("Debilidad")) feedbackNumber += 4;
+      if (!isBlockPassed("Amenaza")) feedbackNumber += 2;
+      if (!isBlockPassed("Oportunidad")) feedbackNumber += 1;
+      return `feedback_${feedbackNumber}`;
+    }
+
+    function showResult() {
+      app.classList.add("hidden");
+      result.classList.remove("hidden");
+      exitBtn.classList.remove("hidden");
+
+      const key = chooseSummaryVideoKey();
+      const number = Number(String(key).split("feedback_").join(""));
+      renderVideo("#summaryVideoContainer", SUMMARY_VIDEOS[key], "Ver resumen", null);
+
+      document.querySelector("#resultUserName").textContent = userName ? `Informe de ${userName}` : "";
+      document.querySelector("#resultText").textContent = `Has terminado la ruta. Ahora verás un vídeo de resumen adaptado a tus respuestas. Vídeo de feedback ${number}.`;
+      document.querySelector("#answersList").innerHTML = answers.map(answer => `
+        <article class="answer-item">
+          <strong>${escapeHtml(answer.tipo)}</strong>
+          <p><b>Pregunta:</b> ${escapeHtml(answer.pregunta)}</p>
+          <p><b>Tu respuesta:</b> ${escapeHtml(answer.respuestaUsuario)}</p>
+        </article>`).join("");
+    }
+
+    function personalizeText(text) {
+      let result = String(text || "");
+      result = result.split("{{nombre}}").join(userName);
+      result = result.split("{nombre}").join(userName);
+      result = result.split("[nombre]").join(userName);
+      result = result.split("NOMBRE").join(userName);
+      return result;
+    }
+
+    function escapeHtml(text) {
+      let result = String(text || "");
+      result = result.split("&").join("&amp;");
+      result = result.split("<").join("&lt;");
+      result = result.split(">").join("&gt;");
+      result = result.split('"').join("&quot;");
+      result = result.split("'").join("&#39;");
+      return result;
+    }
+
+    function createPdfDocument() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      const margin = 15;
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const usableWidth = pageWidth - margin * 2;
+      let y = 18;
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(18);
+      doc.text("Informe Ruta DAFO", margin, y);
+      y += 10;
+
+      if (userName) {
+        doc.setFontSize(13);
+        doc.text(`Nombre: ${userName}`, margin, y);
+        y += 9;
+      }
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(11);
+      y = addWrappedText(doc, "Este informe recoge tus respuestas y recomendaciones para seguir trabajando tu objetivo profesional.", margin, y, usableWidth) + 8;
+
+      SECTION_ORDER.forEach(type => {
+        y = ensureSpace(doc, y, 30, pageHeight, margin);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(14);
+        doc.text(pluralTitle(type), margin, y);
+        y += 8;
+
+        answers.filter(answer => answer.tipo === type).forEach((answer, index) => {
+          y = ensureSpace(doc, y, 50, pageHeight, margin);
+          doc.setFont("helvetica", "bold");
+          doc.setFontSize(11);
+          y = addWrappedText(doc, `${index + 1}. ${answer.pregunta}`, margin, y, usableWidth);
+
+          doc.setFont("helvetica", "normal");
+          y = addWrappedText(doc, `Tu respuesta: ${answer.respuestaUsuario}`, margin, y + 2, usableWidth);
+          y = addWrappedText(doc, `Recomendación: ${answer.feedback}`, margin, y + 2, usableWidth);
+          y += 6;
+        });
+      });
+
+      return doc;
+    }
+
+    function savePdf() {
+      const doc = createPdfDocument();
+      doc.save("informe-ruta-dafo.pdf");
+    }
+
+    async function sharePdf() {
+      const doc = createPdfDocument();
+      const blob = doc.output("blob");
+      const file = new File([blob], "informe-ruta-dafo.pdf", { type: "application/pdf" });
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({
+            title: "Informe Ruta DAFO",
+            text: "Te envío mi informe de Ruta DAFO.",
+            files: [file]
+          });
+          return;
+        } catch (error) {
+          console.warn("No se completó la acción de compartir.", error);
+        }
+      }
+
+      doc.save("informe-ruta-dafo.pdf");
+      alert("Tu navegador no permite compartir el PDF directamente. Se ha descargado para que puedas enviarlo manualmente.");
+    }
+
+    function addWrappedText(doc, text, x, y, width) {
+      const lines = doc.splitTextToSize(text, width);
+      doc.text(lines, x, y);
+      return y + lines.length * 6;
+    }
+
+    function ensureSpace(doc, y, needed, pageHeight, margin) {
+      if (y + needed > pageHeight - margin) {
+        doc.addPage();
+        return margin;
+      }
+      return y;
+    }
+  </script>
 </body>
 </html>
