@@ -1107,6 +1107,12 @@ document.addEventListener('DOMContentLoaded', () => {
       /\[([^\]]+)\]\(\s*((?:https?:\/\/|www\.)[^\s)]+)\s*\)/g,
       (m, label, url) => {
         const href = url.startsWith('http') ? url : `https://${url}`;
+        const isImage = /\.(png|jpg|jpeg|webp|gif)$/i.test(href);
+        
+        if (isImage) {
+          return `<a href="${href}" class="js-image-link">${label}</a>`;
+        }
+        
         return `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
       }
     );
@@ -1231,6 +1237,19 @@ document.addEventListener('DOMContentLoaded', () => {
     openModalPreguntas(rec, tipo);
   }
 
+document.addEventListener('click', e => {
+
+  const link = e.target.closest('.inline-image-link');
+  if (!link) return;
+
+  e.preventDefault();
+
+  const src = link.dataset.image;
+  const caption = link.dataset.caption || '';
+
+  openImageModal(src, caption);
+});
+  
   // ======= AYUDA como resultado extra =======
   function appendHelpResult(){
     const tmp = document.createElement('div');
