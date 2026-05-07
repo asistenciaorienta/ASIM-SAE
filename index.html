@@ -793,8 +793,8 @@
         await loadIntroSubtitles();
 
         try {
+          introAudio.addEventListener("playing", startIntroSubtitles, { once: true });
           await introAudio.play();
-          startIntroSubtitles();
         } catch (error) {
           console.warn("No se pudo reproducir inicio.mp3.", error);
         }
