@@ -910,20 +910,23 @@ footer{
 
       <section class="card card-tipo card-tipo-saeclick step-tab-card">
         <div class="step-tab step-tab-saeclick">3</div>
-
+      
         <div class="card-tipo-header">
           <h3>Si no te hemos podido ayudar...</h3>
         </div>
-
+      
         <div class="card-tipo-body">
           <div class="saeclick-box">
             <p>
-              Si tras revisar las opciones sigues teniendo dudas, puedes trasladar tu consulta a SAEclick.
+              Si tras revisar las opciones sigues teniendo dudas, puedes trasladar tu consulta al siguiente correo:
             </p>
-
-            <a class="saeclick-cta" href="https://ws148.juntadeandalucia.es/dwp/app/" target="_blank" rel="noopener">
-              Ir a SAEclick
-            </a>
+      
+            <p style="font-weight:800; color:var(--sae-green); font-size:1.05rem;">
+              asim.consultas.sae@juntadeandalucia.es
+            </p>
+            <button class="saeclick-cta" type="button" onclick="navigator.clipboard.writeText('asim.consultas.sae@juntadeandalucia.es'); alert('Correo copiado');">
+              Copiar correo
+            </button>
           </div>
         </div>
       </section>
@@ -934,7 +937,7 @@ footer{
 <footer>
   <div class="footer-logo">
     <span id="version"></span>
-  </div
+  </div>
 </footer>
 <script src="version.js"></script>  
 <script> document.getElementById("version").textContent = APP_CONFIG.version;  </script>
