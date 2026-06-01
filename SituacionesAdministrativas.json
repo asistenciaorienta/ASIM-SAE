@@ -1345,7 +1345,7 @@
     "Alcance de la Autorización": "Autoriza a Trabajar",
     "Alcance de la Autorización OPCIONAL": "",
     "Alcance de la Autorización OPCIONAL2": "",
-    "Observaciones": "Autoriza a trabajar en cualquier sector o actividad./nSe consignará fecha caducidad: fecha comunicación de la admisión a trámite del procedimiento + 3 meses./n\nSi transcurrido este plazo el expediente sigue en tramitación se consignará como fecha de caducidad la fecha de consulta de expediente o declaración jurada + 3meses.",
+    "Observaciones": "Autoriza a trabajar en cualquier sector o actividad./nSe consignará fecha caducidad: fecha comunicación de la admisión a trámite del procedimiento + 3 meses./n/nSi transcurrido este plazo el expediente sigue en tramitación se consignará como fecha de caducidad la fecha de consulta de expediente o declaración jurada + 3 meses./n/n[Ejemplo Modelo de Admisión a Trámite](images/admision_a_tramite.png).",
     "Observaciones OPCIONAL": "",
     "Observaciones OPCIONAL2": "",
     "Documentación": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/Plantilla-PERMISO-RE.pdf",
