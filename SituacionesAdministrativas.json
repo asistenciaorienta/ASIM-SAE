@@ -1311,7 +1311,7 @@
     "Observaciones": "Autoriza a trabajar en cualquier sector o actividad. /nVigencia de 1 año prorrogable o modificable. /nSe consignará fecha caducidad la indicada en el documento.",
     "Observaciones OPCIONAL": "",
     "Observaciones OPCIONAL2": "",
-    "Documentación": "",
+    "Documentación": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/Plantilla-PERMISO-RE.pdf",
     "Documentación OPCIONAL": "",
     "Documentación OPCIONAL2": "",
     "¿Inscrito anteriormente?": "",
@@ -1332,7 +1332,7 @@
     "¿Revisado?": "Revisado"
   },
   {
-    "ANVERSO": "Autoriza a trabajar en cualquier sector o actividad./nSe consignará fecha caducidad: fecha comunicación de la admisión a trámite del procedimiento + 3 meses./n\nSi transcurrido este plazo el expediente sigue en tramitación se consignará como fecha de caducidad la fecha de consulta de expediente o declaración jurada + 3meses./n/n[Ejemplo Modelo de Admisión a Trámite](images/admision_a_tramite.png).",
+    "ANVERSO": "Autoriza a trabajar en cualquier sector o actividad./nSe consignará fecha caducidad: fecha comunicación de la admisión a trámite del procedimiento + 3 meses./n\nSi transcurrido este plazo el expediente sigue en tramitación se consignará como fecha de caducidad la fecha de consulta de expediente o declaración jurada + 3meses./n/n[Ejemplo Modelo de Admisión a Trámite](images/admision_a_tramite.png). residencia temporal por circunstancias excepcionales de la disposición adicional D.A. 2ª segunda del reglamento de la ley orgánica 4/2020 de 19 de Abril, Regularización Extraordinaria.\"Autorización circunstancias excepcionales regularización extraordinaria disposición adicional vigésima 20ª, vigesimoprimera 21ª, solicitantes protección internacional, comunicación inicio tramitación del procedimiento, admisión a trámite provisional\",",
     "REVERSO": "",
     "Palabras_Clave": "",
     "Condicionantes": "- Se debe preguntar al técnico la fecha de admisión a trámite de la solicitud más tres meses",
@@ -1348,7 +1348,7 @@
     "Observaciones": "Autoriza a trabajar en cualquier sector o actividad./nSe consignará fecha caducidad: fecha comunicación de la admisión a trámite del procedimiento + 3 meses./n\nSi transcurrido este plazo el expediente sigue en tramitación se consignará como fecha de caducidad la fecha de consulta de expediente o declaración jurada + 3meses.",
     "Observaciones OPCIONAL": "",
     "Observaciones OPCIONAL2": "",
-    "Documentación": "",
+    "Documentación": "https://ws155.juntadeandalucia.es/hermesayuda/wp-content/uploads/Plantilla-PERMISO-RE.pdf",
     "Documentación OPCIONAL": "",
     "Documentación OPCIONAL2": "",
     "¿Inscrito anteriormente?": "",
